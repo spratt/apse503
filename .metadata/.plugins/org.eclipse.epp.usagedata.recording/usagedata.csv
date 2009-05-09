@@ -1,0 +1,16 @@
+what,kind,bundleId,bundleVersion,description,time
+started,bundle,org.eclipse.wst.validation,1.2.6.v200902121900,org.eclipse.wst.validation,1241886625021
+started,bundle,org.eclipse.wst.web,1.1.206.v200812100430,org.eclipse.wst.web,1241886625021
+started,bundle,org.eclipse.wst.ws.service.policy.ui,1.0.2.v200809031518,org.eclipse.wst.ws.service.policy.ui,1241886625022
+started,bundle,org.eclipse.wst.xml.core,1.1.307.v200812040936,org.eclipse.wst.xml.core,1241886625023
+activated,view,org.eclipse.ui.navigator.resources,3.3.101.M20080910-0800,org.eclipse.ui.navigator.ProjectExplorer,1241886625357
+activated,view,org.eclipse.ui.navigator.resources,3.3.101.M20080910-0800,org.eclipse.ui.navigator.ProjectExplorer,1241886625364
+closed,view,org.eclipse.ui,3.4.2.M20090204-0800,org.eclipse.ui.internal.introview,1241886625375
+deactivated,workbench,org.eclipse.ui.workbench,3.4.2.M20090127-1700,,1241886634765
+activated,workbench,org.eclipse.ui.workbench,3.4.2.M20090127-1700,,1241886727748
+closed,workbench,org.eclipse.ui.workbench,3.4.2.M20090127-1700,,1241886727886
+stopped,bundle,org.eclipse.jst.j2ee.xdoclet.runtime,1.1.102.v200805140135,org.eclipse.jst.j2ee.xdoclet.runtime,1241886728327
+stopped,bundle,org.eclipse.jst.j2ee.ejb.annotations.xdoclet,1.2.0.v200805140020,org.eclipse.jst.j2ee.ejb.annotations.xdoclet,1241886728348
+stopped,bundle,org.eclipse.jst.server.generic.jboss,1.5.206.v20090115,org.eclipse.jst.server.generic.jboss,1241886728367
+stopped,bundle,org.eclipse.jst.server.generic.jonas,1.5.205.v200805140145,org.eclipse.jst.server.generic.jonas,1241886728379
+stopped,bundle,org.eclipse.jst.server.generic.oc4j,1.5.205.v200805140145,org.eclipse.jst.server.generic.oc4j,1241886728401

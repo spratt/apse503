@@ -1,9 +1,11 @@
-If you can read this, then you have successfully downloaded from github.
+APSE503
+========================================
 
-If you can modify it and push to github, then all is well.
+Instructions:
 
-\/\/\/\/\/\/\/\/\/\/\/\/Modify Below This Line\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-woohoo!!!!
+# create a dynamic project in eclipse called apse503
+# open a command prompt
+# navigate to the apse503 project directory
+# git clone git@github.com:spratt/apse503.git
 
-Simon (hyralt) has successfully edited this file.  Second edit.
-Sunmoon (greenfrog76) has successfully edited this file.
+You should be good to go!
