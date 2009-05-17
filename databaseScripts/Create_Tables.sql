@@ -9,6 +9,7 @@ CREATE TABLE `user` (
   `country` varchar(50) DEFAULT NULL,
   `email` varchar(50) NOT NULL,
   `datetime` datetime DEFAULT NULL,
+  `user_name` varchar(50) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
   `salt` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`)
