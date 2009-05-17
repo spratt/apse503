@@ -1,15 +1,30 @@
 package apse503;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import org.junit.Before;
 
 import junit.framework.TestCase;
 
 public class UserTest extends TestCase {
+	// For holding a valid user used in testing
 	User validUser = new User();
+	
+	// For connecting to the DB
+	// Remove these when we refactor the persistence code
+	Connection db;
+	private static final String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
+	private static final String DB_CONN_STRING = "jdbc:mysql://localhost:3306/webMethods";
+	private static final String DB_PASSWORD = "root";
+	private static final String DB_USERNAME = "root";
 	
 	@Before
 	public void setUp() throws Exception {
-		// Valid User
+		// Construct a simple, valid User
 		validUser.firstName = "Foo";
 		validUser.lastName = "Bar";
 		validUser.address = "123 4th Street";
@@ -20,6 +35,10 @@ public class UserTest extends TestCase {
 		validUser.postalCode = "H3Z2K6";
 		validUser.userName = "foo";
 		validUser.setPassword("foobar");
+		
+		// Set up the connection to the DB
+	    Class.forName(DRIVER_CLASS_NAME).newInstance();
+		db = DriverManager.getConnection(DB_CONN_STRING, DB_USERNAME, DB_PASSWORD);
 	}
 	
 	public void testBlankUserIsInvalid() throws Exception {
@@ -101,6 +120,30 @@ public class UserTest extends TestCase {
 	
 	public void testValidAuthenticationPasses() {
 		assertTrue(validUser.authenticate("foobar"));
+	}
+	
+	public void testSavePersistsToDatabase() {
+		User saveMe = new User(validUser);
+		
+		saveMe.save();
+		assertTrue(saveMe.isSaved());
+		
+		try {
+			// Set up a statement to execute SQL on the db
+			Statement sql = db.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			
+			// Check to make sure the user was saved
+			sql.execute("SELECT * FROM user WHERE user_id=" + saveMe.getId());
+			ResultSet results = sql.getResultSet();
+			assertTrue("Results should return at least one result!",results.next());
+			
+			// Clear out that row for further testing
+			// make the results updatable
+			results.deleteRow();
+		} catch (SQLException e) {
+			// TODO log this SQLException
+			e.printStackTrace();
+		}
 	}
 	
 	/* save this for later

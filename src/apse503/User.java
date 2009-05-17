@@ -1,7 +1,38 @@
 package apse503;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class User {
+	// For connecting to the DB
+	// Remove these when we refactor the persistence code
+	private Connection db;
+	private Statement sql;
+	private static final String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
+	private static final String DB_CONN_STRING = "jdbc:mysql://localhost:3306/webMethods";
+	private static final String DB_PASSWORD = "root";
+	private static final String DB_USERNAME = "root";
 	
+	private void setUpDB(){
+	    try {
+			Class.forName(DRIVER_CLASS_NAME).newInstance();
+			this.db = DriverManager.getConnection(DB_CONN_STRING, DB_USERNAME, DB_PASSWORD);
+			this.sql = db.createStatement();
+		} catch (Exception e) {
+			// TODO log this exception
+			e.printStackTrace();
+		}
+	}
+	
+	// A flag value to indicate that this object has not been saved
+	// to the DB before
+	final static private int UNSAVED_ID = -1;
+	
+	private int id = UNSAVED_ID;
+
 	public String userName,
 				  firstName,
 				  lastName,
@@ -27,6 +58,7 @@ public class User {
 		this.postalCode = "";
 		this.province = "";
 		this.country = "";
+		this.setUpDB();
 	}
 	
 	// Create a new user from an old user
@@ -43,6 +75,12 @@ public class User {
 		this.postalCode = originalUser.postalCode;
 		this.province =originalUser.province;
 		this.country = originalUser.country;
+		this.setUpDB();
+	}
+	
+	// Look, but don't touch my private
+	public int getId() {
+		return id;
 	}
 
 	public boolean isValid() {
@@ -77,9 +115,54 @@ public class User {
 	
 	// TODO implement persistence code
 	public boolean save() {
+		// Don't save if the user is invalid
 		if (!this.isValid()) return false;
-		// Save to database here
-		return true;
+		
+		if (this.isSaved()) {
+			// UPDATE ROW IN TABLE
+			// Return true if sql executed properly
+		} else {
+			String query;
+			query  = "INSERT INTO user ";
+			query += "(first_name,last_name,address,postal_code,city,province_state,country,email,datetime,user_name,password,salt) ";
+			query += "VALUES ";
+			query += "('"+this.firstName+"','"
+			      +  this.lastName      +"','"
+			      +  this.address       +"','"
+			      +  this.postalCode    +"','"
+			      +  this.city          +"','"
+			      +  this.province      +"','"
+			      +  this.country       +"','"
+			      +  this.email         +"',"
+			      +  "NOW(),'"
+			      +  this.userName      +"','"
+			      +  this.passwordHash  +"','"
+			      +  this.salt          +"')";
+			try {
+				// INSERT the user into the table
+				sql.execute(query);
+				
+				// Figure out the user's new ID number
+				query = "SELECT user_id FROM user WHERE user_name='" + this.userName + "'";
+				sql.execute(query);
+				ResultSet results = sql.getResultSet();
+				
+				// Set the attribute to the new ID number
+				if(!results.next()) return false;
+				this.id = results.getInt("user_id");
+			} catch (SQLException e) {
+				// TODO log exception
+				e.printStackTrace();
+			}
+		}
+		// If the code ever gets to this point, 
+		// something went horribly, horribly wrong
+		return false;
+	}
+	
+	public boolean isSaved() {
+		// not unsaved means saved
+		return this.id != UNSAVED_ID;
 	}
 
 	// TODO implement randomized salt generation
