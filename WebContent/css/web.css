@@ -1,0 +1,41 @@
+body {
+	font-family: Verdana, Arial, Courier, serif;
+	font-size: x-small;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: normal;
+}
+
+a {
+	background-color: transparent;
+	font-family: Verdana, Arial, Courier, serif;
+	font-size: x-small;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: normal;
+	text-decoration: underline;
+}
+
+h2 {
+	font-family: Verdana, Arial, Courier, serif;
+	font-size: small;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 600;
+	line-height: normal;
+}
+
+p {
+	font-family: Verdana, Arial, Courier, serif;
+	font-size: x-small;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	line-height: normal;
+}
