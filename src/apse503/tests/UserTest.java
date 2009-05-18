@@ -1,30 +1,24 @@
-package apse503;
+package apse503.tests;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import apse503.User;
+
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.junit.Before;
-
 import junit.framework.TestCase;
+
+import static org.easymock.EasyMock.*;
+
 
 public class UserTest extends TestCase {
 	// For holding a valid user used in testing
-	User validUser = new User();
-	
-	// For connecting to the DB
-	// Remove these when we refactor the persistence code
-	Connection db;
-	private static final String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
-	private static final String DB_CONN_STRING = "jdbc:mysql://localhost:3306/webMethods";
-	private static final String DB_PASSWORD = "root";
-	private static final String DB_USERNAME = "root";
+	User validUser;
 	
 	@Before
 	public void setUp() throws Exception {
 		// Construct a simple, valid User
+		validUser = new User();
 		validUser.firstName = "Foo";
 		validUser.lastName = "Bar";
 		validUser.address = "123 4th Street";
@@ -35,10 +29,6 @@ public class UserTest extends TestCase {
 		validUser.postalCode = "H3Z2K6";
 		validUser.userName = "foo";
 		validUser.setPassword("foobar");
-		
-		// Set up the connection to the DB
-	    Class.forName(DRIVER_CLASS_NAME).newInstance();
-		db = DriverManager.getConnection(DB_CONN_STRING, DB_USERNAME, DB_PASSWORD);
 	}
 	
 	public void testBlankUserIsInvalid() throws Exception {
@@ -49,56 +39,56 @@ public class UserTest extends TestCase {
 		assertTrue(validUser.isValid());
 	}
 	
-	public void testShortFirstNameIsInvalid() {
+	public void testShortFirstNameIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		invalidUser.firstName = "-2";
 		assertFalse("A short first name should be invalid!",
 				invalidUser.isValid());
 	}
 	
-	public void testShortLastNameIsInvalid() {
+	public void testShortLastNameIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		invalidUser.lastName = "-2";
 		assertFalse("A short last name should be invalid!",
 				invalidUser.isValid());
 	}
 	
-	public void testShortAddressIsInvalid() {
+	public void testShortAddressIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		invalidUser.address = "----5";
 		assertFalse("A short address should be invalid!",
 				invalidUser.isValid());
 	}
 	
-	public void testShortCityIsInvalid() {
+	public void testShortCityIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		invalidUser.city = "-2";
 		assertFalse("A short city name should be invalid!",
 				invalidUser.isValid());
 	}
 	
-	public void testShortProvinceIsInvalid() {
+	public void testShortProvinceIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		invalidUser.province = "----5";
 		assertFalse("A short province name should be invalid!",
 				invalidUser.isValid());
 	}
 	
-	public void testShortCountryIsInvalid() {
+	public void testShortCountryIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		invalidUser.country = "----5";
 		assertFalse("A short country name should be invalid!",
 				invalidUser.isValid());
 	}
 	
-	public void testShortEmailIsInvalid() {
+	public void testShortEmailIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		invalidUser.email = "----5---10";
 		assertFalse("A short email address should be invalid!",
 				invalidUser.isValid());
 	}
 	
-	public void testShortPostalCodeIsInvalid() {
+	public void testShortPostalCodeIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		// Remember that the minimum is 5, due to US postal codes
 		invalidUser.postalCode = "---4";
@@ -106,44 +96,40 @@ public class UserTest extends TestCase {
 				invalidUser.isValid());
 	}
 	
-	public void testShortUserNameIsInvalid() {
+	public void testShortUserNameIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
 		invalidUser.userName = "-2";
 		assertFalse("A short user name should be invalid!",
 				invalidUser.isValid());
 	}
 	
-	public void testInvalidAuthenticationFails() {
+	public void testInvalidAuthenticationFails() throws Exception {
 		assertFalse(validUser.authenticate("wrongpassword"));
 		assertFalse(new User().authenticate("wronguser"));
 	}
 	
-	public void testValidAuthenticationPasses() {
+	public void testValidAuthenticationPasses() throws Exception {
 		assertTrue(validUser.authenticate("foobar"));
 	}
 	
-	public void testSavePersistsToDatabase() {
-		User saveMe = new User(validUser);
+	public void testSaveCallsExpectedSQLandThenIsSavedReturnsTrue() throws Exception {
+		Statement mockStatement = MockDB.createStatement();
+		User localValidUser = new User(validUser);
+		assertFalse("isSaved() called on an unsaved user should return false!",localValidUser.isSaved());
+		ResultSet mockResultSet = MockDB.createResultSet();
 		
-		saveMe.save();
-		assertTrue(saveMe.isSaved());
+		expect(mockStatement.execute("INSERT INTO user (first_name,last_name,address,postal_code,city,province_state,country,email,datetime,user_name,password,salt) VALUES ('Foo','Bar','123 4th Street','H3Z2K6','Calgary','Alberta','Canada','foo@bar.net',NOW(),'foo','foobar','----5---10---15---20---25---30---35---40---45---50---55---60--64')"
+)).andReturn(true);
+		expect(mockStatement.execute("SELECT user_id FROM user WHERE user_name='foo'")).andReturn(true);
+		expect(mockStatement.getResultSet()).andReturn(mockResultSet);
+		replay(mockStatement);
 		
-		try {
-			// Set up a statement to execute SQL on the db
-			Statement sql = db.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			
-			// Check to make sure the user was saved
-			sql.execute("SELECT * FROM user WHERE user_id=" + saveMe.getId());
-			ResultSet results = sql.getResultSet();
-			assertTrue("Results should return at least one result!",results.next());
-			
-			// Clear out that row for further testing
-			// make the results updatable
-			results.deleteRow();
-		} catch (SQLException e) {
-			// TODO log this SQLException
-			e.printStackTrace();
-		}
+		expect(mockResultSet.next()).andReturn(true);
+		expect(mockResultSet.getInt("user_id")).andReturn(1);
+		replay(mockResultSet);
+		
+		assertTrue("save() called on a valid user should return true!",localValidUser.save());
+		assertTrue("isSaved() called on a saved user should return true!",localValidUser.isSaved());
 	}
 	
 	/* save this for later

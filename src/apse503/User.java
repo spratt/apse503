@@ -1,26 +1,36 @@
 package apse503;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
+
 public class User {
 	// For connecting to the DB
-	// Remove these when we refactor the persistence code
-	private Connection db;
-	private Statement sql;
-	private static final String DRIVER_CLASS_NAME = "org.gjt.mm.mysql.Driver";
-	private static final String DB_CONN_STRING = "jdbc:mysql://localhost:3306/webMethods";
-	private static final String DB_PASSWORD = "root";
-	private static final String DB_USERNAME = "root";
+	private Statement sql = null;
+	private static final String DATASOURCE_CONTEXT = "java:comp/env/jdbc/DB";
 	
-	private void setUpDB(){
-	    try {
-			Class.forName(DRIVER_CLASS_NAME).newInstance();
-			this.db = DriverManager.getConnection(DB_CONN_STRING, DB_USERNAME, DB_PASSWORD);
-			this.sql = db.createStatement();
+	private void setUpDataSource(){
+		/*
+		 *  The process for connecting to the db is as follows in pseudocode:
+		 *  
+		 *    getContext()			<- this context is managed by tomcat and used to store resources
+		 *         ||                  like the db datasource
+		 *         \/
+		 *    getDataSource()		<- this datasource is basically a pool of connections from which
+		 *         ||                  we can ask for a connection
+		 *         \/
+		 *    getConnection()		<- finally we have a connection to the database, which we can use
+		 *         ||                  to create sql statements
+		 *         \/
+		 *    getStatement()		<- which we use can edit and execute to return sets of results
+		 */
+		
+		try {
+			DataSource data = (DataSource)new InitialContext().lookup(DATASOURCE_CONTEXT);
+			sql = data.getConnection().createStatement();
 		} catch (Exception e) {
 			// TODO log this exception
 			e.printStackTrace();
@@ -58,7 +68,6 @@ public class User {
 		this.postalCode = "";
 		this.province = "";
 		this.country = "";
-		this.setUpDB();
 	}
 	
 	// Create a new user from an old user
@@ -75,7 +84,6 @@ public class User {
 		this.postalCode = originalUser.postalCode;
 		this.province =originalUser.province;
 		this.country = originalUser.country;
-		this.setUpDB();
 	}
 	
 	// Look, but don't touch my private
@@ -115,6 +123,8 @@ public class User {
 	
 	// TODO implement persistence code
 	public boolean save() {
+		if(null == sql) setUpDataSource();
+		
 		// Don't save if the user is invalid
 		if (!this.isValid()) return false;
 		
@@ -150,6 +160,7 @@ public class User {
 				// Set the attribute to the new ID number
 				if(!results.next()) return false;
 				this.id = results.getInt("user_id");
+				return true;
 			} catch (SQLException e) {
 				// TODO log exception
 				e.printStackTrace();
