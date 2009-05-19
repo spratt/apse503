@@ -147,13 +147,10 @@ public class User {
 			      +  "NOW(),'"
 			      +  this.userName      +"','"
 			      +  this.passwordHash  +"','"
-			      +  this.salt          +"')";
+			      +  this.salt          +"');" 
+			      +  "select last_insert_id() as user_id;"; // grab the id of this new user
 			try {
 				// INSERT the user into the table
-				sql.execute(query);
-				
-				// Figure out the user's new ID number
-				query = "SELECT user_id FROM user WHERE user_name='" + this.userName + "'";
 				sql.execute(query);
 				ResultSet results = sql.getResultSet();
 				
