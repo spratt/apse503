@@ -6,10 +6,17 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 public abstract class PersistenceClass {
+	// A flag value to indicate that this object has not been saved to the DB before
+	final static protected int UNSAVED_ID = -1;
+	
+	// The id of a persistence class begins life as a flag value
+	// to show that it hasn't been saved yet.
+	protected int id = UNSAVED_ID;
+	
 	// The resource ID, defined in context.xml and web.xml
 	protected static final String DATASOURCE_CONTEXT = "java:comp/env/jdbc/DB";
 
-	// For querying the DB
+	// Used for querying the DB
 	protected Statement sql = null;
 	
 	protected void setUpDataSource(){
@@ -37,6 +44,17 @@ public abstract class PersistenceClass {
 		}
 	}
 	
+	// Look, but don't touch my private
+	public int getId() {
+		return id;
+	}
+
+	// not unsaved means saved
+	public boolean isSaved() {
+		return this.id != UNSAVED_ID;
+	}
+	
+	// To be implemented by subclasses
 	public abstract boolean isValid();
 	public abstract boolean save();
 }

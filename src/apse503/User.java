@@ -4,12 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class User extends PersistenceClass {
-	
-	// A flag value to indicate that this object has not been saved
-	// to the DB before
-	final static private int UNSAVED_ID = -1;
-	
-	private int id = UNSAVED_ID;
 
 	public String userName,
 				  firstName,
@@ -53,12 +47,11 @@ public class User extends PersistenceClass {
 		this.province =originalUser.province;
 		this.country = originalUser.country;
 	}
-	
-	// Look, but don't touch my private
-	public int getId() {
-		return id;
-	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see apse503.PersistenceClass#isValid()
+	 */
 	public boolean isValid() {
 		// Check the attribute lengths
 		boolean validLength = userName.length() >= 3;
@@ -81,15 +74,10 @@ public class User extends PersistenceClass {
 		return validLength;
 	}
 	
-	public boolean authenticate(String password) {	
-		return this.isValid() && this.encrypt(password) == this.passwordHash;
-	}
-	
-	public void setPassword(String password) {
-		this.passwordHash = this.encrypt(password);
-	}
-	
-	// TODO implement update code
+	/*
+	 * (non-Javadoc)
+	 * @see apse503.PersistenceClass#save()
+	 */
 	public boolean save() {
 		if(null == sql) setUpDataSource();
 		
@@ -97,6 +85,7 @@ public class User extends PersistenceClass {
 		if (!this.isValid()) return false;
 		
 		if (this.isSaved()) {
+			// TODO implement update code
 			// UPDATE ROW IN TABLE
 			// Return true if sql executed properly
 		} else {
@@ -136,9 +125,12 @@ public class User extends PersistenceClass {
 		return false;
 	}
 	
-	public boolean isSaved() {
-		// not unsaved means saved
-		return this.id != UNSAVED_ID;
+	public boolean authenticate(String password) {	
+		return this.isValid() && this.encrypt(password) == this.passwordHash;
+	}
+	
+	public void setPassword(String password) {
+		this.passwordHash = this.encrypt(password);
 	}
 
 	// TODO implement randomized salt generation
