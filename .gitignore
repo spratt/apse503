@@ -1,0 +1,9 @@
+# We don't want to share bytecode class files
+build/
+
+# This is a creepy file on Mac that stores folder information
+# no need to spread the mac creepiness
+.DS_Store
+
+# Files ending with ~ are emacs autosaves.  Not to be shared.
+*~
