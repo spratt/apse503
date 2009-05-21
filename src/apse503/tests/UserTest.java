@@ -41,21 +41,21 @@ public class UserTest extends TestCase {
 	
 	public void testShortFirstNameIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
-		invalidUser.firstName = "-2";
+		invalidUser.firstName = "";
 		assertFalse("A short first name should be invalid!",
 				invalidUser.isValid());
 	}
 	
 	public void testShortLastNameIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
-		invalidUser.lastName = "-2";
+		invalidUser.lastName = "";
 		assertFalse("A short last name should be invalid!",
 				invalidUser.isValid());
 	}
 	
 	public void testShortAddressIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
-		invalidUser.address = "----5";
+		invalidUser.address = "---4";
 		assertFalse("A short address should be invalid!",
 				invalidUser.isValid());
 	}
@@ -83,7 +83,7 @@ public class UserTest extends TestCase {
 	
 	public void testShortEmailIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
-		invalidUser.email = "----5---10";
+		invalidUser.email = "----5";
 		assertFalse("A short email address should be invalid!",
 				invalidUser.isValid());
 	}
@@ -98,7 +98,7 @@ public class UserTest extends TestCase {
 	
 	public void testShortUserNameIsInvalid() throws Exception {
 		User invalidUser = new User(validUser);
-		invalidUser.userName = "-2";
+		invalidUser.userName = "1";
 		assertFalse("A short user name should be invalid!",
 				invalidUser.isValid());
 	}
@@ -123,18 +123,166 @@ public class UserTest extends TestCase {
 		expect(mockStatement.execute("INSERT INTO user "+
 				"(first_name,last_name,address,postal_code,city,province_state,country,email,datetime,user_name,password,salt)"+
 				" VALUES ('Foo','Bar','123 4th Street','H3Z2K6','Calgary','Alberta','Canada','foo@bar.net',NOW(),'foo','foobar','----5---10---15---20---25---30---35---40---45---50---55---60--64');"+
-				"select last_insert_id() as user_id;"
-)).andReturn(true);
+				"select last_insert_id() as user_id;")).andReturn(true);
+		expect(mockStatement.getResultSet()).andReturn(mockResultSet);
+		
+		// Mock the update
+		expect(mockStatement.execute("UPDATE user SET "+
+				"first_name='Foo'," +
+				"last_name='SNAFU'," +
+				"address='123 4th Street'," +
+				"postal_code='H3Z2K6'," +
+				"city='Calgary'," +
+				"province_state='Alberta'," +
+				"country='Canada'," +
+				"email='foo@bar.net'," +
+				"user_name='foo'," +
+				"password='foobar' "+
+				"WHERE user_id=1;")).andReturn(true);
 		expect(mockStatement.getResultSet()).andReturn(mockResultSet);
 		replay(mockStatement);
 		
 		// Mock the results
 		expect(mockResultSet.next()).andReturn(true);
 		expect(mockResultSet.getInt("user_id")).andReturn(1);
+		expect(mockResultSet.next()).andReturn(true);
 		replay(mockResultSet);
 		
 		assertTrue("save() called on a valid user should return true!",localValidUser.save());
 		assertTrue("isSaved() called on a saved user should return true!",localValidUser.isSaved());
+		
+		// Now make the changes!
+		localValidUser.lastName = "SNAFU"; // User got married
+		assertTrue("save() called on a valid user should return true!",localValidUser.save());
+	}
+	
+	public void testGettingAUserByID() throws Exception {
+		User getThisUser = new User(validUser);
+		
+		// Mocks
+		ResultSet mockResultSet = MockDB.createResultSet();
+		Statement mockStatement = MockDB.createStatement();
+		
+		// Mock the select
+		expect(mockStatement.execute("SELECT * FROM user WHERE user_id=1")).andReturn(true);
+		expect(mockStatement.getResultSet()).andReturn(mockResultSet);
+		replay(mockStatement);
+		
+		// Mock the results
+		expect(mockResultSet.next()).andReturn(true);
+		expect(mockResultSet.getInt("user_id")).andReturn(1);
+		expect(mockResultSet.getString("user_name")).andReturn(getThisUser.userName);
+		expect(mockResultSet.getString("password")).andReturn("123456");
+		expect(mockResultSet.getString("salt")).andReturn("123456");
+		expect(mockResultSet.getString("first_name")).andReturn(getThisUser.firstName);
+		expect(mockResultSet.getString("last_name")).andReturn(getThisUser.lastName);
+		expect(mockResultSet.getString("email")).andReturn(getThisUser.email);
+		expect(mockResultSet.getString("address")).andReturn(getThisUser.address);
+		expect(mockResultSet.getString("city")).andReturn(getThisUser.city);
+		expect(mockResultSet.getString("postal_code")).andReturn(getThisUser.postalCode);
+		expect(mockResultSet.getString("province_state")).andReturn(getThisUser.province);
+		expect(mockResultSet.getString("country")).andReturn(getThisUser.country);
+		replay(mockResultSet);
+		
+		// Do it!
+		User foundThisUser = new User().get(1);
+		
+		// Assert we got the same user
+		assertEquals("userName didn't match",foundThisUser.userName,getThisUser.userName);
+		assertEquals("firstName didn't match",foundThisUser.firstName,getThisUser.firstName);
+		assertEquals("lastName didn't match",foundThisUser.lastName,getThisUser.lastName);
+		assertEquals("email didn't match",foundThisUser.email,getThisUser.email);
+		assertEquals("address didn't match",foundThisUser.address,getThisUser.address);
+		assertEquals("city didn't match",foundThisUser.city,getThisUser.city);
+		assertEquals("postalCode didn't match",foundThisUser.postalCode,getThisUser.postalCode);
+		assertEquals("province didn't match",foundThisUser.province,getThisUser.province);
+		assertEquals("country didn't match",foundThisUser.country,getThisUser.country);
+	}
+	
+	public void testFindingAUserByUserName() throws Exception {
+		User getThisUser = new User(validUser);
+		
+		// Mocks
+		ResultSet mockResultSet = MockDB.createResultSet();
+		Statement mockStatement = MockDB.createStatement();
+		
+		// Mock the select
+		expect(mockStatement.execute("SELECT * FROM user WHERE user_name='" + getThisUser.userName + "'")).andReturn(true);
+		expect(mockStatement.getResultSet()).andReturn(mockResultSet);
+		replay(mockStatement);
+		
+		// Mock the results
+		expect(mockResultSet.next()).andReturn(true);
+		expect(mockResultSet.getInt("user_id")).andReturn(1);
+		expect(mockResultSet.getString("user_name")).andReturn(getThisUser.userName);
+		expect(mockResultSet.getString("password")).andReturn("123456");
+		expect(mockResultSet.getString("salt")).andReturn("123456");
+		expect(mockResultSet.getString("first_name")).andReturn(getThisUser.firstName);
+		expect(mockResultSet.getString("last_name")).andReturn(getThisUser.lastName);
+		expect(mockResultSet.getString("email")).andReturn(getThisUser.email);
+		expect(mockResultSet.getString("address")).andReturn(getThisUser.address);
+		expect(mockResultSet.getString("city")).andReturn(getThisUser.city);
+		expect(mockResultSet.getString("postal_code")).andReturn(getThisUser.postalCode);
+		expect(mockResultSet.getString("province_state")).andReturn(getThisUser.province);
+		expect(mockResultSet.getString("country")).andReturn(getThisUser.country);
+		replay(mockResultSet);
+		
+		// Do it!
+		User foundThisUser = new User().findByUserName(getThisUser.userName);
+		
+		// Assert we got the same user
+		assertEquals("userName didn't match",foundThisUser.userName,getThisUser.userName);
+		assertEquals("firstName didn't match",foundThisUser.firstName,getThisUser.firstName);
+		assertEquals("lastName didn't match",foundThisUser.lastName,getThisUser.lastName);
+		assertEquals("email didn't match",foundThisUser.email,getThisUser.email);
+		assertEquals("address didn't match",foundThisUser.address,getThisUser.address);
+		assertEquals("city didn't match",foundThisUser.city,getThisUser.city);
+		assertEquals("postalCode didn't match",foundThisUser.postalCode,getThisUser.postalCode);
+		assertEquals("province didn't match",foundThisUser.province,getThisUser.province);
+		assertEquals("country didn't match",foundThisUser.country,getThisUser.country);
+	}
+	
+	public void testFindingAUserByEmail() throws Exception {
+		User getThisUser = new User(validUser);
+		
+		// Mocks
+		ResultSet mockResultSet = MockDB.createResultSet();
+		Statement mockStatement = MockDB.createStatement();
+		
+		// Mock the select
+		expect(mockStatement.execute("SELECT * FROM user WHERE email='" + getThisUser.email + "'")).andReturn(true);
+		expect(mockStatement.getResultSet()).andReturn(mockResultSet);
+		replay(mockStatement);
+		
+		// Mock the results
+		expect(mockResultSet.next()).andReturn(true);
+		expect(mockResultSet.getInt("user_id")).andReturn(1);
+		expect(mockResultSet.getString("user_name")).andReturn(getThisUser.userName);
+		expect(mockResultSet.getString("password")).andReturn("123456");
+		expect(mockResultSet.getString("salt")).andReturn("123456");
+		expect(mockResultSet.getString("first_name")).andReturn(getThisUser.firstName);
+		expect(mockResultSet.getString("last_name")).andReturn(getThisUser.lastName);
+		expect(mockResultSet.getString("email")).andReturn(getThisUser.email);
+		expect(mockResultSet.getString("address")).andReturn(getThisUser.address);
+		expect(mockResultSet.getString("city")).andReturn(getThisUser.city);
+		expect(mockResultSet.getString("postal_code")).andReturn(getThisUser.postalCode);
+		expect(mockResultSet.getString("province_state")).andReturn(getThisUser.province);
+		expect(mockResultSet.getString("country")).andReturn(getThisUser.country);
+		replay(mockResultSet);
+		
+		// Do it!
+		User foundThisUser = new User().findByEmail(getThisUser.email);
+		
+		// Assert we got the same user
+		assertEquals("userName didn't match",foundThisUser.userName,getThisUser.userName);
+		assertEquals("firstName didn't match",foundThisUser.firstName,getThisUser.firstName);
+		assertEquals("lastName didn't match",foundThisUser.lastName,getThisUser.lastName);
+		assertEquals("email didn't match",foundThisUser.email,getThisUser.email);
+		assertEquals("address didn't match",foundThisUser.address,getThisUser.address);
+		assertEquals("city didn't match",foundThisUser.city,getThisUser.city);
+		assertEquals("postalCode didn't match",foundThisUser.postalCode,getThisUser.postalCode);
+		assertEquals("province didn't match",foundThisUser.province,getThisUser.province);
+		assertEquals("country didn't match",foundThisUser.country,getThisUser.country);
 	}
 	
 	/* save this for later

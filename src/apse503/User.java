@@ -74,10 +74,36 @@ public class User extends PersistenceClass {
 		return null;
 	}
 	
-	public User get(String userName) {
+	public User findByUserName(String userName) {
 		if(null == sql) setUpDataSource();
 		try {
-			sql.execute("SELECT * FROM user WHERE user_name=" + userName);
+			sql.execute("SELECT * FROM user WHERE user_name='" + userName + "'");
+			ResultSet results = sql.getResultSet();
+			if(!results.next()) return null;
+			this.id = results.getInt("user_id");
+			this.userName = results.getString("user_name");
+			this.passwordHash = results.getString("password");
+			this.salt = results.getString("salt");
+			this.firstName = results.getString("first_name");
+			this.lastName = results.getString("last_name");
+			this.email = results.getString("email");
+			this.address = results.getString("address");
+			this.city = results.getString("city");
+			this.postalCode = results.getString("postal_code");
+			this.province = results.getString("province_state");
+			this.country = results.getString("country");
+			return this;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public User findByEmail(String email) {
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("SELECT * FROM user WHERE email='" + email + "'");
 			ResultSet results = sql.getResultSet();
 			if(!results.next()) return null;
 			this.id = results.getInt("user_id");
@@ -120,8 +146,10 @@ public class User extends PersistenceClass {
 		validLength = validLength && country.length() >= 6;
 		
 		// TODO Check attribute uniqueness
-		// username
-		// email
+		if(!this.isSaved()){
+			// username
+			// email
+		}
 		
 		return validLength;
 	}
@@ -139,16 +167,16 @@ public class User extends PersistenceClass {
 		if (this.isSaved()) {
 			// TODO implement update code
 			String query;
-			query  = "UPDATE user SET";
-			query += "first_name='" + this.firstName+"','"
-			      + "last_name='" + this.lastName      +"','"
-			      + "address='" + this.address       +"','"
-			      + "postal_code='" + this.postalCode    +"','"
-			      + "city='" + this.city          +"','"
-			      + "province_state='" + this.province      +"','"
-			      + "country='" + this.country       +"','"
+			query  = "UPDATE user SET ";
+			query += "first_name='" + this.firstName+"',"
+			      + "last_name='" + this.lastName      +"',"
+			      + "address='" + this.address       +"',"
+			      + "postal_code='" + this.postalCode    +"',"
+			      + "city='" + this.city          +"',"
+			      + "province_state='" + this.province      +"',"
+			      + "country='" + this.country       +"',"
 			      + "email='" + this.email         +"',"
-			      + "user_name='" + this.userName      +"','"
+			      + "user_name='" + this.userName      +"',"
 			      + "password='" + this.passwordHash  +"' "
 			      + "WHERE user_id=" + this.id +";";
 			try {

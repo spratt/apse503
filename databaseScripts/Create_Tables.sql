@@ -7,7 +7,7 @@ CREATE TABLE `user` (
   `city` varchar(100) DEFAULT NULL,
   `province_state` varchar(50) DEFAULT NULL,
   `country` varchar(50) DEFAULT NULL,
-  `email` varchar(50) NOT NULL,
+  `email` varchar(50) UNIQUE NOT NULL,
   `datetime` datetime DEFAULT NULL,
   `user_name` varchar(50) UNIQUE NOT NULL,
   `password` varchar(255) NOT NULL,
