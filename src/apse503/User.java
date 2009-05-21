@@ -47,6 +47,58 @@ public class User extends PersistenceClass {
 		this.province =originalUser.province;
 		this.country = originalUser.country;
 	}
+	
+	public User get(int id) {
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("SELECT * FROM user WHERE user_id=" + id);
+			ResultSet results = sql.getResultSet();
+			if(!results.next()) return null;
+			this.id = results.getInt("user_id");
+			this.userName = results.getString("user_name");
+			this.passwordHash = results.getString("password");
+			this.salt = results.getString("salt");
+			this.firstName = results.getString("first_name");
+			this.lastName = results.getString("last_name");
+			this.email = results.getString("email");
+			this.address = results.getString("address");
+			this.city = results.getString("city");
+			this.postalCode = results.getString("postal_code");
+			this.province = results.getString("province_state");
+			this.country = results.getString("country");
+			return this;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public User get(String userName) {
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("SELECT * FROM user WHERE user_name=" + userName);
+			ResultSet results = sql.getResultSet();
+			if(!results.next()) return null;
+			this.id = results.getInt("user_id");
+			this.userName = results.getString("user_name");
+			this.passwordHash = results.getString("password");
+			this.salt = results.getString("salt");
+			this.firstName = results.getString("first_name");
+			this.lastName = results.getString("last_name");
+			this.email = results.getString("email");
+			this.address = results.getString("address");
+			this.city = results.getString("city");
+			this.postalCode = results.getString("postal_code");
+			this.province = results.getString("province_state");
+			this.country = results.getString("country");
+			return this;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -54,13 +106,13 @@ public class User extends PersistenceClass {
 	 */
 	public boolean isValid() {
 		// Check the attribute lengths
-		boolean validLength = userName.length() >= 3;
+		boolean validLength = userName.length() >= 2;
 		validLength = validLength && passwordHash.length() >= 6;
 		validLength = validLength && salt.length() >= 6;
-		validLength = validLength && firstName.length() >= 3;
-		validLength = validLength && lastName.length() >= 3;
-		validLength = validLength && email.length() >= 11;
-		validLength = validLength && address.length() >= 6;
+		validLength = validLength && firstName.length() >= 1;
+		validLength = validLength && lastName.length() >= 1;
+		validLength = validLength && email.length() >= 6;
+		validLength = validLength && address.length() >= 5;
 		validLength = validLength && city.length() >= 3;
 		// This is 5 to take US zip codes into consideration
 		validLength = validLength && postalCode.length() >= 5;
@@ -86,8 +138,28 @@ public class User extends PersistenceClass {
 		
 		if (this.isSaved()) {
 			// TODO implement update code
-			// UPDATE ROW IN TABLE
-			// Return true if sql executed properly
+			String query;
+			query  = "UPDATE user SET";
+			query += "first_name='" + this.firstName+"','"
+			      + "last_name='" + this.lastName      +"','"
+			      + "address='" + this.address       +"','"
+			      + "postal_code='" + this.postalCode    +"','"
+			      + "city='" + this.city          +"','"
+			      + "province_state='" + this.province      +"','"
+			      + "country='" + this.country       +"','"
+			      + "email='" + this.email         +"',"
+			      + "user_name='" + this.userName      +"','"
+			      + "password='" + this.passwordHash  +"' "
+			      + "WHERE user_id=" + this.id +";";
+			try {
+				sql.execute(query);
+				ResultSet results = sql.getResultSet();
+				if(!results.next()) return false;
+				return true;
+			} catch (SQLException e) {
+				// TODO log exception
+				e.printStackTrace();
+			}
 		} else {
 			String query;
 			query  = "INSERT INTO user ";

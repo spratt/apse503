@@ -2,11 +2,7 @@ package apse503;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Date;
-
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 public class Method extends PersistenceClass {
 

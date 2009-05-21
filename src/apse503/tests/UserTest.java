@@ -120,7 +120,10 @@ public class UserTest extends TestCase {
 		assertFalse("isSaved() called on an unsaved user should return false!",localValidUser.isSaved());
 		
 		// Mock the insert
-		expect(mockStatement.execute("INSERT INTO user (first_name,last_name,address,postal_code,city,province_state,country,email,datetime,user_name,password,salt) VALUES ('Foo','Bar','123 4th Street','H3Z2K6','Calgary','Alberta','Canada','foo@bar.net',NOW(),'foo','foobar','----5---10---15---20---25---30---35---40---45---50---55---60--64');select last_insert_id() as user_id;"
+		expect(mockStatement.execute("INSERT INTO user "+
+				"(first_name,last_name,address,postal_code,city,province_state,country,email,datetime,user_name,password,salt)"+
+				" VALUES ('Foo','Bar','123 4th Street','H3Z2K6','Calgary','Alberta','Canada','foo@bar.net',NOW(),'foo','foobar','----5---10---15---20---25---30---35---40---45---50---55---60--64');"+
+				"select last_insert_id() as user_id;"
 )).andReturn(true);
 		expect(mockStatement.getResultSet()).andReturn(mockResultSet);
 		replay(mockStatement);
