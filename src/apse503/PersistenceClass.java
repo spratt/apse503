@@ -33,6 +33,10 @@ public abstract class PersistenceClass {
 		 *         ||                  to create sql statements
 		 *         \/
 		 *    getStatement()		<- which we use can edit and execute to return sets of results
+		 *    
+		 *    This is mostly taken from:
+		 *    http://www.javapractices.com/topic/TopicAction.do?Id=127
+		 *    http://tomcat.apache.org/tomcat-5.5-doc/jndi-datasource-examples-howto.html
 		 */
 		
 		try {

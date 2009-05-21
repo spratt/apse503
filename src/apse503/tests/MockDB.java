@@ -15,11 +15,14 @@ import javax.sql.DataSource;
 
 public class MockDB {
 	/*
-	 *   As was explained in the user domain class, there is a chain of execution
+	 *   As was explained in the abstract PersistenceClass, there is a chain of execution
 	 *   for setting up a db connection.
 	 *   
 	 *   Here we have to mock out the various parts of the chain in reverse to run
 	 *   tests decoupled from the db.
+	 *   
+	 *   This is mostly taken from:
+	 *   http://amazing-development.com/archives/2006/07/24/mocking-context-lookups/
 	 */
 	public static Context createContext() {
 		// When the User class asks for an initial context factory, give it the mock

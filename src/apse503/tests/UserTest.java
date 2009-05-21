@@ -112,6 +112,10 @@ public class UserTest extends TestCase {
 		assertTrue(validUser.authenticate("foobar"));
 	}
 	
+	/*
+	 * For more information on EasyMock, visit: 
+	 * http://easymock.org/EasyMock2_4_Documentation.html
+	 */
 	public void testSaveCallsExpectedSQLandThenIsSavedReturnsTrue() throws Exception {
 		ResultSet mockResultSet = MockDB.createResultSet();
 		Statement mockStatement = MockDB.createStatement();
