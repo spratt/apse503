@@ -1,7 +1,6 @@
 package apse503;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,8 +27,8 @@ public class UserController extends ActionController {
 	public class login extends Action{
 
 		@Override
-		public void start(ServletContext context, HttpServletRequest request, HttpServletResponse response) {
-			render("/login.jsp",context,request,response);
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+			render("/login.jsp",request,response);
 		}
 		
 	}
@@ -37,8 +36,8 @@ public class UserController extends ActionController {
 	public class signup extends Action{
 
 		@Override
-		public void start(ServletContext context, HttpServletRequest request, HttpServletResponse response) {
-			render("/signup.jsp",context,request,response);
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+			render("/signup.jsp",request,response);
 		}
 		
 	}

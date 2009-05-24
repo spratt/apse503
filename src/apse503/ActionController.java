@@ -41,23 +41,23 @@ public abstract class ActionController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		dispatch(getActions,getServletContext(),request,response);
+		dispatch(getActions,request,response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		dispatch(postActions,getServletContext(),request,response);
+		dispatch(postActions,request,response);
 	}
 	
-	private void dispatch(Map<String,Action> toDispatch, ServletContext context, HttpServletRequest request, HttpServletResponse response){
+	private void dispatch(Map<String,Action> toDispatch, HttpServletRequest request, HttpServletResponse response){
 		String pathInfo = request.getPathInfo();
 		if(!toDispatch.containsKey(pathInfo)) {
-			render(errorJSP, context, request, response);
+			render(errorJSP, request, response);
 			return;  // Just in case
 		}
-		toDispatch.get(pathInfo).start(context,request,response);
+		toDispatch.get(pathInfo).start(request,response);
 	}
 	
 	public void addGetAction(String path,Action toAdd){
@@ -81,7 +81,8 @@ public abstract class ActionController extends HttpServlet {
 	/*
 	 *  This is a method in case at some point in the future we want to
 	 */
-	protected void render(String toJSP, ServletContext context, HttpServletRequest request, HttpServletResponse response){
+	protected void render(String toJSP, HttpServletRequest request, HttpServletResponse response){
+		ServletContext context = getServletContext();
 		try {
 			context.getRequestDispatcher(toJSP).forward(request,response);
 		} catch (Exception e) {
@@ -107,6 +108,6 @@ public abstract class ActionController extends HttpServlet {
 	 */
 	public abstract class Action {
 		
-		public abstract void start(ServletContext context, HttpServletRequest request, HttpServletResponse response);
+		public abstract void start(HttpServletRequest request, HttpServletResponse response);
 	}
 }
