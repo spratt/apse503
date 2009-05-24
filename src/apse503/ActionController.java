@@ -51,6 +51,7 @@ public abstract class ActionController extends HttpServlet {
 		dispatch(postActions,request,response);
 	}
 	
+	// This takes care of the dispatch to the various actions
 	private void dispatch(Map<String,Action> toDispatch, HttpServletRequest request, HttpServletResponse response){
 		String pathInfo = request.getPathInfo();
 		if(!toDispatch.containsKey(pathInfo)) {
@@ -60,6 +61,7 @@ public abstract class ActionController extends HttpServlet {
 		toDispatch.get(pathInfo).start(request,response);
 	}
 	
+	// Getters and setters so that we don't have to use the tiresome map.put every time
 	public void addGetAction(String path,Action toAdd){
 		this.getActions.put(path,toAdd);
 	}
@@ -78,9 +80,7 @@ public abstract class ActionController extends HttpServlet {
 		this.postActions.put("/",toAdd);
 	}
 	
-	/*
-	 *  This is a method in case at some point in the future we want to
-	 */
+	// Redirects the browser to a JSP and handles up to three exceptions deep!
 	protected void render(String toJSP, HttpServletRequest request, HttpServletResponse response){
 		ServletContext context = getServletContext();
 		try {
