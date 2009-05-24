@@ -5,8 +5,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>main-nav</title>
+
+<style type="text/css">
+<%@ include file="../css/web.css" %>
+</style>
+
 </head>
 <body>
-
+future navigation item | future navigation item | future navigation item
 </body>
 </html>
