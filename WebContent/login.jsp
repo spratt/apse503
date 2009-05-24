@@ -8,7 +8,7 @@
 <title>Login</title>
 </head>
 <body>
-<form method="POST" action="/login">
+<form method="POST" action="/user/login">
 	Username: <input type="text" id="username" name="username" />
 	Password: <input type="password" id="password" name="password" />
 	<button type="submit">Log In</button>
