@@ -49,10 +49,12 @@ public class UserController extends ActionController {
 			User someone = new User().findByUserName(request.getParameter("username"));
 			if(null == someone || !someone.authenticate(request.getParameter("password"))) {
 				// Bad username/password
+				request.setAttribute("flash","Invalid username or password, please try again.");
 				render("/login.jsp",request,response);
 			} else {
 				// Authenticated!
-				// TODO put the userid into the session variables
+				request.setAttribute("flash","Welcome back, " + someone.firstName);
+				request.getSession().setAttribute("user",(Object)someone.id);
 				// TODO render to the home page
 			}
 		}
