@@ -16,10 +16,10 @@
 Summary: <input type="text" name="Msummary" value="Method summary">
 <br>
 <br>
-Rate option: <input type="radio" checked="checked" name="Option1"
-	value="rate"> Option 1 <br>
-<input type="radio" name="Option2" value="rate"> Option 2 <br>
-<input type="radio" name="Option3" value="rate"> Option 3 <br>
+Rate option: <input type="radio" checked="checked" name="rate"
+	value="Option1"> Option 1 <br>
+<input type="radio" name="rate" value="Option2"> Option 2 <br>
+<input type="radio" name="rate" value="Option3"> Option 3 <br>
 <p>
 ------------------------------------------------------------------</p>
 <br>
