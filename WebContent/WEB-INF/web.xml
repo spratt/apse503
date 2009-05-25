@@ -23,13 +23,14 @@
 		<servlet-name>LoginView</servlet-name>
 		<jsp-file>/login.jsp</jsp-file>
 	</servlet>
+	<servlet>
+		<description>The generic home view.</description>
+		<display-name>HomeView</display-name>
+		<servlet-name>HomeView</servlet-name>
+		<jsp-file>/home.jsp</jsp-file>
+	</servlet>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>home.jsp</welcome-file>
 	</welcome-file-list>  
 	<resource-ref>
       <description>DB Connection</description>

@@ -1,17 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>main-nav</title>
+<%-- allows tags such as c:if --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<img src="/apse503/images/main_logo.gif" style="float: right; margin: 4px" />
 <style type="text/css">
 <%@ include file="../css/web.css" %>
 </style>
-
-</head>
-<body>
-future navigation item | future navigation item | future navigation item
-</body>
-</html>
+<%-- 
+	These links will break during deployment unless the app is served from the apse503 folder,
+	as it is on the development machines.
+--%>
+<a href="/apse503/">Home</a> 
+| future navigation item
+| future navigation item
+<% 
+	Integer userid = (Integer)session.getAttribute("userid");
+%>
+<c:if test="">
+</c:if>
+<c:choose>
+	<c:when test="${null == userid}"> <%-- Not signed in --%>
+		| <a href="/apse503/user/login">Sign in</a>
+	</c:when>
+	<c:otherwise>
+		| <a href="/apse503/user/logout">Sign out</a>
+	</c:otherwise>
+</c:choose>
+<br clear="all" />

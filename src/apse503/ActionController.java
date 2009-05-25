@@ -80,7 +80,15 @@ public abstract class ActionController extends HttpServlet {
 		this.postActions.put("/",toAdd);
 	}
 	
-	// Redirects the browser to a JSP and handles up to three exceptions deep!
+	protected void redirect(String toJSP, HttpServletRequest request, HttpServletResponse response){
+		try {
+			response.sendRedirect(toJSP);
+		} catch (IOException e) {
+			render(errorJSP,request,response);
+		}
+	}
+	
+	// Renders a JSP and handles up to three exceptions deep!
 	protected void render(String toJSP, HttpServletRequest request, HttpServletResponse response){
 		ServletContext context = getServletContext();
 		try {

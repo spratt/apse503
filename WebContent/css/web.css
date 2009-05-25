@@ -39,3 +39,13 @@ p {
 	font-weight: normal;
 	line-height: normal;
 }
+td.label {
+	width: 100px;
+	text-align: right;
+}
+div.error {
+	text-align: center;
+	background-color: #900;
+	border: solid 2px #f99;
+	color: white;
+}

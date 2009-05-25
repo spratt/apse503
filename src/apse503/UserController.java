@@ -23,6 +23,7 @@ public class UserController extends ActionController {
 		addPostAction("/login", new authenticate());
 		addGetAction("/signup", new signup());
 		addPostAction("/signup", new register());
+		addGetAction("/logout", new logout());
 	}
 	
 	// Like a controller method in grails
@@ -31,6 +32,16 @@ public class UserController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			render("/login.jsp",request,response);
+		}
+	}
+	
+	// Like a controller method in grails
+	public class logout extends Action{
+
+		@Override
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+			request.getSession().setAttribute("userid",null);
+			redirect("/home.jsp",request,response);
 		}
 	}
 	
@@ -54,8 +65,8 @@ public class UserController extends ActionController {
 			} else {
 				// Authenticated!
 				request.setAttribute("flash","Welcome back, " + someone.firstName);
-				request.getSession().setAttribute("user",(Object)someone.id);
-				// TODO render to the home page
+				request.getSession().setAttribute("userid",(Object)new Integer(someone.id));
+				redirect("/home.jsp",request,response);
 			}
 		}
 	}
@@ -66,6 +77,7 @@ public class UserController extends ActionController {
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			// TODO Create a user from the request object
 			// TODO Validate user valid->success; invalid->signup
+			//request.getSession().setAttribute("userid",(Object)new Integer(someone.id));
 		}
 	}
 }
