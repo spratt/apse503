@@ -20,6 +20,16 @@ Rate option: <input type="radio" checked="checked" name="Option1"
 	value="rate"> Option 1 <br>
 <input type="radio" name="Option2" value="rate"> Option 2 <br>
 <input type="radio" name="Option3" value="rate"> Option 3 <br>
+<p> ------------------------------------------------------------------ </p>
+<br>
+<h3>Payment Details</h3>
+<br>
+Card Type: <select name="Card types">
+<option value="Card">-- Select Card Type --</option>
+<option value="Card">Visa</option>
+<option value="Card">Master</option>
+<option value="Card">Paypal</option>
+</select>
 
 </form>
 
