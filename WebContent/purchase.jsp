@@ -47,7 +47,5 @@ Code: <input type="text" name="Code"> <br>
 <input type="submit" value="Purchase Now" />
 <br>
 </form>
-
-
 </body>
 </html>
