@@ -5,9 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome</title>
-<%@ include file="/nav/main-nav.jsp" %>
+
 </head>
 <body>
+<%@ include file="/nav/main-nav.jsp" %>
 <h2>Welcome User!</h2>
+<%@ include file="/nav/footer.jsp" %>
 </body>
 </html>
