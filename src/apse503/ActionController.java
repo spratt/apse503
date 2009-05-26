@@ -84,6 +84,7 @@ public abstract class ActionController extends HttpServlet {
 		try {
 			response.sendRedirect(toJSP);
 		} catch (IOException e) {
+			// TODO log this exception
 			render(errorJSP,request,response);
 		}
 	}
@@ -95,6 +96,7 @@ public abstract class ActionController extends HttpServlet {
 			context.getRequestDispatcher(toJSP).forward(request,response);
 		} catch (Exception e) {
 			try {
+				// TODO log this exception
 				context.getRequestDispatcher(errorJSP).forward(request,response);
 			} catch (Exception doubleException) {
 				// TODO log this exception...very bad, since we couldn't even find the error page!

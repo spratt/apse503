@@ -1,5 +1,7 @@
 package apse503;
 
+import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +43,7 @@ public class UserController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			request.getSession().setAttribute("userid",null);
-			redirect("/home.jsp",request,response);
+			redirect(request.getContextPath() + "/home.jsp",request,response);
 		}
 	}
 	
@@ -58,15 +60,22 @@ public class UserController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			User someone = new User().findByUserName(request.getParameter("username"));
-			if(null == someone || !someone.authenticate(request.getParameter("password"))) {
+			if(null == someone){
+				try {
+					response.getWriter().println("null");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else if(!someone.authenticate(request.getParameter("password"))) {
 				// Bad username/password
 				request.setAttribute("flash","Invalid username or password, please try again.");
 				render("/login.jsp",request,response);
 			} else {
 				// Authenticated!
-				request.setAttribute("flash","Welcome back, " + someone.firstName);
-				request.getSession().setAttribute("userid",(Object)new Integer(someone.id));
-				redirect("/home.jsp",request,response);
+				request.setAttribute("flash","Welcome back, " + someone.firstName + "!");
+				request.getSession().setAttribute("user",(Object)someone);
+				redirect(request.getContextPath() + "/home.jsp",request,response);
 			}
 		}
 	}

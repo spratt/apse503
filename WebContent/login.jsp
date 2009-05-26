@@ -1,4 +1,3 @@
-<%-- Should probably include a generic header here in the future --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,13 +7,7 @@
 </head>
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
-	<% String flash = (String)request.getAttribute("flash");%>
-	<c:if test="${null != flash}">
-		<div class="error">
-			<%=flash%>
-		</div>
-	</c:if>
-	<form method="POST" action="login">
+	<form method="POST" action="<%=root%>/user/login">
 		<table>
 			<tr>
 				<td class="label">Username:</td><td><input type="text" id="username" name="username" /></td>
@@ -31,7 +24,7 @@
 	<table>
 		<tr>
 			<td class="label">New User?</td>
-			<td><button type="button" onclick="location.href='signup'">Register now</button></td>
+			<td><button type="button" onclick="location.href='<%=root%>/user/signup'">Register now</button></td>
 		</tr>
 	</table>
 <%@ include file="/nav/footer.jsp" %>
