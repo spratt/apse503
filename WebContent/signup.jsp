@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%@ include file="/nav/main-nav.jsp" %>
-	<form method="POST" action="/user/signup">
+	<form method="POST" action="<%=root%>/user/signup">
 		<table>
 			<tr>
 				<td class="label">Username:</td><td><input type="text" id="username" name="username" /></td>

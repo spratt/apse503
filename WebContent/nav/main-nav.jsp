@@ -1,14 +1,14 @@
 <%-- allows tags such as c:if --%>
 <%@ page   import="apse503.User" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<img src="<%=request.getContextPath()%>/images/main_logo.gif" style="float: right; margin: 4px" />
-<style type="text/css">
-<%@ include file="../css/web.css" %>
-</style>
 <%
 	String root = request.getContextPath();
 %>
+<img src="<%=root%>/images/main_logo.gif" style="float: right; margin: 4px" />
+<style type="text/css">
+<%@ include file="../css/web.css" %>
+</style>
+
 
 <a href="/apse503/">Home</a> 
 | <a href="<%=request.getContextPath()%>/contribute.jsp">Contribute</a>

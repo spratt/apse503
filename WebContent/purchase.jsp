@@ -5,8 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Purchase form</title>
+
 </head>
 <body>
+<%@ include file="/nav/main-nav.jsp" %>
 <p>Some texts to explain the purchasing details</p>
 
 <h3>Method Details</h3>
@@ -47,5 +49,7 @@ Code: <input type="text" name="Code"> <br>
 <input type="submit" value="Purchase Now" />
 <br>
 </form>
+<%@ include file="/nav/footer.jsp" %>
 </body>
+
 </html>

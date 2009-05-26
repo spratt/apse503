@@ -7,6 +7,7 @@
 </head>
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
+
 	<form method="POST" action="<%=root%>/user/login">
 		<table>
 			<tr>
