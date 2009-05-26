@@ -43,7 +43,10 @@ td.label {
 	width: 100px;
 	text-align: right;
 }
-div.error {
+div.flash {
+	overflow: visible;
+	width: 90%;
+	margin: 8px;
 	text-align: center;
 	background-color: #900;
 	border: solid 2px #f99;

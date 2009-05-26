@@ -11,26 +11,8 @@
 		<servlet-name>UserController</servlet-name>
 		<url-pattern>/user/*</url-pattern>
 	</servlet-mapping>
-	<servlet>
-		<description>The signup view for the user model.</description>
-		<display-name>SignUpView</display-name>
-		<servlet-name>SignUpView</servlet-name>
-		<jsp-file>/signup.jsp</jsp-file>
-	</servlet>
-	<servlet>
-		<description>The login view for the user model.</description>
-		<display-name>LoginView</display-name>
-		<servlet-name>LoginView</servlet-name>
-		<jsp-file>/login.jsp</jsp-file>
-	</servlet>
-	<servlet>
-		<description>The generic home view.</description>
-		<display-name>HomeView</display-name>
-		<servlet-name>HomeView</servlet-name>
-		<jsp-file>/home.jsp</jsp-file>
-	</servlet>
 	<welcome-file-list>
-		<welcome-file>home.jsp</welcome-file>
+		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>  
 	<resource-ref>
       <description>DB Connection</description>

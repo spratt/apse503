@@ -226,7 +226,7 @@ public class User extends PersistenceClass {
 	}
 	
 	public boolean authenticate(String password) {	
-		return this.isValid() && this.encrypt(password) == this.passwordHash;
+		return this.isValid() && this.encrypt(password).equals(this.passwordHash);
 	}
 	
 	public void setPassword(String password) {
