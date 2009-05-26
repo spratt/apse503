@@ -58,7 +58,11 @@ public class Method extends PersistenceClass {
 	
 	// TODO implement persistence code
 	public boolean save() {
-		if(null == sql) setUpDataSource();
+		System.out.println("in save");
+		if(null == sql) {
+			System.out.println("sql is null");
+			setUpDataSource();
+		}
 		
 		// Don't save if the method is invalid
 		if (!this.isValid()) return false;
@@ -90,9 +94,9 @@ public class Method extends PersistenceClass {
 					 	this.status_id			+ "," +
 					 	this.category_id		+ "," +
 					 	this.dateTime			+
-					 ");"						+
-					 "select last_insert_id() as id;";
-					 			
+					 "); "						+
+					 "select last_insert_id();";
+			
 			try {
 				// INSERT the user into the table
 				sql.execute(insert);
@@ -102,7 +106,7 @@ public class Method extends PersistenceClass {
 				if(!results.next()) 
 					return false;
 				
-				this.id = results.getInt("id");
+				this.id = results.getInt("method_id");
 				return true;
 			} 
 			catch (SQLException e) {
@@ -113,6 +117,32 @@ public class Method extends PersistenceClass {
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
 		return false;
+	}
+	
+	public Method get(int id) {
+		
+		if(null == sql){ 
+			setUpDataSource();
+		}
+		try {
+			sql.execute("SELECT * FROM method WHERE method_id=" + id);
+			ResultSet results = sql.getResultSet();
+			if(!results.next()) return null;
+			this.id = results.getInt("method_id");
+			this.name = results.getString("name");
+			this.description = results.getString("description");
+			this.summary = results.getString("summary");
+			this.status_id = results.getInt("status_id");
+			this.url = results.getString("url");
+			this.user_id = results.getInt("user_id");
+			this.category_id = results.getInt("category_id");
+			return this;
+		} 
+		catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public boolean isSaved() {
