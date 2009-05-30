@@ -31,10 +31,9 @@ Card Type: <select name="Card types">
 	<option value="Card">-- Select Card Type --</option>
 	<option value="Card">Visa</option>
 	<option value="Card">Master</option>
-	<option value="Card">Paypal</option>
 </select> <br>
 <br>
-Cardholder Number: <input type="text" name="Cardnumber"> <br>
+Card Number: <input type="text" name="Cardnumber"> <br>
 	
 Expiry: <select name="Expiry">
 <option value="month">mm</option>
