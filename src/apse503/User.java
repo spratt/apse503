@@ -142,8 +142,8 @@ public class User extends PersistenceClass {
 		validLength = validLength && city.length() >= 3;
 		// This is 5 to take US zip codes into consideration
 		validLength = validLength && postalCode.length() >= 5;
-		validLength = validLength && province.length() >= 6;
-		validLength = validLength && country.length() >= 6;
+		validLength = validLength && province.length() >= 2;
+		validLength = validLength && country.length() >= 3;
 		
 		// TODO Check attribute uniqueness
 		if(!this.isSaved()){
