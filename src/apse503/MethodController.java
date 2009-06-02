@@ -59,16 +59,40 @@ public class MethodController extends ActionController {
 				method.url = request.getParameter("url"); //probably won't pass this in
 				method.category_id = Integer.parseInt(request.getParameter("categoryid"));
 				method.status_id = Integer.parseInt(request.getParameter("statusid"));
-				method.user_id = Integer.parseInt(request.getParameter("userid"));				
+				method.user_id = Integer.parseInt(request.getParameter("userid"));								
 				
 				if(method.save())
 				{
-					System.out.println("save");
-					request.setAttribute("flash", "true");
-					System.out.println("attribute");
+					MethodPrice methodPrice = new MethodPrice();
+					
+					methodPrice.method_id = method.id;
+					methodPrice.method_price_status_id = 1; //TODO remove hardcoding
+					
+					if(request.getParameter("rate_one") != "" && request.getParameter("rate_one_uses") != "")
+					{
+						methodPrice.price = Double.parseDouble(request.getParameter("rate_one"));
+						methodPrice.quantity = Integer.parseInt(request.getParameter("rate_one_uses"));
+						methodPrice.save();
+					}
+					
+					if(request.getParameter("rate_two") != "" && request.getParameter("rate_two_uses") != "")
+					{
+						methodPrice.price = Double.parseDouble(request.getParameter("rate_two"));
+						methodPrice.quantity = Integer.parseInt(request.getParameter("rate_two_uses"));
+						methodPrice.save();
+					}
+					
+					if(request.getParameter("rate_three") != "" && request.getParameter("rate_three_uses") != "")
+					{
+						methodPrice.price = Double.parseDouble(request.getParameter("rate_three"));
+						methodPrice.quantity = Integer.parseInt(request.getParameter("rate_three_uses"));
+						methodPrice.save();
+					}
+					
+					request.setAttribute("flash", "Method Saved Successfully");
 				}
 				else
-					request.setAttribute("flash", "false");
+					request.setAttribute("flash", "Method Save was Unsucessful");
 				
 			}
 			catch(NumberFormatException nfe){
