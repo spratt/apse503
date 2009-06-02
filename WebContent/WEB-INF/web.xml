@@ -7,9 +7,19 @@
 		<servlet-name>UserController</servlet-name>
 		<servlet-class>apse503.UserController</servlet-class>
 	</servlet>
+	<servlet>
+		<description>The dispatcher for requests on the method model.</description>
+		<display-name>MethodController</display-name>
+		<servlet-name>MethodController</servlet-name>
+		<servlet-class>apse503.MethodController</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>UserController</servlet-name>
 		<url-pattern>/user/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MethodController</servlet-name>
+		<url-pattern>/method/*</url-pattern>
 	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>login.jsp</welcome-file>
