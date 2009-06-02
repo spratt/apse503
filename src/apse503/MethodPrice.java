@@ -45,23 +45,22 @@ public class MethodPrice extends PersistenceClass{
 		} 
 		else {
 			String insert;
-			insert  = "INSERT INTO method_price" +
-					 "(" +
-					 	"date_time," +
-					 	"price," +
-					 	"quantity," +
-					 	"method_id," +
-					 	"method_price_status_id," +
-					 ") " +
-					 "VALUES" +
-					 "(" +
-					 	"'" + this.date_time + "'," +
-					 	"'" + this.price + "'," +
-					 	"'" + this.quantity + "'," +
-					 	"'" + this.method_id + "'," +
+			insert  = "INSERT INTO method_price" 	+
+					 "(" 							+
+					 	"date_time," 				+
+					 	"price," 					+
+					 	"quantity," 				+
+					 	"method_id," 				+
+					 	"method_price_status_id," 	+
+					 ") " 							+
+					 "VALUES" 						+
+					 "(" 							+
+					 	"'" + this.date_time 		+ "'," +
+					 	"'" + this.price 			+ "'," 	+
+					 	"'" + this.quantity 		+ "'," 	+
+					 	"'" + this.method_id 		+ "'," +
 					 	this.method_price_status_id +
-					 ");" +
-					 "select last_insert_id() as id;";
+					 ");";
 					 			
 			try {
 				// INSERT the price into the table
@@ -72,7 +71,7 @@ public class MethodPrice extends PersistenceClass{
 				if(!results.next()) 
 					return false;
 				
-				this.id = results.getInt("id");
+				this.id = results.getInt("method_price_id");
 				return true;
 			} 
 			catch (SQLException e) {
