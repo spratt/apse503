@@ -33,9 +33,11 @@ function imposeMaxLength(Object, MaxLen)
 	<td class="label">Summary:</td><td><input type="text" id="summary" name="summary" /></td>
 </tr>
 <tr>
-	<td class="label">Category:</td><td><select id="categoryid" name="categoryid" />
+	<td class="label">Category:</td>
+	<td>
+	<select id="categoryid" name="categoryid" />
 	<option>-- Select Category --</option>
-	<option>Category 1</option>
+	<%for(i=0; i <= 10; i++){%><option><%=i%></option><%}%>
 	</select>
 	</td>
 </tr>
