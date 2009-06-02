@@ -12,7 +12,7 @@ function imposeMaxLength(Object, MaxLen)
 {
   return (Object.value.length <= MaxLen);
 }
--->
+//-->
 </script>
 
 <%@ include file="/nav/main-nav.jsp" %>
@@ -25,22 +25,44 @@ function imposeMaxLength(Object, MaxLen)
 <div id="contribute_form" class="form">
 
 <form method="POST" action="contribute.jsp">
-	Method name: <input type="text" id="method_name" name="method_name" /><br />
-	Summary: <input type="text" id="summary" name="summary" /><br />
-	Category: <select id="category" name="category" />
+<table>
+<tr>
+	<td class="label">Method name:</td><td><input type="text" id="name" name="name" /></td>
+</tr>
+<tr>
+	<td class="label">Summary:</td><td><input type="text" id="summary" name="summary" /></td>
+</tr>
+<tr>
+	<td class="label">Category:</td><td><select id="categoryid" name="categoryid" />
 	<option>-- Select Category --</option>
 	<option>Category 1</option>
 	</select>
-	<br />
-	Detailed description: <textarea name="description" onkeypress="return imposeMaxLength(this, 200);" ></textarea> <br />
-	Method file: <input type="file" name="datafile" size="30"><br />
-	Some details about the payment options or rates etc. <br />
-	Rate 1: <input type="text" id="rate_one" name="rate_one" maxsize="8" length="8" /> for <input type="text" id="rate_one_uses" name="rate_one_uses" maxsize="8" length="8" /> uses.<br />
-	Rate 2: <input type="text" id="rate_two" name="rate_two" maxsize="8" length="8" /> for <input type="text" id="rate_two_uses" name="rate_two_uses" maxsize="8" length="8" /> uses.<br />
-	Rate 3: <input type="text" id="rate_three" name="rate_three" maxsize="8" length="8" /> for <input type="text" id="rate_three_uses" name="rate_three_uses" maxsize="8" length="8" /> uses.<br />
-	<button type="submit">Submit</button>
+	</td>
+</tr>
+<tr>
+	<td class="label">Detailed description:</td><td><textarea id ="description" name="description" onkeypress="return imposeMaxLength(this, 200);" ></textarea></td>
+</tr>
+<tr>
+	<td class="label">Method file:</td><td><input type="file" id="id" name="file" size="30"></td>
+</tr>
+<tr>
+	<td colspan="4">Some details about the payment options or rates etc.</td>
+</tr>
+<tr>
+	<td class="label">Rate 1:</td><td><input type="text" id="rate_one" name="rate_one" maxsize="8" length="8" /> for <input type="text" id="rate_one_uses" name="rate_one_uses" maxsize="8" length="8" /> uses.</td>
+</tr>
+<tr>
+	<td class="label">Rate 2:</td><td><input type="text" id="rate_two" name="rate_two" maxsize="8" length="8" /> for <input type="text" id="rate_two_uses" name="rate_two_uses" maxsize="8" length="8" /> uses.</td>
+</tr>
+<tr>
+	<td class="label">Rate 3:</td><td><input type="text" id="rate_three" name="rate_three" maxsize="8" length="8" /> for <input type="text" id="rate_three_uses" name="rate_three_uses" maxsize="8" length="8" /> uses.</td>
+</tr>
+<tr>
+	<td>&nbsp;</td><td><button type="submit">Submit</button></td>
+</tr>
+</table>
 </form>
-
 </div>
+<%@ include file="/nav/footer.jsp" %>
 </body>
 </html>

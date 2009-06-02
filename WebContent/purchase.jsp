@@ -5,8 +5,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Purchase form</title>
+
 </head>
 <body>
+<%@ include file="/nav/main-nav.jsp" %>
 <p>Some texts to explain the purchasing details</p>
 
 <h3>Method Details</h3>
@@ -29,10 +31,9 @@ Card Type: <select name="Card types">
 	<option value="Card">-- Select Card Type --</option>
 	<option value="Card">Visa</option>
 	<option value="Card">Master</option>
-	<option value="Card">Paypal</option>
 </select> <br>
 <br>
-Cardholder Number: <input type="text" name="Cardnumber"> <br>
+Card Number: <input type="text" name="Cardnumber"> <br>
 	
 Expiry: <select name="Expiry">
 <option value="month">mm</option>
@@ -47,5 +48,7 @@ Code: <input type="text" name="Code"> <br>
 <input type="submit" value="Purchase Now" />
 <br>
 </form>
+<%@ include file="/nav/footer.jsp" %>
 </body>
+
 </html>

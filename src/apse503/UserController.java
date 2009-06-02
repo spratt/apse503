@@ -1,6 +1,8 @@
 package apse503;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +35,10 @@ public class UserController extends ActionController {
 
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
-			render("/login.jsp",request,response);
+			if(null == request.getSession().getAttribute("user"))
+				render("/login.jsp",request,response);
+			else 
+				redirect(request.getContextPath() + "/home.jsp",request,response);
 		}
 	}
 	
@@ -42,7 +47,7 @@ public class UserController extends ActionController {
 
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
-			request.getSession().setAttribute("userid",null);
+			request.getSession().setAttribute("user",null);
 			redirect(request.getContextPath() + "/home.jsp",request,response);
 		}
 	}
@@ -61,14 +66,11 @@ public class UserController extends ActionController {
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			User someone = new User().findByUserName(request.getParameter("username"));
 			if(null == someone){
-				try {
-					response.getWriter().println("null");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				// Username couldn't be found
+				request.setAttribute("flash","Invalid username or password, please try again.");
+				render("/login.jsp",request,response);
 			}else if(!someone.authenticate(request.getParameter("password"))) {
-				// Bad username/password
+				// Wrong password
 				request.setAttribute("flash","Invalid username or password, please try again.");
 				render("/login.jsp",request,response);
 			} else {
@@ -84,9 +86,51 @@ public class UserController extends ActionController {
 
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
-			// TODO Create a user from the request object
-			// TODO Validate user valid->success; invalid->signup
-			//request.getSession().setAttribute("userid",(Object)new Integer(someone.id));
+			/*
+			 *  BEGIN DEBUG CODE
+			 */
+			try {
+				PrintWriter out = response.getWriter();
+				Enumeration<String> parameters = request.getParameterNames();
+				while(parameters.hasMoreElements()) {
+					String key = parameters.nextElement();
+					out.print(key + " = ");
+					out.println(request.getParameter(key));
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			/*
+			 *  END OF DEBUG CODE
+			 */
+			// If the passwords do not match, go back to registration
+			if(!request.getParameter("password").equals(request.getParameter("confirm_password"))){
+				request.setAttribute("flash","Confirm password does not match password.");
+				render("/signup.jsp",request,response);
+			}
+			// Build the user
+			User newUser = new User();
+			newUser.address = request.getParameter("address");
+			newUser.userName=request.getParameter("username");
+			newUser.firstName=request.getParameter("firstname");
+			newUser.lastName=request.getParameter("lastname");
+			newUser.email=request.getParameter("email");
+			newUser.city=request.getParameter("city");
+			newUser.postalCode=request.getParameter("postalcode");
+			newUser.province=request.getParameter("province");
+			newUser.country=request.getParameter("country");
+			newUser.setPassword(request.getParameter("password"));
+			
+			// Check validity
+			if(newUser.isValid()){
+				newUser.save();
+				new authenticate().start(request, response);
+			}
+			else {
+				request.setAttribute("flash","User does not validate.");
+				render("/signup.jsp",request,response);
+			}
 		}
 	}
 }

@@ -204,11 +204,12 @@ public class User extends PersistenceClass {
 			      +  "NOW(),'"
 			      +  this.userName      +"','"
 			      +  this.passwordHash  +"','"
-			      +  this.salt          +"');" 
-			      +  "select last_insert_id() as user_id;"; // grab the id of this new user
+			      +  this.salt          +"')"; 
+			String getid =  "select last_insert_id() as user_id"; // grab the id of this new user
 			try {
 				// INSERT the user into the table
 				sql.execute(query);
+				sql.execute(getid);
 				ResultSet results = sql.getResultSet();
 				
 				// Set the attribute to the new ID number
