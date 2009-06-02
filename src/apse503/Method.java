@@ -94,18 +94,17 @@ public class Method extends PersistenceClass {
 					 	this.status_id			+ "," +
 					 	this.category_id		+ "," +
 					 	this.dateTime			+
-					 "); "						+
-					 "select last_insert_id();";
+					 "); ";
+			String select =  "select last_insert_id() as user_id"; // grab the id of this new method
 			
 			try {
 				// INSERT the user into the table
 				sql.execute(insert);
+				sql.execute(select);
 				ResultSet results = sql.getResultSet();
 				
 				// Set the attribute to the new ID number
-				if(!results.next()) 
-					return false;
-				
+				if(!results.next()) return false;
 				this.id = results.getInt("method_id");
 				return true;
 			} 
