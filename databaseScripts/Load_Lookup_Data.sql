@@ -17,3 +17,8 @@ select * from status;
 INSERT INTO method_price_status (method_price_status_id, status) VALUES (1, 'Active');
 INSERT INTO method_price_status (method_price_status_id, status) VALUES (2, 'Inactive');
 select * from method_price_status;
+
+/*Insert statements for credit_cards */
+INSERT INTO credit_cards VALUES (1, 'Visa', '1234567890123456', 'Foo Bar', '02', '2010', '666');
+INSERT INTO credit_cards VALUES (2, 'MasterCard', '6543210987654321', 'Foo Bar', '02', '2010', '666');
+select * from credit_cards;
