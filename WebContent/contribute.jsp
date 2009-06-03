@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import="java.util.*,apse503.Category"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,7 +37,12 @@ function imposeMaxLength(Object, MaxLen)
 	<td>
 	<select id="categoryid" name="categoryid" />
 	<option>-- Select Category --</option>
-	<%for(int i=0; i <= 10; i++){%><option><%=i%></option><%}%>
+	<%
+	ArrayList<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
+	
+	Iterator i = categories.iterator();
+	
+	while(i.hasNext()){%><option><%= ((Category)i.next()).category %></option><%}%>
 	</select>
 	</td>
 </tr>

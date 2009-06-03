@@ -33,7 +33,7 @@ public class Category extends PersistenceClass {
 		return null;
 	}
 	
-	public ArrayList getAll() {
+	public ArrayList<Category> getAll() {
 		if(null == sql) setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM category");

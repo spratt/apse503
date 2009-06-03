@@ -13,12 +13,6 @@ public class MethodPrice extends PersistenceClass{
 	public Date date_time;
 	
 	public MethodPrice(){
-		this.method_price_id = method_price_id;
-		this.method_id = method_id;
-		this.method_price_status_id = method_price_status_id;
-		this.quantity = quantity;
-		this.price = price;
-		this.date_time = date_time;
 	}
 	
 	public boolean isValid() {
@@ -27,8 +21,8 @@ public class MethodPrice extends PersistenceClass{
 		
 		//validate price as regex
 		//validate quanitity as ?? number
-		
-		
+		valid = valid && quantity > 0  && quantity < 1000000;
+		valid = valid && price    > 0  && price    < 1000000;
 		
 		return valid;
 	}
@@ -40,7 +34,30 @@ public class MethodPrice extends PersistenceClass{
 		if (!this.isValid()) return false;
 		
 		if (this.isSaved()) {
-			// UPDATE ROW IN TABLE
+			String update;
+			update  = "UPDATE method_price SET " 	+
+					 	"date_time='" 				+ this.date_time + "'," +
+					 	"price='" 					+ this.price + "'," +
+					 	"quantity='" 				+ this.quantity + "'," +
+					 	"method_id='" 				+ this.method_id + "'," +
+					 	"method_price_status_id='" 	+ this.method_price_status_id + "' " +
+					 "WHERE method_price_id='"+ method_price_id +"';";
+					 			
+			try {
+				// UPDATE the price in the table
+				sql.execute(update);
+				ResultSet results = sql.getResultSet();
+				
+				// Set the attribute to the new ID number
+				if(!results.next()) 
+					return false;
+				
+				return true;
+			} 
+			catch (SQLException e) {
+				// TODO log exception
+				e.printStackTrace();
+			}
 			// Return true if sql executed properly
 		} 
 		else {
@@ -51,11 +68,11 @@ public class MethodPrice extends PersistenceClass{
 					 	"price," 					+
 					 	"quantity," 				+
 					 	"method_id," 				+
-					 	"method_price_status_id," 	+
+					 	"method_price_status_id" 	+
 					 ") " 							+
 					 "VALUES" 						+
 					 "(" 							+
-					 	"'" + this.date_time 		+ "'," +
+					 	"NOW()," +
 					 	"'" + this.price 			+ "'," 	+
 					 	"'" + this.quantity 		+ "'," 	+
 					 	"'" + this.method_id 		+ "'," +
@@ -67,10 +84,11 @@ public class MethodPrice extends PersistenceClass{
 				sql.execute(insert);
 				ResultSet results = sql.getResultSet();
 				
-				// Set the attribute to the new ID number
 				if(!results.next()) 
 					return false;
 				
+				// Set the attribute to the new ID number
+				// Is this going to work?
 				this.id = results.getInt("method_price_id");
 				return true;
 			} 

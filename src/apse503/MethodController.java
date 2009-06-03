@@ -22,6 +22,7 @@ public class MethodController extends ActionController {
 		addDefaultGetAction(new get());
 		addPostAction("/get", new get());
 		addPostAction("/save", new save());
+		addGetAction("/submit", new submit());
 	}
 	
 	// Like a controller method in grails
@@ -42,6 +43,17 @@ public class MethodController extends ActionController {
 			}
 						
 			render("/method.jsp",request,response);
+		}
+	}
+	
+	public class submit extends Action{
+
+		@Override
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+
+			request.setAttribute("categories", new Category().getAll());
+						
+			render("/contribute.jsp",request,response);
 		}
 	}
 	
