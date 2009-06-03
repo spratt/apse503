@@ -2,6 +2,7 @@ package apse503;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Category extends PersistenceClass {
 	
@@ -31,6 +32,30 @@ public class Category extends PersistenceClass {
 		}
 		return null;
 	}
+	
+	public ArrayList getAll() {
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("SELECT * FROM category");
+			ResultSet results = sql.getResultSet();
+
+			ArrayList<Category> categories = new ArrayList<Category>();
+			Category tmp;
+			while(results.next())
+			{
+				tmp = new Category();				
+				tmp.id = results.getInt("category_id");
+				tmp.category = results.getString("category");
+				categories.add(tmp);
+			}
+			return categories;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	
 	public Category findByCategory(String category) {
 		if(null == sql) setUpDataSource();
