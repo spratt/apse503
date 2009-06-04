@@ -46,11 +46,6 @@ public class MethodPrice extends PersistenceClass{
 			try {
 				// UPDATE the price in the table
 				sql.execute(update);
-				ResultSet results = sql.getResultSet();
-				
-				// Set the attribute to the new ID number
-				if(!results.next()) 
-					return false;
 				
 				return true;
 			} 
@@ -78,10 +73,12 @@ public class MethodPrice extends PersistenceClass{
 					 	"'" + this.method_id 		+ "'," +
 					 	this.method_price_status_id +
 					 ");";
-					 			
+			String select =  "select last_insert_id() as method_price_id"; // grab the id of this new method
+			
 			try {
 				// INSERT the price into the table
 				sql.execute(insert);
+				sql.execute(select);
 				ResultSet results = sql.getResultSet();
 				
 				if(!results.next()) 

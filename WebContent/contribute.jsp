@@ -24,7 +24,7 @@ function imposeMaxLength(Object, MaxLen)
 
 <div id="contribute_form" class="form">
 
-<form method="POST" action="contribute.jsp">
+<form method="POST" action="<%=root%>/method/save">
 <table>
 <tr>
 	<td class="label">Method name:</td><td><input type="text" id="name" name="name" /></td>
@@ -40,9 +40,15 @@ function imposeMaxLength(Object, MaxLen)
 	<%
 	ArrayList<Category> categories = (ArrayList<Category>)request.getAttribute("categories");
 	
-	Iterator i = categories.iterator();
+	if(categories != null)
+	{
+		Iterator i = categories.iterator();
 	
-	while(i.hasNext()){%><option><%= ((Category)i.next()).category %></option><%}%>
+		while(i.hasNext()){
+			Category cat = (Category)i.next(); %>
+			<option value="<%=cat.categoryID %>"><%= cat.category %></option>
+		<%}
+	}%>
 	</select>
 	</td>
 </tr>

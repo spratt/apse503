@@ -95,7 +95,7 @@ public class Method extends PersistenceClass {
 					 	this.category_id		+ "," +
 					 	this.dateTime			+
 					 "); ";
-			String select =  "select last_insert_id() as user_id"; // grab the id of this new method
+			String select =  "select last_insert_id() as method_id"; // grab the id of this new method
 			
 			try {
 				// INSERT the user into the table

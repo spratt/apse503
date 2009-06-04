@@ -44,7 +44,7 @@ public class Category extends PersistenceClass {
 			while(results.next())
 			{
 				tmp = new Category();				
-				tmp.id = results.getInt("category_id");
+				tmp.categoryID = results.getInt("category_id");
 				tmp.category = results.getString("category");
 				categories.add(tmp);
 			}
