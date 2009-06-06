@@ -69,9 +69,9 @@ public class MethodController extends ActionController {
 				method.summary = request.getParameter("summary");			
 				method.description = request.getParameter("description");				
 				method.url = request.getParameter("url"); //probably won't pass this in
-				method.category_id = 1;//Integer.parseInt(request.getParameter("categoryid"));
-				method.status_id = 1;//Integer.parseInt(request.getParameter("statusid"));
-				method.user_id = 1;//((User)request.getSession().getAttribute("user")).id;								
+				method.category_id = Integer.parseInt(request.getParameter("categoryid"));
+				method.status_id = 2;//default status code when method is submitted
+				method.user_id = ((User)request.getSession().getAttribute("user")).id;								
 				
 				boolean saveResult = method.save();
 				System.out.println("status:" + saveResult);

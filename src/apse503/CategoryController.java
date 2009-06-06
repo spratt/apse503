@@ -19,10 +19,11 @@ public class CategoryController extends ActionController {
 	 */
 	public CategoryController() {
 		// Like UrlMappings in grails, only you don't have to worry about which order they're in!
-		addDefaultGetAction(new get());
+		addDefaultGetAction(new show());
 		addPostAction("/get", new get());
 		addPostAction("/list", new list());
 		addPostAction("/save", new save());
+		addGetAction("/show", new show());
 	}
 	
 	// Like a controller method in grails
@@ -52,6 +53,15 @@ public class CategoryController extends ActionController {
 			request.setAttribute("method", category.getAll());
 			
 			render("/method.jsp",request,response);
+		}
+	}
+	
+	public class show extends Action{
+
+		@Override
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+			
+			render("/categories.jsp",request,response);
 		}
 	}
 	

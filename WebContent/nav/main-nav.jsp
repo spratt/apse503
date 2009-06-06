@@ -10,9 +10,9 @@
 </style>
 
 
-<a href="/apse503/">Home</a> 
-| <a href="<%=request.getContextPath()%>/contribute.jsp">Contribute</a>
-| future navigation item
+<a href="<%=root%>/home.jsp">Home</a> 
+| <a href="<%=root%>/method/submit">Contribute</a>
+| <a href="<%=root%>/category/show">Categories</a>
 <% 
 	User user = (User)session.getAttribute("user");
 %>

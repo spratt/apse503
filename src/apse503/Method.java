@@ -15,7 +15,7 @@ public class Method extends PersistenceClass {
 			   status_id,
 			   category_id;
 	
-	public Date dateTime;
+	//public Date dateTime;
 	
 	public Method() {
 		this.name = "";
@@ -25,7 +25,7 @@ public class Method extends PersistenceClass {
 		this.user_id = -1;
 		this.status_id = -1;
 		this.category_id = -1;
-		this.dateTime = null;
+		//this.dateTime = null;
 	}
 	
 	// Create a new method from an old method
@@ -39,7 +39,7 @@ public class Method extends PersistenceClass {
 		this.user_id = originalMethod.user_id;
 		this.status_id = originalMethod.status_id;
 		this.category_id = originalMethod.category_id;
-		this.dateTime = originalMethod.dateTime;
+		//this.dateTime = originalMethod.dateTime;
 	}
 	
 	public boolean isValid()
@@ -93,7 +93,7 @@ public class Method extends PersistenceClass {
 					 	this.user_id			+ "," +
 					 	this.status_id			+ "," +
 					 	this.category_id		+ "," +
-					 	this.dateTime			+
+					 	"NOW()"			+
 					 "); ";
 			String select =  "select last_insert_id() as method_id"; // grab the id of this new method
 			

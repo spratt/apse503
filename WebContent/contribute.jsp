@@ -56,7 +56,7 @@ function imposeMaxLength(Object, MaxLen)
 	<td class="label">Detailed description:</td><td><textarea id ="description" name="description" onkeypress="return imposeMaxLength(this, 200);" ></textarea></td>
 </tr>
 <tr>
-	<td class="label">Method file:</td><td><input type="file" id="id" name="file" size="30"></td>
+	<td class="label">Method file:</td><td><input type="file" id="url" name="url" size="30"></td>
 </tr>
 <tr>
 	<td colspan="4">Some details about the payment options or rates etc.</td>

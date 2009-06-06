@@ -24,7 +24,7 @@ public class MethodTest extends TestCase {
 		validMethod.category_id = 1;
 		validMethod.user_id = 1;
 		validMethod.status_id = 1;
-		validMethod.dateTime = null;
+		//validMethod.dateTime = null;
 	}
 	
 	public void testBlankMethodIsInvalid() throws Exception {
