@@ -1,5 +1,6 @@
 # We don't want to share bytecode class files
 build/
+build/*
 
 # This is a creepy file on Mac that stores folder information
 # no need to spread the mac creepiness
