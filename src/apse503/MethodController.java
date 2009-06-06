@@ -4,6 +4,8 @@ import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import apse503.ActionController.Action;
+
 /**
  * Servlet implementation class UserController
  */
@@ -119,6 +121,32 @@ public class MethodController extends ActionController {
 			}
 			
 			render("/home.jsp",request,response);
+		}
+	}
+	
+	public class use extends Action{
+
+		@Override
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+			if(null == request.getSession().getAttribute("user")) {
+				// TODO log the method usage
+				String classToLoad;
+				// Grab the name of the class to load from the parameters
+				if(null != (classToLoad = request.getParameter("class"))){
+					try{
+						// Make a new instance of the class
+						Object o = Class.forName(classToLoad).newInstance();
+						request.setAttribute("methodOutput", o.toString());
+						render("/loader.jsp",request,response);
+			 		}catch(Exception e) {
+						request.setAttribute("flash", "There was an error loading class: '" + classToLoad + "'");
+						redirect(request.getContextPath() + "home.jsp",request,response);
+					}
+				}
+			} else {
+				request.setAttribute("flash", "Need to be logged in before using a method.");
+				redirect(request.getContextPath() + "/user/signin",request,response);
+			}
 		}
 	}
 }

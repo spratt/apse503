@@ -83,9 +83,25 @@ public abstract class ActionController extends HttpServlet {
 	protected void redirect(String toJSP, HttpServletRequest request, HttpServletResponse response){
 		try {
 			response.sendRedirect(toJSP);
-		} catch (IOException e) {
-			// TODO log this exception
-			render(errorJSP,request,response);
+		} catch (Exception e) {
+			try {
+				// TODO log this exception
+				System.out.println("Render Error");
+				System.out.println("Request was: '" + request.getRequestURI() + "'");
+				System.out.println("toJSP was:   '" + toJSP                   + "'");
+				render(errorJSP,request,response);
+			} catch (Exception doubleException) {
+				// TODO log this exception...very bad, since we couldn't even find the error page!
+				try {
+					PrintWriter out =response.getWriter(); 
+					out.println("Couldn't find the error page!");
+					System.out.println("Couldn't find errorJSP: '" + errorJSP + "'");
+					doubleException.printStackTrace(out);
+				} catch (IOException tripleException) {
+					// Okay, something must be insane...couldn't even write to output!
+					tripleException.printStackTrace();
+				}
+			}
 		}
 	}
 	
@@ -97,12 +113,16 @@ public abstract class ActionController extends HttpServlet {
 		} catch (Exception e) {
 			try {
 				// TODO log this exception
+				System.out.println("Render Error");
+				System.out.println("Request was: '" + request.getRequestURI() + "'");
+				System.out.println("toJSP was:   '" + toJSP                   + "'");
 				context.getRequestDispatcher(errorJSP).forward(request,response);
 			} catch (Exception doubleException) {
 				// TODO log this exception...very bad, since we couldn't even find the error page!
 				try {
 					PrintWriter out =response.getWriter(); 
 					out.println("Couldn't find the error page!");
+					System.out.println("Couldn't find errorJSP: '" + errorJSP + "'");
 					doubleException.printStackTrace(out);
 				} catch (IOException tripleException) {
 					// Okay, something must be insane...couldn't even write to output!

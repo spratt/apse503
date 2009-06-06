@@ -1,12 +1,8 @@
 package apse503;
 
-import java.io.IOException;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import apse503.UserController.authenticate;
 
 /**
  * Servlet implementation class UserController
