@@ -12,15 +12,14 @@ import java.sql.SQLException;
  */
 public class MethodUse extends PersistenceClass {
 
-	int methodID = -1;
-	int userID = -1;
+	public int methodID = -1;
+	public int userID = -1;
 	
 	/**
 	 * 
 	 */
-	public MethodUse(int methodID,int userID) {
-		this.methodID = methodID;
-		this.userID   = userID;
+	public MethodUse() {
+		// I do nothing!  Nothing!!
 	}
 
 	/* (non-Javadoc)
@@ -40,6 +39,9 @@ public class MethodUse extends PersistenceClass {
 		
 		// Don't save if the user is invalid
 		if (!this.isValid()) return false;
+		
+		// Don't save if the user has no uses left
+		if (!this.hasUsesLeft()) return false;
 		
 		String query;
 		query  = "INSERT INTO method_use ";
@@ -64,5 +66,9 @@ public class MethodUse extends PersistenceClass {
 		}
 		return false;
 	}
-
+	
+	public boolean hasUsesLeft() {
+		// TODO code goes here
+		return false;
+	}
 }
