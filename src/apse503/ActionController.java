@@ -55,6 +55,9 @@ public abstract class ActionController extends HttpServlet {
 	private void dispatch(Map<String,Action> toDispatch, HttpServletRequest request, HttpServletResponse response){
 		String pathInfo = request.getPathInfo();
 		if(!toDispatch.containsKey(pathInfo)) {
+			System.err.println("Dispatch Error");
+			System.err.println("RequestURI was: '" + request.getRequestURI() + "'");
+			System.err.println("PathInfo was:   '" + pathInfo                + "'");
 			render(errorJSP, request, response);
 			return;  // Just in case
 		}
@@ -86,16 +89,17 @@ public abstract class ActionController extends HttpServlet {
 		} catch (Exception e) {
 			try {
 				// TODO log this exception
-				System.out.println("Render Error");
-				System.out.println("Request was: '" + request.getRequestURI() + "'");
-				System.out.println("toJSP was:   '" + toJSP                   + "'");
+				System.err.println("Render Error");
+				System.err.println("RequestURI was: '" + request.getRequestURI() + "'");
+				System.err.println("PathInfo was:   '" + request.getPathInfo()   + "'");
+				System.err.println("toJSP was:   '"    + toJSP                   + "'");
 				render(errorJSP,request,response);
 			} catch (Exception doubleException) {
 				// TODO log this exception...very bad, since we couldn't even find the error page!
 				try {
 					PrintWriter out =response.getWriter(); 
 					out.println("Couldn't find the error page!");
-					System.out.println("Couldn't find errorJSP: '" + errorJSP + "'");
+					System.err.println("Couldn't find errorJSP: '" + errorJSP + "'");
 					doubleException.printStackTrace(out);
 				} catch (IOException tripleException) {
 					// Okay, something must be insane...couldn't even write to output!
@@ -113,16 +117,17 @@ public abstract class ActionController extends HttpServlet {
 		} catch (Exception e) {
 			try {
 				// TODO log this exception
-				System.out.println("Render Error");
-				System.out.println("Request was: '" + request.getRequestURI() + "'");
-				System.out.println("toJSP was:   '" + toJSP                   + "'");
+				System.err.println("Render Error");
+				System.err.println("RequestURI was: '" + request.getRequestURI() + "'");
+				System.err.println("PathInfo was:   '" + request.getPathInfo()   + "'");
+				System.err.println("toJSP was:   '"    + toJSP                   + "'");
 				context.getRequestDispatcher(errorJSP).forward(request,response);
 			} catch (Exception doubleException) {
 				// TODO log this exception...very bad, since we couldn't even find the error page!
 				try {
 					PrintWriter out =response.getWriter(); 
 					out.println("Couldn't find the error page!");
-					System.out.println("Couldn't find errorJSP: '" + errorJSP + "'");
+					System.err.println("Couldn't find errorJSP: '" + errorJSP + "'");
 					doubleException.printStackTrace(out);
 				} catch (IOException tripleException) {
 					// Okay, something must be insane...couldn't even write to output!
