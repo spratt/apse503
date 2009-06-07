@@ -17,8 +17,11 @@
 
 <%@ include file="/nav/footer.jsp" %>
 
+<table>
+<tr>
+<td width="250">
 <div id="categories">
-
+	<label class="title">Categories</label><br /><br />
 	<%
 	ArrayList<Category> categories = new Category().getAll();
 	
@@ -34,9 +37,10 @@
 	}%>
 	
 </div>
-
+</td>
+<td width="450">
 <div id ="top_methods">
-
+	<label class="title">Top Methods</label><br /><br />
 	<%
 	ArrayList<Method> methods = new Method().getAll();
 	
@@ -47,23 +51,20 @@
 		int ranking = 1;
 	
 		while(i.hasNext()){
-			Method meth = (Method)i.next(); %>
-			<label>
-			<%=ranking %> <a href="#" id="<%=meth.getId() %>"><%= meth.name %></a></label><br />
-			<%= meth.summary %><br /><br />
-			<% ranking++; %>
-			
-			<%
+			Method meth = (Method)i.next(); 
 			Rating rating = new Rating();
 			rating.method_id = meth.getId();%>
-			<label>average:</label> <%= rating.getAverageRating()%><br />
-			<label>count:</label> <%= rating.getRatingsCount()%><br />
+			<label>
+			<%=ranking %> <a href="#" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;<label>average:</label> <%= rating.getAverageRating()%>&nbsp;<label>count:</label> <%= rating.getRatingsCount()%></label><br />
+			<%= meth.summary %><br /><br />
+			<% ranking++; %>
+			<br />
 			<br />
 		<%}
 	}%>
 	
 
 </div>
-
+</td></tr></table>
 </body>
 </html>

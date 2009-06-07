@@ -42,6 +42,11 @@ p {
 td.label {
 	text-align: right;
 }
+
+.title {
+	font-weight: bold;
+}
+
 div.flash {
 	overflow: visible;
 	width: 90%;
