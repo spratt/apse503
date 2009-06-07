@@ -2,6 +2,7 @@ package apse503;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Method extends PersistenceClass {
 
@@ -9,6 +10,8 @@ public class Method extends PersistenceClass {
 				  description,
 				  summary,
 				  url;
+	
+	//public URL url;  //if we switch to actual URL instead of a url String attribute
 	
 	public int user_id,
 			   status_id,
@@ -57,7 +60,7 @@ public class Method extends PersistenceClass {
 	
 	// TODO implement persistence code
 	public boolean save() {
-		System.out.println("in save");
+		//System.out.println("in save");
 		if(null == sql) {
 			System.out.println("sql is null");
 			setUpDataSource();
@@ -146,5 +149,37 @@ public class Method extends PersistenceClass {
 	public boolean isSaved() {
 		// not unsaved means saved
 		return this.id != UNSAVED_ID;
+	}
+	
+	public ArrayList<Method> getAll() {
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("SELECT * FROM method");
+			ResultSet results = sql.getResultSet();
+
+			ArrayList<Method> methods = new ArrayList<Method>();
+			Method tmp;
+			while(results.next())
+			{
+				tmp = new Method();				
+				tmp.id = results.getInt("method_id");
+				tmp.name = results.getString("name");
+				tmp.user_id = results.getInt("user_id");
+				tmp.status_id = results.getInt("status_id");
+				tmp.category_id = results.getInt("category_id");
+				tmp.description = results.getString("description");
+				tmp.summary = results.getString("summary");
+				//tmp.date_time = results.getDate("datetime");
+				tmp.url = results.getString("url");
+				//tmp.url = results.getURL("url");  //might want to switch to actual URL type
+				//
+				methods.add(tmp);
+			}
+			return methods;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

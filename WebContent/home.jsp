@@ -19,7 +19,7 @@
 
 <div id="categories">
 
-<%
+	<%
 	ArrayList<Category> categories = new Category().getAll();
 	
 	if(categories != null)
@@ -33,6 +33,36 @@
 		<%}
 	}%>
 	
+</div>
+
+<div id ="top_methods">
+
+	<%
+	ArrayList<Method> methods = new Method().getAll();
+	
+	if(methods != null)
+	{
+		Iterator i = methods.iterator();
+		
+		int ranking = 1;
+	
+		while(i.hasNext()){
+			Method meth = (Method)i.next(); %>
+			<label>
+			<%=ranking %> <a href="#" id="<%=meth.getId() %>"><%= meth.name %></a></label><br />
+			<%= meth.summary %><br /><br />
+			<% ranking++; %>
+			
+			<%
+			Rating rating = new Rating();
+			rating.method_id = meth.getId();%>
+			<label>average:</label> <%= rating.getAverageRating()%><br />
+			<label>count:</label> <%= rating.getRatingsCount()%><br />
+			<br />
+		<%}
+	}%>
+	
+
 </div>
 
 </body>
