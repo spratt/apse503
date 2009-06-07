@@ -19,7 +19,7 @@ public class CategoryController extends ActionController {
 	 */
 	public CategoryController() {
 		// Like UrlMappings in grails, only you don't have to worry about which order they're in!
-		addDefaultGetAction(new show());
+		addDefaultGetAction(new get());
 		addPostAction("/get", new get());
 		addPostAction("/list", new list());
 		addPostAction("/save", new save());
