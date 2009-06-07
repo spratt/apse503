@@ -24,7 +24,10 @@ function imposeMaxLength(Object, MaxLen)
 
 <div id="contribute_form" class="form">
 
-<form ENCTYPE='multipart/form-data' method="POST" action="<%=root%>/method/save">
+<!-- 
+<form ENCTYPE='multipart/form-data' method="POST" action="<%=root%>/method/save"> 
+-->
+<form method="POST" action="<%=root%>/method/save">
 <table>
 <tr>
 	<td class="label">Method name:</td><td><input type="text" id="name" name="name" /></td>

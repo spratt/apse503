@@ -4,45 +4,23 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome</title>
-
+<title>My Methods</title>
 </head>
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
 
-<h2>Welcome, <%= ((User)session.getAttribute("user")).userName %>!</h2>
 
 
 
-<%@ include file="/nav/footer.jsp" %>
 
-<table>
-<tr>
-<td width="250">
-<div id="categories">
-	<label class="title">Categories</label><br /><br />
+
+<div id="my_contrib">
+	<label class="title">My contributed methods</label><br /><br />
 	<%
-	ArrayList<Category> categories = new Category().getAll();
-	
-	if(categories != null)
-	{
-		Iterator i = categories.iterator();
-	
-		while(i.hasNext()){
-			Category cat = (Category)i.next(); %>
-			<label>
-			<a href="#" id="<%=cat.categoryID %>"><%= cat.category %></a></label><br /><br />
-		<%}
-	}%>
-	
-</div>
-</td>
-<td width="450">
-<div id ="top_methods">
-	<label class="title">Top Methods</label><br /><br />
-	<%
-	ArrayList<Method> methods = new Method().getAll();
+	Method m = new Method();
+	m.getId();
+	ArrayList<Method> methods = m.getMyContributed();
 	
 	if(methods != null)
 	{
@@ -63,8 +41,14 @@
 		<%}
 	}%>
 	
+</div>
+
+<div id ="my_purchased">
+	<label class="title">My purchased methods</label><br /><br />
+
+	
 
 </div>
-</td></tr></table>
+<%@ include file="/nav/footer.jsp" %>
 </body>
 </html>

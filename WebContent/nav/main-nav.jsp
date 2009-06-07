@@ -11,6 +11,7 @@
 
 
 <a href="<%=root%>/home.jsp">Home</a> 
+| <a href="<%=root%>/method/show">My Methods</a>
 | <a href="<%=root%>/method/submit">Contribute</a>
 | <a href="<%=root%>/category/show">Categories</a>
 <% 

@@ -182,4 +182,36 @@ public class Method extends PersistenceClass {
 		}
 		return null;
 	}
+	
+	public ArrayList<Method> getMyContributed() {
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("SELECT * FROM method where method_id=" + this.id);
+			ResultSet results = sql.getResultSet();
+
+			ArrayList<Method> methods = new ArrayList<Method>();
+			Method tmp;
+			while(results.next())
+			{
+				tmp = new Method();				
+				tmp.id = results.getInt("method_id");
+				tmp.name = results.getString("name");
+				tmp.user_id = results.getInt("user_id");
+				tmp.status_id = results.getInt("status_id");
+				tmp.category_id = results.getInt("category_id");
+				tmp.description = results.getString("description");
+				tmp.summary = results.getString("summary");
+				//tmp.date_time = results.getDate("datetime");
+				tmp.url = results.getString("url");
+				//tmp.url = results.getURL("url");  //might want to switch to actual URL type
+				//
+				methods.add(tmp);
+			}
+			return methods;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
