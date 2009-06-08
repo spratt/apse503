@@ -23,6 +23,7 @@ public class MethodPurchaseController extends ActionController {
 		addPostAction("/get", new get());
 		addPostAction("/save", new save());
 		addGetAction("/submit", new submit());
+		addGetAction("/autenticate", new authenticate());
 	}
 
 	// Like a controller method in grails
@@ -61,6 +62,24 @@ public class MethodPurchaseController extends ActionController {
 			render("/method.jsp", request, response);
 		}
 	}
+	
+	public class authenticate extends Action{
+		
+		@Override
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+			int id = 0;
+			CreditCard cc = new CreditCard().get(id);
+			if(null == cc){
+				request.setAttribute("flash","Invalid creditcard number, please try again.");
+				render("/method_purchase.jsp",request,response);
+			} else {
+				// Authenticated!
+				request.getSession().setAttribute("card_id",(Object)cc);
+				redirect(request.getContextPath() + "/method_purchase.jsp",request,response);
+			}
+		}
+	}
+
 
 	public class save extends Action {
 
