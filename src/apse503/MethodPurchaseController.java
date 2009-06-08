@@ -68,8 +68,8 @@ public class MethodPurchaseController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request,
 				HttpServletResponse response) {
-			int id = 0;
-			CreditCard cc = new CreditCard().get(id);
+			
+			CreditCard cc = new CreditCard();
 			if (null == cc) {
 				request.setAttribute("flash",
 						"Invalid creditcard number, please try again.");
