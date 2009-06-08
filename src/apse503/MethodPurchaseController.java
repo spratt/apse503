@@ -70,13 +70,17 @@ public class MethodPurchaseController extends ActionController {
 				HttpServletResponse response) {
 			
 			CreditCard cc = new CreditCard();
-			if (null == cc) {
+/* (request.getParameter("card_number"),
+					request.getParameter("card_type"), request.getParameter("card_hold_name"), 
+					request.getParameter("card_id"), request.getParameter("card_expiry_month"), 
+					request.getParameter("card_expiry_year"), request.getParameter("card_code"));
+*/			
+			if (!cc.isValid()) {
 				request.setAttribute("flash",
 						"Invalid creditcard number, please try again.");
 				render("/method_purchase.jsp", request, response);
 			} else {
 				// Authenticated!
-				request.getSession().setAttribute("card_id", (Object) cc);
 				redirect(request.getContextPath() + "/method_purchase.jsp",
 						request, response);
 			}
