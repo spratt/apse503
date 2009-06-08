@@ -63,26 +63,6 @@ public class MethodPurchaseController extends ActionController {
 		}
 	}
 
-	public class authenticate extends Action {
-
-		@Override
-		public void start(HttpServletRequest request,
-				HttpServletResponse response) {
-			int id = 0;
-			CreditCard cc = new CreditCard().get(id);
-			if (null == cc) {
-				request.setAttribute("flash",
-						"Invalid creditcard number, please try again.");
-				render("/method_purchase.jsp", request, response);
-			} else {
-				// Authenticated!
-				request.getSession().setAttribute("card_id", (Object) cc);
-				redirect(request.getContextPath() + "/method_purchase.jsp",
-						request, response);
-			}
-		}
-	}
-
 	public class save extends Action {
 
 		public void start(HttpServletRequest request,
