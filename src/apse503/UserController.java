@@ -28,6 +28,19 @@ public class UserController extends ActionController {
 		addGetAction("/signup", new signup());
 		addPostAction("/signup", new register());
 		addGetAction("/logout", new logout());
+		addGetAction("/home", new home());
+	}
+	
+	// Like a controller method in grails
+	public class home extends Action{
+
+		@Override
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
+			else // logged in
+				render("/home.jsp",request,response);
+		}
 	}
 	
 	// Like a controller method in grails
@@ -38,7 +51,7 @@ public class UserController extends ActionController {
 			if(null == request.getSession().getAttribute("user"))
 				render("/login.jsp",request,response);
 			else 
-				redirect(request.getContextPath() + "/home.jsp",request,response);
+				redirect(request.getContextPath() + "/user/home",request,response);
 		}
 	}
 	
@@ -48,7 +61,7 @@ public class UserController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			request.getSession().setAttribute("user",null);
-			redirect(request.getContextPath() + "/home.jsp",request,response);
+			redirect(request.getContextPath() + "/user/login",request,response);
 		}
 	}
 	
@@ -75,9 +88,9 @@ public class UserController extends ActionController {
 				render("/login.jsp",request,response);
 			} else {
 				// Authenticated!
-				//request.setAttribute("flash","Welcome back, " + someone.firstName + "!");
+				request.setAttribute("flash","Welcome back, " + someone.firstName + "!");
 				request.getSession().setAttribute("user",(Object)someone);
-				redirect(request.getContextPath() + "/home.jsp",request,response);
+				redirect(request.getContextPath() + "/user/home",request,response);
 			}
 		}
 	}

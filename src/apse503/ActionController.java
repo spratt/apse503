@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class ActionController
@@ -85,11 +86,17 @@ public abstract class ActionController extends HttpServlet {
 	
 	protected void redirect(String toJSP, HttpServletRequest request, HttpServletResponse response){
 		try {
+			// Redirect kills all request attributes, so let's temporarily save the flash
+			String tempFlash = null;
+			if(null != (tempFlash = (String)request.getAttribute("flash"))) {
+				HttpSession session = request.getSession();
+				session.setAttribute("sessionFlash", tempFlash);
+			}
 			response.sendRedirect(toJSP);
 		} catch (Exception e) {
 			try {
 				// TODO log this exception
-				System.err.println("Render Error");
+				System.err.println("Redirect Error");
 				System.err.println("RequestURI was: '" + request.getRequestURI() + "'");
 				System.err.println("PathInfo was:   '" + request.getPathInfo()   + "'");
 				System.err.println("toJSP was:   '"    + toJSP                   + "'");
