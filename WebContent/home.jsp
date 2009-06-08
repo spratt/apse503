@@ -10,7 +10,6 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
-
 <h2>Welcome, <%= ((User)session.getAttribute("user")).userName %>!</h2>
 
 
@@ -55,7 +54,7 @@
 			Rating rating = new Rating();
 			rating.method_id = meth.getId();%>
 			<label>
-			<%=ranking %> <a href="#" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;</label><label>average:</label> <%= rating.getAverageRating()%>&nbsp;<label>count:</label> <%= rating.getRatingsCount()%><br />
+			<%=ranking %> <a href="<%=root%>/usemethod/?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;</label><label>average:</label> <%= rating.getAverageRating()%>&nbsp;<label>count:</label> <%= rating.getRatingsCount()%><br />
 			<%= meth.summary %><br /><br />
 			<% ranking++; %>
 			<br />

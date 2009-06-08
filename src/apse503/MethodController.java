@@ -3,6 +3,12 @@ package apse503;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.disk.*;
+import java.util.*;
+import java.io.*;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  * Servlet implementation class UserController
@@ -75,49 +81,34 @@ public class MethodController extends ActionController {
 				//Create the new method then set its attributes from request's parameters
 				Method method = new Method();
 				
-				method.name = request.getParameter("name");
-				method.summary = request.getParameter("summary");			
-				method.description = request.getParameter("description");				
-				method.url = request.getParameter("url"); //probably won't pass this in
-				method.category_id = Integer.parseInt(request.getParameter("categoryid"));
-				method.status_id = 2;//default status code when method is submitted
-				method.user_id = ((User)request.getSession().getAttribute("user")).id;								
+				//Generate the 3 possible prices
+				ArrayList<MethodPrice> methodPrices = new ArrayList<MethodPrice>();
+				methodPrices.add(new MethodPrice());
+				methodPrices.add(new MethodPrice());
+				methodPrices.add(new MethodPrice());
 				
-				boolean saveResult = method.save();
-				System.out.println("status:" + saveResult);
-				if(saveResult)
+				method.status_id = 2;
+				method.user_id = ((User)request.getSession().getAttribute("user")).id;																		
+				
+				//Builds the method object and saves the file to disk
+				method = this.HandleUpload(method, methodPrices, request);
+				System.out.println("Method:" + method.category_id + "," + method.description + "," + method.name + "," + method.status_id + "," + method.url + "," + method.user_id);
+				if(method != null)
 				{
-					MethodPrice methodPrice = new MethodPrice();
-					
-					methodPrice.method_id = method.id;
-					methodPrice.method_price_status_id = 1; //TODO remove hardcoding
-					
-					if(request.getParameter("rate_one") != "" && request.getParameter("rate_one_uses") != "")
-					{
-						methodPrice.price = Double.parseDouble(request.getParameter("rate_one"));
-						methodPrice.quantity = Integer.parseInt(request.getParameter("rate_one_uses"));
-						methodPrice.save();
+					if(method.save())
+					{									
+						//Saves the prices						
+						for (MethodPrice methodPrice : methodPrices) {
+							methodPrice.method_id = method.id;
+							methodPrice.method_price_status_id = 1; //TODO remove hardcoding
+							methodPrice.save();
+						}
+
+						request.setAttribute("flash", "Method Saved Successfully");
 					}
-					
-					if(request.getParameter("rate_two") != "" && request.getParameter("rate_two_uses") != "")
-					{
-						methodPrice.price = Double.parseDouble(request.getParameter("rate_two"));
-						methodPrice.quantity = Integer.parseInt(request.getParameter("rate_two_uses"));
-						methodPrice.save();
-					}
-					
-					if(request.getParameter("rate_three") != "" && request.getParameter("rate_three_uses") != "")
-					{
-						methodPrice.price = Double.parseDouble(request.getParameter("rate_three"));
-						methodPrice.quantity = Integer.parseInt(request.getParameter("rate_three_uses"));
-						methodPrice.save();
-					}
-					
-					request.setAttribute("flash", "Method Saved Successfully");
+					else
+						request.setAttribute("flash", "Method Save was Unsucessful");
 				}
-				else
-					request.setAttribute("flash", "Method Save was Unsucessful");
-				
 			}
 			catch(NumberFormatException nfe){
 				nfe.printStackTrace();
@@ -130,5 +121,96 @@ public class MethodController extends ActionController {
 			
 			render("/mymethods.jsp",request,response);
 		}
+		
+		private Method HandleUpload(Method method, ArrayList<MethodPrice> methodPrices, HttpServletRequest request)
+		{
+			//Upload method
+			if (ServletFileUpload.isMultipartContent(request))
+			{
+				ServletFileUpload servletFileUpload = new ServletFileUpload(new DiskFileItemFactory());
+				List fileItemsList;
+				
+				try
+				{
+					fileItemsList = servletFileUpload.parseRequest(request);
+				}
+				catch(Exception e)
+				{
+					System.out.println(e.getMessage());
+					System.out.println(e.getStackTrace());
+					return null;
+				}
+			
+				Iterator it = fileItemsList.iterator();
+				
+				while (it.hasNext())
+				{					
+					FileItem fileItemTemp = (FileItem)it.next();
+				
+					//If the item is a field
+					if (fileItemTemp.isFormField())
+					{							
+						// Build the method one element at a time
+						this.BuildMethod(method, methodPrices, fileItemTemp.getFieldName(), fileItemTemp.getString());
+					}
+				
+					if (fileItemTemp.getFieldName().equals("filename"))
+					{
+						String fileName = FilenameUtils.getName(fileItemTemp.getName()) + "_" + System.currentTimeMillis() + "_" + ((User)request.getSession().getAttribute("user")).id + ".class";
+				
+						/* Save the uploaded file if its size is greater than 0. */
+						if (fileItemTemp.getSize() > 0)
+						{
+							String dirName = "/workspace/apse503/build/classes/userMethods/";
+
+							File saveTo = new File(dirName + fileName);
+							try 
+							{
+								System.out.println(saveTo.getAbsolutePath());
+								fileItemTemp.write(saveTo);
+							}
+							catch (Exception e)
+							{
+								System.out.println(e.getMessage());
+								System.out.println(e.getStackTrace());
+								return null;
+							}
+						}
+					}
+				}
+			}
+
+			return method;
+		}
+		
+		private void BuildMethod(Method method, ArrayList<MethodPrice> methodPrices, String field, String value)
+		{
+			if(field.equals("name"))
+				method.name = value;
+			else if(field.equals("summary"))
+				method.summary = value;
+			else if(field.equals("description"))
+				method.description = value;
+			else if(field.equals("url"))
+				method.url = value;
+			else if(field.equals("categoryid"))
+				method.category_id = Integer.parseInt(value);
+			else if(field.equals("statusid"))
+				method.status_id = Integer.parseInt(value);
+			else if(field.equals("userid"))
+				method.user_id = Integer.parseInt(value);
+			else if(field.equals("rate_one"))
+				methodPrices.get(0).price = Double.parseDouble(value);
+			else if(field.equals("rate_one_uses"))
+				methodPrices.get(0).quantity = Integer.parseInt(value);
+			else if(field.equals("rate_two"))
+				methodPrices.get(1).price = Double.parseDouble(value);
+			else if(field.equals("rate_two_uses"))
+				methodPrices.get(1).quantity = Integer.parseInt(value);
+			else if(field.equals("rate_three"))
+				methodPrices.get(2).price = Double.parseDouble(value);
+			else if(field.equals("rate_three_uses"))
+				methodPrices.get(2).quantity = Integer.parseInt(value);		
+		}	
 	}
 }
