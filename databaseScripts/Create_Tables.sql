@@ -29,7 +29,7 @@ CREATE TABLE `category` (
 
 CREATE TABLE `method` (
   `method_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(200) NOT NULL UNIQUE,
+  `name` varchar(200) NOT NULL,
   `user_id` int(11) NOT NULL,
   `status_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
