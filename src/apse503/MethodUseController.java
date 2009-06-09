@@ -70,11 +70,10 @@ public class MethodUseController extends ActionController {
 			// in the DB, then create a new instance of it
 			UserMethod userMethod = null;
 			try{
-				// TODO change this when we add the filepath to the DB
-				userMethod = (UserMethod)Class.forName("userMethods." + thisMethod.name).newInstance();
+				userMethod = (UserMethod)Class.forName("userMethods." + thisMethod.filePath).newInstance();
 	 		}catch(Exception e) {
 				// The method could not be found, abort!  Abort!
-				request.setAttribute("flash", "There was an error loading class: '" + thisMethod.name + "'");
+				request.setAttribute("flash", "There was an error loading class: '" + "userMethods." + thisMethod.filePath + "'");
 				redirect(request.getContextPath() + "/user/home",request,response);
 				return;
 			}

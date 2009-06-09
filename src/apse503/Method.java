@@ -5,11 +5,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Method extends PersistenceClass {
-
+	
 	public String name,
 				  description,
 				  summary,
-				  url;
+				  url,
+				  filePath;
 	
 	//public URL url;  //if we switch to actual URL instead of a url String attribute
 	
@@ -81,6 +82,7 @@ public class Method extends PersistenceClass {
 					 	"description," 			+
 					 	"summary," 				+
 					 	"url," 					+
+					 	"filepath," 			+
 					 	"user_id," 				+
 					 	"status_id," 			+
 					 	"category_id," 			+
@@ -92,6 +94,7 @@ public class Method extends PersistenceClass {
 					 	"'" + this.description 	+ "'," +
 					 	"'" + this.summary		+ "'," +
 					 	"'" + this.url			+ "'," +
+					 	"'" + this.filePath		+ "'," +
 					 	this.user_id			+ "," +
 					 	this.status_id			+ "," +
 					 	this.category_id		+ "," +
@@ -133,6 +136,7 @@ public class Method extends PersistenceClass {
 			this.name = results.getString("name");
 			this.description = results.getString("description");
 			this.summary = results.getString("summary");
+			this.filePath = results.getString("filepath");
 			this.status_id = results.getInt("status_id");
 			this.url = results.getString("url");
 			this.user_id = results.getInt("user_id");
@@ -171,6 +175,7 @@ public class Method extends PersistenceClass {
 				tmp.summary = results.getString("summary");
 				//tmp.date_time = results.getDate("datetime");
 				tmp.url = results.getString("url");
+				tmp.filePath = results.getString("filepath");
 				//tmp.url = results.getURL("url");  //might want to switch to actual URL type
 				//
 				methods.add(tmp);
@@ -191,8 +196,10 @@ public class Method extends PersistenceClass {
 
 			ArrayList<Method> methods = new ArrayList<Method>();
 			Method tmp;
+			System.err.println("looking for methods");
 			while(results.next())
 			{
+				System.err.println("method found");
 				tmp = new Method();				
 				tmp.id = results.getInt("method_id");
 				tmp.name = results.getString("name");
@@ -201,6 +208,7 @@ public class Method extends PersistenceClass {
 				tmp.category_id = results.getInt("category_id");
 				tmp.description = results.getString("description");
 				tmp.summary = results.getString("summary");
+				tmp.filePath = results.getString("filepath");
 				//tmp.date_time = results.getDate("datetime");
 				tmp.url = results.getString("url");
 				//tmp.url = results.getURL("url");  //might want to switch to actual URL type

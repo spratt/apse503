@@ -156,18 +156,22 @@ public class MethodController extends ActionController {
 				
 					if (fileItemTemp.getFieldName().equals("filename"))
 					{
-						String fileName = FilenameUtils.getName(fileItemTemp.getName()) + "_" + System.currentTimeMillis() + "_" + ((User)request.getSession().getAttribute("user")).id + ".class";
+						// Can't munge the file name because of how java loads files
+						//String fileName = FilenameUtils.getName(fileItemTemp.getName()) + "_" + System.currentTimeMillis() + "_" + ((User)request.getSession().getAttribute("user")).id + ".class";
+						String fileName = FilenameUtils.getName(fileItemTemp.getName());
 				
 						/* Save the uploaded file if its size is greater than 0. */
 						if (fileItemTemp.getSize() > 0)
 						{
-							String dirName = "/workspace/apse503/build/classes/userMethods/";
+							String dirName = System.getProperty("user.dir") + "/apse503/build/classes/userMethods/";
 
 							File saveTo = new File(dirName + fileName);
 							try 
 							{
 								System.out.println(saveTo.getAbsolutePath());
 								fileItemTemp.write(saveTo);
+								// Just want to chop off the file extension =)
+								method.filePath = fileName.substring(0, fileName.lastIndexOf("."));
 							}
 							catch (Exception e)
 							{

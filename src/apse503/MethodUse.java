@@ -97,7 +97,8 @@ public class MethodUse extends PersistenceClass {
 		String usedQuery = "select " +
 				"count(*) as used " +
 				"from method_use " +
-				"where user_id=" + this.userID + ";";
+				"where user_id=" + this.userID + " " +
+				"and method_id=" + this.methodID;
 		try {
 			// INSERT the user into the table
 			sql.execute(usedQuery);
