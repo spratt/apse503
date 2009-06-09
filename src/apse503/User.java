@@ -2,6 +2,7 @@ package apse503;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class User extends PersistenceClass {
 
@@ -247,5 +248,70 @@ public class User extends PersistenceClass {
 		this.generateSalt();
 		// Do some hashing here ;-)
 		return toHash;
+	}
+	
+	public ArrayList<Method> getMyContributed() {
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("SELECT * FROM method where user_id=" + this.id);
+			ResultSet results = sql.getResultSet();
+
+			ArrayList<Method> methods = new ArrayList<Method>();
+			Method tmp;
+			while(results.next())
+			{
+				tmp = new Method();				
+				tmp.id = results.getInt("method_id");
+				tmp.name = results.getString("name");
+				tmp.user_id = results.getInt("user_id");
+				tmp.status_id = results.getInt("status_id");
+				tmp.category_id = results.getInt("category_id");
+				tmp.description = results.getString("description");
+				tmp.summary = results.getString("summary");
+				tmp.url = results.getString("url");
+				methods.add(tmp);
+			}
+			return methods;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<Method> getMyPurchased() {
+		if(null == sql) setUpDataSource();
+		try {
+			//sql.execute("select u.user_name AS 'Purchaser', m.name 'Method Name' " +
+			sql.execute("select * " +
+			"from method_purchase mp " +
+			"join method m " +
+			"on mp.method_id = m.method_id " +
+			"join user u " +
+			"on u.user_id = mp.user_id " +
+			"where u.user_id=" + this.id);
+			ResultSet results = sql.getResultSet();
+
+			ArrayList<Method> methods = new ArrayList<Method>();
+			Method tmp;
+			while(results.next())
+			{
+				tmp = new Method();				
+				tmp.id = results.getInt("method_id");
+				tmp.name = results.getString("name");
+				tmp.user_id = results.getInt("user_id");
+				tmp.status_id = results.getInt("status_id");
+				tmp.category_id = results.getInt("category_id");
+				tmp.description = results.getString("description");
+				tmp.summary = results.getString("summary");
+				tmp.url = results.getString("url");
+				methods.add(tmp);
+			}
+			return methods;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

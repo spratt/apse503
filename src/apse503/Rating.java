@@ -184,12 +184,13 @@ public class Rating extends PersistenceClass {
 			ResultSet results = sql.getResultSet();
 			results.next();
 			average = results.getFloat("average");
-			return (int) average;
+			//if (average != null)
+				return (int) average;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
-		return -1;
+		return 0;
 	}
 	
 	//gets the total number of ratings for a method
