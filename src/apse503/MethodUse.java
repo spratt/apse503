@@ -67,8 +67,59 @@ public class MethodUse extends PersistenceClass {
 		return false;
 	}
 	
+	public int totalPurchased() {
+		if(null == sql) setUpDataSource();
+		
+		String purchasedQuery = "select " +
+				"sum(quantity) as purchased " +
+				"from method_purchase " +
+				"inner join method_price " +
+				"on method_purchase.method_price_id = method_price.method_price_id " +
+				"where user_id=" + this.userID + " AND method_purchase.method_id="+ this.methodID +";";
+		try {
+			// INSERT the user into the table
+			sql.execute(purchasedQuery);
+			ResultSet results = sql.getResultSet();
+			
+			// Set the attribute to the new ID number
+			if(!results.next()) return -1;
+			return results.getInt("purchased");
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public int totalUsed() {
+		if(null == sql) setUpDataSource();
+		
+		String usedQuery = "select " +
+				"count(*) as used " +
+				"from method_use " +
+				"where user_id=" + this.userID + ";";
+		try {
+			// INSERT the user into the table
+			sql.execute(usedQuery);
+			ResultSet results = sql.getResultSet();
+			
+			// Set the attribute to the new ID number
+			if(!results.next()) return -1;
+			return results.getInt("used");
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
 	public boolean hasUsesLeft() {
-		// TODO code goes here
-		return false;
+		int purchased = this.totalPurchased();
+		System.err.println("Purchased: " + purchased);
+		int used = this.totalUsed();
+		System.err.println("Used: " + used);
+		int left = purchased - used;
+		System.err.println("Uses left: " + left);
+		return left>0;
 	}
 }

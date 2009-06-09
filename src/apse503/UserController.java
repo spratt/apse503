@@ -88,7 +88,7 @@ public class UserController extends ActionController {
 				render("/login.jsp",request,response);
 			} else {
 				// Authenticated!
-				request.setAttribute("flash","Welcome back, " + someone.firstName + "!");
+				//request.setAttribute("flash","Welcome back, " + someone.firstName + "!");
 				request.getSession().setAttribute("user",(Object)someone);
 				redirect(request.getContextPath() + "/user/home",request,response);
 			}

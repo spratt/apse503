@@ -16,8 +16,8 @@
 %>
 
 <c:choose>
-	<c:when test="${null == user}"> <%-- Not signed in --%>
-		  <a href="<%=root%>/user/login">Sign in</a>
+	<c:when test="${null == user}"> 
+		<%-- Not signed in --%>
 	</c:when>
 	<c:otherwise>
 		  <a href="<%=root%>/user/home">Home</a> 
