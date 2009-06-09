@@ -253,7 +253,8 @@ public class User extends PersistenceClass {
 	public ArrayList<Method> getMyContributed() {
 		if(null == sql) setUpDataSource();
 		try {
-			sql.execute("SELECT * FROM method where user_id=" + this.id);
+			sql.execute(
+					"SELECT * FROM method where user_id=" + this.id);
 			ResultSet results = sql.getResultSet();
 
 			ArrayList<Method> methods = new ArrayList<Method>();

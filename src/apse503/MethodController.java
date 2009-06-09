@@ -92,7 +92,7 @@ public class MethodController extends ActionController {
 				
 				//Builds the method object and saves the file to disk
 				method = this.HandleUpload(method, methodPrices, request);
-				System.out.println("Method:" + method.category_id + "," + method.description + "," + method.name + "," + method.status_id + "," + method.url + "," + method.user_id);
+				//System.out.println("Method:" + method.category_id + "," + method.description + "," + method.name + "," + method.status_id + "," + method.url + "," + method.user_id);
 				if(method != null)
 				{
 					if(method.save())

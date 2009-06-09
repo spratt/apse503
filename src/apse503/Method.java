@@ -217,7 +217,7 @@ public class Method extends PersistenceClass {
 				//tmp.category_id = results.getInt("category_id");
 				//tmp.description = results.getString("description");
 				tmp.summary = results.getString("summary");
-				tmp.filePath = results.getString("filepath");
+				//tmp.filePath = results.getString("filepath");
 				//tmp.date_time = results.getDate("datetime");
 				//tmp.url = results.getString("url");
 				//tmp.url = results.getURL("url");  //might want to switch to actual URL type
@@ -230,6 +230,69 @@ public class Method extends PersistenceClass {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public float getEarnedByMethod(){
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("select SUM(Total) AS 'Earned' " +
+			"from ( " +
+			"select m.method_id, m.name, price, count(mpr.method_id) AS 'Transactions', price * count(mpr.method_id) AS 'Total' " +
+			"from method m " +
+			"left join method_purchase mpr " +
+			"on m.method_id = mpr.method_id " +
+			"join method_price mp " +
+			"on mpr.method_price_id = mp.method_price_id " +
+			"where m.method_id =" + this.id + " " +
+			"group by mp.method_price_id" +
+			") a " +
+			"group by a.method_id " +
+			"order by SUM(Total) Desc");
+
+			ResultSet results = sql.getResultSet();
+			
+			if (!results.next())
+				return 0;
+			else
+				return (float) (results.getFloat("Earned")* (0.55));
+			
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public int getTotalPurchases(){
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("select SUM(Transactions) AS 'Total Purchases' " +
+			"from ( " +
+			"select m.method_id, m.name, price, count(mpr.method_id) AS 'Transactions', price * count(mpr.method_id) AS 'Total' " +
+			"from method m " +
+			"left join method_purchase mpr " +
+			"on m.method_id = mpr.method_id " +
+			"join method_price mp " +
+			"on mpr.method_price_id = mp.method_price_id " +
+			"where m.method_id =" + this.id + " " +
+			"group by mp.method_price_id" +
+			") a " +
+			"group by a.method_id " +
+			"order by SUM(Transactions) Desc");
+
+			ResultSet results = sql.getResultSet();
+			
+			if(!results.next())
+				return 0;
+			
+			else			
+				return results.getInt("Total Purchases");
+			
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return -1;
 	}
 	
 	
