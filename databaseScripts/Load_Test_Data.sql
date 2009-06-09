@@ -1,8 +1,13 @@
+/*Insert statements for credit_cards */
+INSERT INTO credit_cards VALUES (1, 'Visa', '1234567890123456', 'Foo Bar', '02', '2010', '666');
+INSERT INTO credit_cards VALUES (2, 'MasterCard', '6543210987654321', 'Foo Bar', '02', '2010', '666');
+select * from credit_cards;
+
 /*Insert static data for testing methods */
 INSERT INTO user 
 	VALUES (101,'Foo','Bar','123 4th Avenue','H0H0H0','Calgary','Alberta','Canada','foo@bar.com',NOW(),'foo','testing','123456');
 INSERT INTO method 
-	VALUES (102,'apse503.User', 101, 1, 1, 'Awesomesauce', 'The best method evar',NOW(),'apse503/useMethod/?methodID=1');
+	VALUES (102,'testPrintStringMethod', 101, 1, 1, 'Awesomesauce', 'The best method evar',NOW(),'apse503/useMethod/?methodID=1');
 INSERT INTO method_price VALUES (103,NOW(),9.99,10,102,1);
 
 /*Insert dynamic data for testing methods */
