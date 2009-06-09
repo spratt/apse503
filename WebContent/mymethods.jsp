@@ -12,19 +12,47 @@
 
 
 
+<div id ="my_purchased">
+	<label class="title">Purchased Web Methods</label><br /><br />
+	<%
+	
+	
+	ArrayList<Method> purchMethods = ((User)request.getSession().getAttribute("user")).getMyPurchased();
+	
+	if(purchMethods != null)
+	{
+		Iterator i = purchMethods.iterator();
+		
+		int ranking = 1;
+	
+		while(i.hasNext()){
+			Method meth = (Method)i.next(); 
+			Rating rating = new Rating();
+			rating.method_id = meth.getId();%>
+			<label>
+			<%=ranking %> <a href="#" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;</label><label>average:</label> <%= rating.getAverageRating()%>&nbsp;<label>count:</label> <%= rating.getRatingsCount()%><br />
+			<%= meth.summary %><br /><br />
+			<% ranking++; %>
+			<br />
+			<br />
+		<%}
+	}%>
+	
 
+</div>
 
+<hr /> 
 
 <div id="my_contrib">
-	<label class="title">My contributed methods</label><br /><br />
+	<label class="title">Contributed Web Methods</label><br /><br />
 	<%
-	Method m = new Method();
-	m.getId();
-	ArrayList<Method> methods = m.getMyContributed();
 	
-	if(methods != null)
+	
+	ArrayList<Method> contribMethods = ((User)request.getSession().getAttribute("user")).getMyContributed();
+	
+	if(contribMethods != null)
 	{
-		Iterator i = methods.iterator();
+		Iterator i = contribMethods.iterator();
 		
 		int ranking = 1;
 	
@@ -43,12 +71,7 @@
 	
 </div>
 
-<div id ="my_purchased">
-	<label class="title">My purchased methods</label><br /><br />
 
-	
-
-</div>
 <%@ include file="/nav/footer.jsp" %>
 </body>
 </html>

@@ -41,7 +41,7 @@
 <div id ="top_methods">
 	<label class="title">Top Methods</label><br /><br />
 	<%
-	ArrayList<Method> methods = new Method().getAll();
+	ArrayList<Method> methods = new Method().getTopTen();
 	
 	if(methods != null)
 	{
