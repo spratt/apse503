@@ -76,6 +76,7 @@ public class MethodPurchaseController extends ActionController {
 			request.getParameter("cardId");
 			request.getParameter("cardExpiryMonth");
 			request.getParameter("cardExpiryYear");
+			request.getParameter("cardCode");
 
 			if (!cc.isValid()) {
 				request.setAttribute("flash",
