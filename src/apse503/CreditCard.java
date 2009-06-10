@@ -20,9 +20,9 @@ public class CreditCard extends PersistenceClass {
 		this.card_code = -1;
 
 	}
-	
-	public CreditCard(String cardNumber,
-			String cardType, String cardHolderName, int cardId, int cardExpiryMonth, 
+
+	public CreditCard(String cardNumber, String cardType,
+			String cardHolderName, int cardId, int cardExpiryMonth,
 			int cardExpiryYear, int cardCode) {
 		this.card_number = cardNumber;
 		this.card_type = cardType;
@@ -30,7 +30,8 @@ public class CreditCard extends PersistenceClass {
 		this.card_id = cardId;
 		this.card_expiry_month = cardExpiryMonth;
 		this.card_expiry_year = cardExpiryYear;
-		
+		this.card_code = cardCode;
+
 	}
 
 	public boolean isValid() {
