@@ -12,6 +12,8 @@ function imposeMaxLength(Object, MaxLen)
 {
   return (Object.value.length <= MaxLen);
 }
+
+
 //-->
 </script>
 
@@ -24,8 +26,8 @@ function imposeMaxLength(Object, MaxLen)
 
 <div id="contribute_form" class="form">
 
-<form ENCTYPE='multipart/form-data' method="POST" action="<%=root%>/method/save"> 
-<!-- <form method="POST" action="<%=root%>/method/save"> -->
+<form name="contribute" ENCTYPE='multipart/form-data' method="POST" action="<%=root%>/method/save" > 
+
 <table>
 <tr>
 	<td class="label">Method name:</td><td><input type="text" id="name" name="name" /></td>
@@ -71,8 +73,10 @@ function imposeMaxLength(Object, MaxLen)
 <tr>
 	<td class="label">Rate 3:</td><td><input type="text" id="rate_three" name="rate_three" maxsize="8" length="8" /> for <input type="text" id="rate_three_uses" name="rate_three_uses" maxsize="8" length="8" /> uses.</td>
 </tr>
+<tr><td>&nbsp;</td><td><input type="checkbox" name="terms" onClick="document.contribute['submit'].disabled =(document.contribute['submit'].disabled)? false : true"> I agree to the Terms and Conditions</td></tr>
+
 <tr>
-	<td>&nbsp;</td><td><button type="submit">Submit</button></td>
+	<td>&nbsp;</td><td><input type="submit" name="submit" id="submit" value="Submit Method" disabled /></td>
 </tr>
 </table>
 </form>
