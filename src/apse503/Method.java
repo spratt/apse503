@@ -230,7 +230,7 @@ public class Method extends PersistenceClass {
 		return null;
 	}
 	
-	public float getEarnedByMethod(){
+	public double getEarnedByMethod(){
 		if(null == sql) setUpDataSource();
 		try {
 			sql.execute("select SUM(Total) AS 'Earned' " +
@@ -252,7 +252,7 @@ public class Method extends PersistenceClass {
 			if (!results.next())
 				return 0;
 			else
-				return (float) (results.getFloat("Earned")* (0.55));
+				return (results.getDouble("Earned")* (0.55));
 			
 		} catch (SQLException e) {
 			// TODO log exception

@@ -38,6 +38,11 @@ public class MethodController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
+			
+			else{
+			
 			Method method = new Method();
 			
 			// Ensure the parameter is in fact an Integer
@@ -50,6 +55,7 @@ public class MethodController extends ActionController {
 			}
 						
 			render("/method.jsp",request,response);
+			}
 		}
 	}
 	
@@ -57,10 +63,16 @@ public class MethodController extends ActionController {
 
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
+			
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
+			
+			else{
 
 			request.setAttribute("categories", new Category().getAll());
 						
 			render("/contribute.jsp",request,response);
+			}
 		}
 	}
 	
@@ -68,14 +80,23 @@ public class MethodController extends ActionController {
 
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
-						
-			render("/mymethods.jsp",request,response);
+			
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
+			
+			else
+				render("/mymethods.jsp",request,response);
 		}
 	}
 	
 	public class save extends Action{
 		
-		public void start(HttpServletRequest request, HttpServletResponse response){			
+		public void start(HttpServletRequest request, HttpServletResponse response){	
+			
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
+			
+			else{
 			
 			try{
 				//Create the new method then set its attributes from request's parameters
@@ -120,6 +141,7 @@ public class MethodController extends ActionController {
 			}
 			
 			render("/mymethods.jsp",request,response);
+			}
 		}
 		
 		private Method HandleUpload(Method method, ArrayList<MethodPrice> methodPrices, HttpServletRequest request)

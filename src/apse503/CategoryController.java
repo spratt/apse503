@@ -31,15 +31,20 @@ public class CategoryController extends ActionController {
 
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
-			Category category = new Category();
-			try{
-				int categoryID = Integer.parseInt(request.getParameter("id"));
-				request.setAttribute("method", category.get(categoryID));	
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
+			
+			else{
+				Category category = new Category();
+				try{
+					int categoryID = Integer.parseInt(request.getParameter("id"));
+					request.setAttribute("method", category.get(categoryID));	
+				}
+				catch(NumberFormatException nfe){
+					nfe.printStackTrace();
+				}
+				render("/method.jsp",request,response);
 			}
-			catch(NumberFormatException nfe){
-				nfe.printStackTrace();
-			}
-			render("/method.jsp",request,response);
 		}
 	}
 	
@@ -49,10 +54,15 @@ public class CategoryController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			
-			Category category = new Category();
-			request.setAttribute("method", category.getAll());
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
 			
-			render("/method.jsp",request,response);
+			else{
+				Category category = new Category();
+				request.setAttribute("method", category.getAll());
+				
+				render("/method.jsp",request,response);
+			}
 		}
 	}
 	
@@ -61,23 +71,33 @@ public class CategoryController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
 			
-			render("/categories.jsp",request,response);
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
+			
+			else
+				render("/categories.jsp",request,response);
 		}
 	}
 	
 	public class save extends Action{
 		
-		public void start(HttpServletRequest request, HttpServletResponse response){			
+		public void start(HttpServletRequest request, HttpServletResponse response){
 			
-			Category category = new Category();
-			category.category = request.getParameter("category");
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
 			
-			if(category.save())
-				request.setAttribute("flash", "Category Save was Sucessful");
-			else
-				request.setAttribute("flash", "Category Save was Unsucessful");
+			else{
 			
-			render("/method.jsp",request,response);
+				Category category = new Category();
+				category.category = request.getParameter("category");
+				
+				if(category.save())
+					request.setAttribute("flash", "Category Save was Sucessful");
+				else
+					request.setAttribute("flash", "Category Save was Unsucessful");
+				
+				render("/method.jsp",request,response);
+			}
 		}
 	}
 }
