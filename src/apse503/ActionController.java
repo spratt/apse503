@@ -34,8 +34,8 @@ public abstract class ActionController extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public ActionController(){
-		getActions = new HashMap<String,Action>();
-		postActions = new HashMap<String,Action>();
+		getActions = new DispatchMap("get");
+		postActions = new DispatchMap("post");
 	}
 
 	/**
@@ -57,6 +57,7 @@ public abstract class ActionController extends HttpServlet {
 		String pathInfo = request.getPathInfo();
 		if(!toDispatch.containsKey(pathInfo)) {
 			System.err.println("Dispatch Error");
+			System.err.println("Method was: '" + toDispatch + "'");
 			System.err.println("RequestURI was: '" + request.getRequestURI() + "'");
 			System.err.println("PathInfo was:   '" + pathInfo                + "'");
 			render(errorJSP, request, response);
@@ -151,5 +152,19 @@ public abstract class ActionController extends HttpServlet {
 	public abstract class Action {
 		
 		public abstract void start(HttpServletRequest request, HttpServletResponse response);
+	}
+	
+	public class DispatchMap extends HashMap<String,Action>{
+		private static final long serialVersionUID = -5757194562376737591L;
+		
+		String name;
+		
+		public DispatchMap(String name){
+			this.name = name;
+		}
+		
+		public String toString() {
+			return name;
+		}
 	}
 }
