@@ -283,7 +283,6 @@ public class User extends PersistenceClass {
 	public ArrayList<Method> getMyPurchased() {
 		if(null == sql) setUpDataSource();
 		try {
-			//sql.execute("select u.user_name AS 'Purchaser', m.name 'Method Name' " +
 			sql.execute("select * " +
 			"from method_purchase mp " +
 			"join method m " +

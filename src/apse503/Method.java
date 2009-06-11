@@ -1,5 +1,6 @@
 package apse503;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class Method extends PersistenceClass {
 			   status_id,
 			   category_id;
 	
-	//public Date dateTime;
+	public Date dateTime;
 	
 	public Method() {
 		this.name = "";
@@ -28,7 +29,7 @@ public class Method extends PersistenceClass {
 		this.user_id = -1;
 		this.status_id = -1;
 		this.category_id = -1;
-		//this.dateTime = null;
+		this.dateTime = null;
 	}
 	
 	// Create a new method from an old method
@@ -230,7 +231,7 @@ public class Method extends PersistenceClass {
 		return null;
 	}
 	
-	public double getEarnedByMethod(){
+	public String getEarnedByMethod(){
 		if(null == sql) setUpDataSource();
 		try {
 			sql.execute("select SUM(Total) AS 'Earned' " +
@@ -250,15 +251,14 @@ public class Method extends PersistenceClass {
 			ResultSet results = sql.getResultSet();
 			
 			if (!results.next())
-				return 0;
+				return "$0.00";
 			else
-				return (results.getDouble("Earned")* (0.55));
-			
+				return new java.text.DecimalFormat("$0.00").format((results.getDouble("Earned")* (0.55)));
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
-		return -1;
+		return "$0.00";
 	}
 	
 	public int getTotalPurchases(){
@@ -290,8 +290,7 @@ public class Method extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
-		return -1;
+		return 0;
 	}
-	
 	
 }

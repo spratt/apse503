@@ -30,6 +30,7 @@ public class MethodController extends ActionController {
 		addPostAction("/save", new save());
 		addGetAction("/submit", new submit());
 		addGetAction("/show", new show());
+		addGetAction("/view", new view());
 	}
 	
 	// Like a controller method in grails
@@ -56,6 +57,19 @@ public class MethodController extends ActionController {
 						
 			render("/method.jsp",request,response);
 			}
+		}
+	}
+	
+	public class view extends Action{
+
+		@Override
+		public void start(HttpServletRequest request, HttpServletResponse response) {
+			
+			if(null == request.getSession().getAttribute("user")) // not logged in
+				redirect(request.getContextPath() + "/user/login",request,response);
+			
+			else
+				render("/method.jsp",request,response);
 		}
 	}
 	

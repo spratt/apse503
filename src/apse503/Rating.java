@@ -212,4 +212,46 @@ public class Rating extends PersistenceClass {
 		}
 		return -1;
 	}
+	
+	public int getMyRatingForThisMethod(int user_id){
+		
+		int rating = 0;
+		
+		if (null == sql)
+			setUpDataSource();
+		
+		try {
+			sql.execute("SELECT rating from rating where method_id="+ this.method_id + " and user_id =" + user_id);
+			ResultSet results = sql.getResultSet();
+			results.next();
+			rating = results.getInt("rating");
+			return rating;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		
+		return -1;
+	}
+	
+public String getMyCommentForThisMethod(int user_id){
+		
+		String comment = null;
+		
+		if (null == sql)
+			setUpDataSource();
+		
+		try {
+			sql.execute("SELECT comment from rating where method_id="+ this.method_id + " and user_id =" + user_id);
+			ResultSet results = sql.getResultSet();
+			results.next();
+			comment = results.getString("comment");
+			return comment;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 }
