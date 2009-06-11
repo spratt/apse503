@@ -205,10 +205,8 @@ public class Method extends PersistenceClass {
 
 			ArrayList<Method> methods = new ArrayList<Method>();
 			Method tmp;
-			System.err.println("looking for methods");
 			while(results.next())
 			{
-				System.err.println("method found");
 				tmp = new Method();				
 				tmp.id = results.getInt("method_id");
 				tmp.name = results.getString("name");
