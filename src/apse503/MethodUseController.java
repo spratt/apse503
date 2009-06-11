@@ -73,6 +73,7 @@ public class MethodUseController extends ActionController {
 				userMethod = (UserMethod)Class.forName("userMethods." + thisMethod.filePath).newInstance();
 	 		}catch(Exception e) {
 				// The method could not be found, abort!  Abort!
+	 			e.printStackTrace();
 				request.setAttribute("flash", "There was an error loading class: '" + "userMethods." + thisMethod.filePath + "'");
 				redirect(request.getContextPath() + "/user/home",request,response);
 				return;
