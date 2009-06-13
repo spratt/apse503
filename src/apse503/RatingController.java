@@ -6,6 +6,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import apse503.ActionController.Action;
 import apse503.UserController.authenticate;
 
 /**
@@ -27,6 +28,7 @@ public class RatingController extends ActionController {
 		addPostAction("/get", new get());
 		addPostAction("/save", new save());
 		addGetAction("/submit", new submit());
+		addGetAction("/authenticate", new authenticate());
 	}
 
 	// Like a controller method in grails
@@ -42,8 +44,7 @@ public class RatingController extends ActionController {
 			try {
 				int ratingID = Integer.parseInt(request
 						.getParameter("id"));
-				request
-						.setAttribute("rating", rating.getId());
+				request.setAttribute("rating", rating.getId());
 				
 			} catch (NumberFormatException nfe) {
 				nfe.printStackTrace();
@@ -65,6 +66,32 @@ public class RatingController extends ActionController {
 			render("/method.jsp", request, response);
 		}
 	}
+	
+	public class authenticate extends Action {
+
+		@Override
+		public void start(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			Rating rating = new Rating();
+			request.getParameter("comment");
+			request.getParameter("rating");
+			request.getParameter("ratingId");
+			request.getParameter("userId");
+			request.getParameter("methodId");
+			request.getParameter("dateTime");
+
+			if (!rating.isValid()) {
+				request.setAttribute("flash",
+						"Invalid credit card number, please try again.");
+				render("/rating.jsp", request, response);
+			} else {
+				// Authenticated!
+				redirect(request.getContextPath() + "/rating.jsp",
+						request, response);
+			}
+		}
+	}
 
 	public class save extends Action {
 
@@ -74,23 +101,22 @@ public class RatingController extends ActionController {
 			try {
 				// Create the new method then set its attributes from request's
 				// parameters
-				MethodPurchase mp = new MethodPurchase();
+				Rating rating = new Rating();
 
-				mp.method_purchase_id = 1; // Integer.parseInt(request.getParameter("methodpurchase")).id;
-				mp.user_id = 1; // ((User)request.getSession().getAttribute("user")).id;
-				mp.method_id = 1; // Integer.parseInt(request.getParameter("methodid");
-				mp.method_price_id = 1; // Integer.parseInt(request.getParameter("methodpriceid");
-				mp.paid_developer = 1; // Integer.parseInt(request.getParameter("paid_developer");
 
-				boolean saveResult = mp.save();
+				rating.user_id = 1; 
+				rating.method_id = 1; 
+				
+
+				boolean saveResult = rating.save();
 				System.out.println("status:" + saveResult);
 
-				if (mp.save())
+				if (rating.save())
 					request.setAttribute("flash",
-							"rating Save was Sucessful");
+							"Rating Save was Sucessful");
 				else
 					request.setAttribute("flash",
-							"rating Save was Unsucessful");
+							"Rating Save was Unsucessful");
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -100,5 +126,5 @@ public class RatingController extends ActionController {
 			render("/rating.jsp", request, response);
 		}
 	}
-}
 
+}
