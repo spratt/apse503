@@ -22,16 +22,16 @@ public class Rating extends PersistenceClass {
 		this.dateTime = null;
 	}
 
-	// Create a new rating from an old rating
-	// Mostly for testing purposes, but could serve other uses ;-)
-	public Rating(Rating originalRating) {
+	public Rating(String comment, int rating,
+			int ratingId, int userId, int methodId,
+			Date dateTime) {
+		this.comment = comment;
+		this.rating = rating;
+		this.rating_id = ratingId;
+		this.user_id = userId;
+		this.method_id = methodId;
+		this.dateTime = dateTime;
 
-		this.comment = originalRating.comment;
-		this.rating = originalRating.rating;
-		this.rating_id = originalRating.rating_id;
-		this.user_id = originalRating.user_id;
-		this.method_id = originalRating.method_id;
-		this.dateTime = originalRating.dateTime;
 	}
 
 	public boolean isValid() {
