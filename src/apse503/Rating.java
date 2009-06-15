@@ -173,9 +173,9 @@ public class Rating extends PersistenceClass {
 	}
 	
 	//gets the average rating for a method
-	public int getAverageRating(){
+	public double getAverageRating(){
 		
-		float average = 0;
+		double average = 0;
 		if (null == sql)
 			setUpDataSource();
 		
@@ -183,9 +183,9 @@ public class Rating extends PersistenceClass {
 			sql.execute("SELECT AVG(rating) AS average from rating where method_id="+ this.method_id);
 			ResultSet results = sql.getResultSet();
 			results.next();
-			average = results.getFloat("average");
+			average = results.getDouble("average");
 			//if (average != null)
-				return (int) average;
+				return average;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
