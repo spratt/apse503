@@ -21,6 +21,7 @@ Name: <%=method.name %>
 Summary:<%=method.summary %>
 <br>
 <br>
+<form>
 Rate option: <input type="radio" checked="checked" name="rate"
 	value="Option1"> Option 1 <br>
 <input type="radio" name="rate" value="Option2"> Option 2 <br>
