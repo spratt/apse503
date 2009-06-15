@@ -2,6 +2,7 @@ package apse503;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class MethodPrice extends PersistenceClass{
@@ -25,6 +26,38 @@ public class MethodPrice extends PersistenceClass{
 		valid = valid && price    > 0  && price    < 1000000;
 		
 		return valid;
+	}
+	
+	public ArrayList get(int id){
+		
+		if(null == sql) setUpDataSource();
+						
+		try {
+			String select = "SELECT * FROM method_price WHERE method_price_status_id = 1 AND method_id = " + id + " ORDER BY price ASC;";
+			sql.execute(select);
+			ResultSet results = sql.getResultSet();
+
+			ArrayList<MethodPrice> prices = new ArrayList<MethodPrice>();
+			MethodPrice tmp;
+			
+			while(results.next())
+			{
+				tmp = new MethodPrice();				
+				tmp.method_price_id = results.getInt("method_price_id");
+				tmp.price = results.getDouble("price");
+				tmp.quantity = results.getInt("quantity");
+				tmp.method_id = results.getInt("method_id");
+				tmp.method_price_status_id = results.getInt("method_price_status_id");
+
+				prices.add(tmp);
+			}
+			return prices;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 	public boolean save() {

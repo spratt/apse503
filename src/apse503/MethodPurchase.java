@@ -57,22 +57,14 @@ public class MethodPurchase extends PersistenceClass {
 			setUpDataSource();
 		}
 		
-		// Don't save if the method is invalid
-		if (!this.isValid()) return false;
-		
-		if (this.isSaved()) {
-			// UPDATE ROW IN TABLE
-			// Return true if sql executed properly
-		} 
-		else {
+		try{			
 			String insert;
-			insert  = "INSERT INTO method" 		+
+			insert  = "INSERT INTO method_purchase" 		+
 					 "("						+
-					 	"user_id," 				+
-					 	"method_id"				+
-					 	"method_price_id"		+
-					 	"method_purchase_id"	+
-					 	"paid_developer"		+
+					 	"user_id, "				+
+					 	"method_id, "			+
+					 	"method_price_id, "		+
+					 	"paid_developer, "		+
 					 	"date_time"				+
 					 ") "						+
 					 "VALUES"					+
@@ -80,28 +72,26 @@ public class MethodPurchase extends PersistenceClass {
 					 	this.user_id			+ "," +
 					 	this.method_id			+ "," +
 					 	this.method_price_id	+ "," +
-					 	this.method_purchase_id + "," +
 					 	this.paid_developer		+ "," +
-					 	this.dateTime			+
+					 	"now()"					+
 					 "); ";
+			System.out.println (insert);
 			String select =  "select last_insert_id() as user_id"; // grab the id of this new method
+						
+			// INSERT the user into the table
+			sql.execute(insert);
+			sql.execute(select);
+			ResultSet results = sql.getResultSet();
 			
-			try {
-				// INSERT the user into the table
-				sql.execute(insert);
-				sql.execute(select);
-				ResultSet results = sql.getResultSet();
-				
-				// Set the attribute to the new ID number
-				if(!results.next()) return false;
-				this.id = results.getInt("method_purchase_id");
-				return true;
-			} 
-			catch (SQLException e) {
-				// TODO log exception
-				e.printStackTrace();
-			}
-		}
+			// Set the attribute to the new ID number
+			if(!results.next()) return false;
+			this.id = results.getInt("method_purchase_id");
+			return true;
+		} 
+		catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}	
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
 		return false;
