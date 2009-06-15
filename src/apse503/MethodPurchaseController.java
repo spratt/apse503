@@ -23,9 +23,29 @@ public class MethodPurchaseController extends ActionController {
 		addPostAction("/get", new get());
 		addPostAction("/save", new save());
 		addGetAction("/submit", new submit());
+		addGetAction("/approve", new approve());
 		addGetAction("/autenticate", new authenticate());
 	}
+	
+	public class approve extends Action {
 
+		@Override
+		public void start(HttpServletRequest request,HttpServletResponse response) {
+
+			try{
+				Method method = new Method();
+				int methodID = Integer.parseInt(request.getParameter("id"));
+				System.out.println(methodID);
+				request.setAttribute("method", method.get(methodID));	
+			}
+			catch(NumberFormatException nfe){
+				nfe.printStackTrace();
+			}
+						
+			render("/purchase.jsp",request,response);
+		}
+	}
+	
 	// Like a controller method in grails
 	public class get extends Action {
 

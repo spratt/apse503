@@ -12,9 +12,9 @@
 <%
 	User myUser = ((User)request.getSession().getAttribute("user"));
 	Method m = new Method(); 
-	m.get(1);
+	m.get(Integer.parseInt(request.getParameter("method")));
 	Rating r = new Rating();
-	r.method_id = m.getId();
+	r.method_id = m.id;
 %>
 	
 	Method name: <%=m.name %><br />
@@ -22,9 +22,10 @@
 	Detailed description: <%=m.description %><br />
 	Rating: <%=r.getAverageRating() %><br />
 	Number of reviews: <%=r.getRatingsCount() %>&nbsp;<u>view ratings link to be added</u><br /><br />
-	Created by: <%=myUser.userName %> 
+	Created by: <%=myUser.userName %> <br /><br />
 	
-	
+
+<a href="<%=root%>/purchase/approve?id=<%=m.id %>">Purchase Method</a>
 
 </body>
 </html>
