@@ -4,7 +4,7 @@
 <%
 	String root = request.getContextPath();
 %>
-<img src="<%=root%>/images/main_logo.gif" style="float: right; margin: 4px" />
+<img src="<%=root%>/images/ravenbay_logo.jpg" style="position:absolute;top:10px;right:475px;" width="174" height="89" border="1" />
 <style type="text/css">
 <%@ include file="../css/web.css" %>
 </style>

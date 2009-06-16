@@ -210,10 +210,10 @@ public class Rating extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
-		return -1;
+		return 0;
 	}
 	
-	public int getMyRatingForThisMethod(int user_id){
+	/**public int getMyRatingForThisMethod(int user_id){
 		
 		int rating = 0;
 		
@@ -231,10 +231,10 @@ public class Rating extends PersistenceClass {
 			e.printStackTrace();
 		}
 		
-		return -1;
-	}
+		return 0;
+	}*/
 	
-public String getMyCommentForThisMethod(int user_id){
+	/**public String getMyCommentForThisMethod(int user_id){
 		
 		String comment = null;
 		
@@ -249,6 +249,32 @@ public String getMyCommentForThisMethod(int user_id){
 			return comment;
 		} catch (SQLException e) {
 			// TODO log exception
+			e.printStackTrace();
+		}
+		
+		return null;
+	}*/
+	
+	public String getMyReview(int user_id){
+		
+		String review = null;
+		String query = null;
+		
+		if (null == sql)
+			setUpDataSource();
+		
+		try {
+			query = "SELECT rating, comment from rating where method_id="+ this.method_id + " and user_id =" + user_id;
+			sql.execute(query);
+			ResultSet results = sql.getResultSet();
+			if(results.next()) {
+				int rating = results.getInt("rating");
+				String comment = results.getString("comment");
+				review = rating + " " + comment;
+				return review;
+			}
+		} catch (SQLException e) {
+			System.err.println("QUERY: " + query);
 			e.printStackTrace();
 		}
 		

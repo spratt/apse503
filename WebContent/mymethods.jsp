@@ -14,10 +14,13 @@
 
 <div id ="my_purchased">
 	<label class="title">Purchased Web Methods</label><br /><br />
-	<%
+	
+ 	<%
 	User myUser = ((User)request.getSession().getAttribute("user"));
 	
 	ArrayList<Method> purchMethods = myUser.getMyPurchased();
+	
+	String review = null;
 	
 	if(purchMethods != null)
 	{
@@ -28,9 +31,13 @@
 		while(i.hasNext()){
 			Method meth = (Method)i.next(); 
 			Rating rating = new Rating();
-			rating.method_id = meth.getId();%>
-			<label>
-			<%=ranking %> <a href="<%=root%>/method/view" id="<%=meth.getId() %>"><%= meth.name %></a></label>&nbsp;rating: <%=rating.getMyRatingForThisMethod(myUser.getId())%>&nbsp;comment: <%=rating.getMyCommentForThisMethod(myUser.getId())%>
+			rating.method_id = meth.id;
+			review = rating.getMyReview(myUser.getId()); %>
+			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.id%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;My rating: 
+			<c:choose>
+				<c:when test="${empty review}"><input type="text" id="comment" name="comment" />&nbsp;<input type="submit" value="add" /></c:when>
+				<c:otherwise><%=review%></c:otherwise>
+			</c:choose>
 			<% ranking++; %>
 			<br />
 			<br />
@@ -59,7 +66,7 @@
 	    
 		while(i.hasNext()){
 			Method meth = (Method)i.next();%>
-			<td><%=ranking %> <a href="<%=root%>/method/view" id="<%=meth.getId() %>"><%= meth.name %></a></td>&nbsp;&nbsp;<td>Times Purchased: <%= meth.getTotalPurchases()%></td>&nbsp;&nbsp;<td>Money earned: <%= meth.getEarnedByMethod()%></td>
+			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.id%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;&nbsp;Times Purchased: <%= meth.getPurchaseDetails()%>
 			<% ranking++; %>
 			<br />
 			<br />

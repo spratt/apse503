@@ -199,7 +199,7 @@ public class MethodController extends ActionController {
 						/* Save the uploaded file if its size is greater than 0. */
 						if (fileItemTemp.getSize() > 0)
 						{
-							String ps = File.pathSeparator;
+							String ps = "/";
 							String dirName = System.getProperty("user.dir") + ps + "apse503" + ps + "src" + ps + "userMethods" + ps;
 
 							File saveTo = new File(dirName + fileName);

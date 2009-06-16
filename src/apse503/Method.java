@@ -321,4 +321,38 @@ public class Method extends PersistenceClass {
 		return 0;
 	}
 	
+	public String getPurchaseDetails(){
+		
+			if(null == sql) setUpDataSource();
+			try {
+				sql.execute("select SUM(Total) AS 'Earned', SUM(Transactions) AS 'Total Purchases' " +
+				"from ( " +
+				"select m.method_id, m.name, price, count(mpr.method_id) AS 'Transactions', price * count(mpr.method_id) AS 'Total' " +
+				"from method m " +
+				"left join method_purchase mpr " +
+				"on m.method_id = mpr.method_id " +
+				"join method_price mp " +
+				"on mpr.method_price_id = mp.method_price_id " +
+				"where m.method_id =" + this.id + " " +
+				"group by mp.method_price_id" +
+				") a " +
+				"group by a.method_id " +
+				"order by SUM(Transactions) Desc");
+
+				ResultSet results = sql.getResultSet();
+				
+				if(!results.next())
+					return "0 for $0.00";
+				
+				else			
+					return (results.getInt("Total Purchases") + " for " + new java.text.DecimalFormat("$0.00").format((results.getDouble("Earned")* (0.55))));
+				
+			} catch (SQLException e) {
+				// TODO log exception
+				e.printStackTrace();
+			}
+			return "0 for $0.00";
+		
+	}
+	
 }

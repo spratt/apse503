@@ -56,3 +56,45 @@ div.flash {
 	border: solid 2px #f99;
 	color: white;
 }
+
+body {
+background-color:#F9F9F8;
+width:800px;
+height:600px;
+
+}
+
+.main_nav {
+
+width:500px;
+height:200px;
+}
+
+.main_title {
+color:#790033;
+font-size:20px;
+padding-left:10px;
+}
+
+.main_nav_links {
+width:500px;
+height:25px;
+}
+
+p.nav {
+padding:0px 30px 0px 40px;
+display:inline;
+}
+
+p.text1 {
+font-size:12px;
+padding-left:10px;
+}
+
+.input {
+display:inline;
+position:absolute;
+top:150px;
+right:475px;
+
+}
