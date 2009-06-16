@@ -15,7 +15,8 @@ public class Method extends PersistenceClass {
 	
 	//public URL url;  //if we switch to actual URL instead of a url String attribute
 	
-	public int user_id,
+	public int id,
+			   user_id,
 			   status_id,
 			   category_id;
 	

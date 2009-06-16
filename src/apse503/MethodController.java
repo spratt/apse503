@@ -26,7 +26,7 @@ public class MethodController extends ActionController {
 	public MethodController() {
 		// Like UrlMappings in grails, only you don't have to worry about which order they're in!
 		addDefaultGetAction(new get());
-		addPostAction("/get", new get());
+		addGetAction("/get", new get());
 		addPostAction("/save", new save());
 		addGetAction("/submit", new submit());
 		addGetAction("/show", new show());

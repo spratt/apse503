@@ -14,6 +14,12 @@
 		<servlet-class>apse503.MethodController</servlet-class>
 	</servlet>
 	<servlet>
+		<description>The dispatcher for requests on the method purchase model.</description>
+		<display-name>MethodPurchaseController</display-name>
+		<servlet-name>MethodPurchaseController</servlet-name>
+		<servlet-class>apse503.MethodPurchaseController</servlet-class>
+	</servlet>
+	<servlet>
 		<description>The dispatcher for requests on the methodUse model.</description>
 		<display-name>MethodUseController</display-name>
 		<servlet-name>MethodUseController</servlet-name>
@@ -32,6 +38,10 @@
 	<servlet-mapping>
 		<servlet-name>MethodController</servlet-name>
 		<url-pattern>/method/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MethodPurchaseController</servlet-name>
+		<url-pattern>/purchase/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>MethodUseController</servlet-name>

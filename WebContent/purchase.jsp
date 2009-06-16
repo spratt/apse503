@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" import="java.util.*,apse503.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,13 +9,16 @@
 </head>
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
+<%
+	Method method = new Method();
+	method.get(Integer.parseInt(request.getParameter("id")));
+%>
 <p>Some texts to explain the purchasing details</p>
 
 <h3>Method Details</h3>
-<form action="">Method name: <input type="text" name="Mname"
-	value="Method name"> <br>
+Name: <%=method.name %>
 <br>
-Summary: <input type="text" name="Msummary" value="Method summary">
+Summary:<%=method.summary %>
 <br>
 <br>
 Rate option: <input type="radio" checked="checked" name="rate"
