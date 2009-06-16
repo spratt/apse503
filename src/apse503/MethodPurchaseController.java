@@ -24,7 +24,32 @@ public class MethodPurchaseController extends ActionController {
 		addPostAction("/save", new save());
 		addGetAction("/submit", new submit());
 		addGetAction("/approve", new approve());
+		addPostAction("/buy", new buy());
 		addGetAction("/autenticate", new authenticate());
+	}
+	
+	public class buy extends Action {
+
+		@Override
+		public void start(HttpServletRequest request,HttpServletResponse response) {
+
+			try{
+				MethodPurchase purchase = new MethodPurchase();
+				
+				purchase.method_id = Integer.parseInt(request.getParameter("methodid"));
+				purchase.method_price_id = Integer.parseInt(request.getParameter("rate"));
+				purchase.user_id = ((User)request.getSession().getAttribute("user")).id;
+				purchase.paid_developer = 0;
+				
+				System.out.println(purchase.method_price_id);
+				purchase.save();
+			}
+			catch(NumberFormatException nfe){
+				nfe.printStackTrace();
+			}
+						
+			render("/home.jsp",request,response);
+		}
 	}
 	
 	public class approve extends Action {

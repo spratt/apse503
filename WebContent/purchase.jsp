@@ -7,24 +7,39 @@
 <title>Purchase form</title>
 
 </head>
+
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
+<form method="POST" action="<%=root%>/purchase/buy">
 <%
 	Method method = new Method();
+	MethodPrice price = new MethodPrice();
 	method.get(Integer.parseInt(request.getParameter("id")));
+	ArrayList<MethodPrice> prices = price.get(method.id);
+	
 %>
 <p>Some texts to explain the purchasing details</p>
 
 <h3>Method Details</h3>
 Name: <%=method.name %>
+<input type="hidden" name="methodid" id="methodid" value="<%=method.id %>"></input>
 <br>
 Summary:<%=method.summary %>
 <br>
 <br>
-Rate option: <input type="radio" checked="checked" name="rate"
-	value="Option1"> Option 1 <br>
-<input type="radio" name="rate" value="Option2"> Option 2 <br>
-<input type="radio" name="rate" value="Option3"> Option 3 <br>
+Rate option:<br /> 
+<%
+if(prices != null)
+{
+	Iterator i = prices.iterator();
+
+	while(i.hasNext()){
+		MethodPrice p = (MethodPrice)i.next(); %>
+		<input type="radio" checked="checked" name="rate" id="rate" value="<%=p.method_price_id %>"> <%=p.quantity %> - $<%=p.price %> <br>
+	<%}
+}
+%>
+
 <p>
 ------------------------------------------------------------------</p>
 <br>
