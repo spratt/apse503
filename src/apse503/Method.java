@@ -152,6 +152,33 @@ public class Method extends PersistenceClass {
 		return null;
 	}
 	
+	public Method findByFilepath(String filepath) {
+		
+		if(null == sql){ 
+			setUpDataSource();
+		}
+		try {
+			sql.execute("SELECT * FROM method WHERE filepath=" + filepath);
+			ResultSet results = sql.getResultSet();
+			if(!results.next()) return null;
+			this.id = results.getInt("method_id");
+			this.name = results.getString("name");
+			this.description = results.getString("description");
+			this.summary = results.getString("summary");
+			this.filePath = results.getString("filepath");
+			this.status_id = results.getInt("status_id");
+			this.url = results.getString("url");
+			this.user_id = results.getInt("user_id");
+			this.category_id = results.getInt("category_id");
+			return this;
+		} 
+		catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	public boolean isSaved() {
 		// not unsaved means saved
 		return this.id != UNSAVED_ID;
