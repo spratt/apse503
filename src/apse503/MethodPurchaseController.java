@@ -107,7 +107,7 @@ public class MethodPurchaseController extends ActionController {
 				nfe.printStackTrace();
 			}
 
-			render("/method_purchase.jsp", request, response);
+			render("/purchase.jsp", request, response);
 		}
 	}
 
@@ -142,10 +142,10 @@ public class MethodPurchaseController extends ActionController {
 			if (!cc.isValid()) {
 				request.setAttribute("flash",
 						"Invalid credit card number, please try again.");
-				render("/method_purchase.jsp", request, response);
+				render("/purchase.jsp", request, response);
 			} else {
 				// Authenticated!
-				redirect(request.getContextPath() + "/method_purchase.jsp",
+				redirect(request.getContextPath() + "/purchase.jsp",
 						request, response);
 			}
 		}
@@ -182,7 +182,7 @@ public class MethodPurchaseController extends ActionController {
 				request.setAttribute("flash", "false");
 			}
 
-			render("/method_purchase.jsp", request, response);
+			render("/purchase.jsp", request, response);
 		}
 	}
 
