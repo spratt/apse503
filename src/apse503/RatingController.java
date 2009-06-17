@@ -12,6 +12,7 @@ import apse503.UserController.authenticate;
 /**
  * Servlet implementation class RatingController
  */
+@SuppressWarnings("unused")
 public class RatingController extends ActionController {
 	/*
 	 * Just let eclipse generate one of these for your class. HOW??
@@ -103,7 +104,9 @@ public class RatingController extends ActionController {
 				// parameters
 				Rating rating = new Rating();
 
-
+				rating.comment = request.getParameter("comment");
+				rating.rating = 1;
+				rating.rating_id = 1;
 				rating.user_id = 1; 
 				rating.method_id = 1; 
 				
