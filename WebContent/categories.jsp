@@ -7,7 +7,6 @@
 <title>Web Method Categories</title>
 </head>
 <body>
-
 <%@ include file="/nav/main-nav.jsp" %>
 
 <div id ="top_methods">
