@@ -53,15 +53,32 @@ Card Type: <select name="Card types">
 <br>
 Card Number: <input type="text" name="Cardnumber"> <br>
 	
-Expiry: <select name="Expiry">
-<option value="month">mm</option>
+Expiry: <select name="ExpiryMonth">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="2">3</option>
+<option value="2">4</option>
+<option value="2">5</option>
+<option value="2">6</option>
+<option value="2">7</option>
+<option value="2">8</option>
+<option value="2">9</option>
+<option value="2">10</option>
+<option value="2">11</option>
+<option value="2">12</option>
 </select>
-<select name="Expiry1">
-<option value="year">yyyy</option>
+<select name="ExpiryYear">
+<option value="2009">2009</option>
+<option value="2010">2010</option>
+<option value="2011">2011</option>
+<option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
 </select>
 <br>
 Cardholder Name: <input type="text" name="Cardname"> <br>
-Code: <input type="text" name="Code"> <br>
+Code: <input type="text" name="code"> <br>
 <br>
 <input type="submit" value="Purchase Now" />
 <br>

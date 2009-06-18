@@ -124,4 +124,32 @@ public class MethodPurchase extends PersistenceClass {
 		// not unsaved means saved
 		return this.id != UNSAVED_ID;
 	}
+	
+	public boolean isValidCreditCard(String creditCardNumber, int expiryMonth, int expiryYear, String cardHolder, int code)	
+	{		
+		if(null == sql){ 
+			setUpDataSource();
+		}
+		try {
+			String query =  "SELECT * " 				+
+							"FROM credit_cards " 		+
+							"WHERE card_number = '"		+ creditCardNumber 	+ "' " +
+							"AND card_holder_name = '" 	+ cardHolder 		+ "' " +
+							"AND card_expiry_month = " 	+ expiryMonth 		+ " " +
+							"AND card_expiry_year = " 	+ expiryYear 		+ " " +
+							"AND card_code = " 			+ code 				+ ";";
+			
+			System.out.println(query);
+			
+			sql.execute(query);
+			ResultSet results = sql.getResultSet();
+			if(results.next()) 
+				return true;		
+		} 
+		catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

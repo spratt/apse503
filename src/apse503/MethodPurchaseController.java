@@ -33,25 +33,41 @@ public class MethodPurchaseController extends ActionController {
 		@Override
 		public void start(HttpServletRequest request,HttpServletResponse response) {
 
-			try{
-				MethodPurchase purchase = new MethodPurchase();
-				
-				purchase.method_id = Integer.parseInt(request.getParameter("methodid"));
-				purchase.method_price_id = Integer.parseInt(request.getParameter("rate"));
-				purchase.user_id = ((User)request.getSession().getAttribute("user")).id;
-				purchase.paid_developer = 0;
-				
-				System.out.println(purchase.method_price_id);
-				purchase.save();
-			}
-			catch(NumberFormatException nfe){
-				nfe.printStackTrace();
-			}
+			
+				try{
+									
+					MethodPurchase purchase = new MethodPurchase();
+					
+					String creditCardNumber = request.getParameter("Cardnumber");			
+					int expiryMonth = Integer.parseInt(request.getParameter("ExpiryMonth"));
+					int expiryYear = Integer.parseInt(request.getParameter("ExpiryYear"));
+					int code = Integer.parseInt(request.getParameter("code"));
+					String cardHolder = request.getParameter("Cardname");			
+					
+					if(purchase.isValidCreditCard(creditCardNumber, expiryMonth, expiryYear, cardHolder, code))
+					{						
+						purchase.method_id = Integer.parseInt(request.getParameter("methodid"));
+						purchase.method_price_id = Integer.parseInt(request.getParameter("rate"));
+						purchase.user_id = ((User)request.getSession().getAttribute("user")).id;
+						purchase.paid_developer = 0;
+						
+						System.out.println(purchase.method_price_id);
+						purchase.save();
+						request.setAttribute("flash", "Purchase Successful");
+					}
+					else
+					{
+						request.setAttribute("flash", "Invalid Credit Card Information");
+					}
+				}
+				catch(NumberFormatException nfe){
+					nfe.printStackTrace();
+				}		
 						
 			render("/home.jsp",request,response);
 		}
 	}
-	
+		
 	public class approve extends Action {
 
 		@Override
