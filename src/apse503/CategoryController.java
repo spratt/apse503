@@ -20,7 +20,7 @@ public class CategoryController extends ActionController {
 	public CategoryController() {
 		// Like UrlMappings in grails, only you don't have to worry about which order they're in!
 		addDefaultGetAction(new get());
-		addPostAction("/get", new get());
+		addGetAction("/get", new get());
 		addPostAction("/list", new list());
 		addPostAction("/save", new save());
 		addGetAction("/show", new show());
@@ -37,13 +37,13 @@ public class CategoryController extends ActionController {
 			else{
 				Category category = new Category();
 				try{
-					int categoryID = Integer.parseInt(request.getParameter("id"));
-					request.setAttribute("method", category.get(categoryID));	
+					int categoryID = Integer.parseInt(request.getParameter("category"));
+					request.setAttribute("category", category.get(categoryID));	
 				}
 				catch(NumberFormatException nfe){
 					nfe.printStackTrace();
 				}
-				render("/method.jsp",request,response);
+				render("/category.jsp",request,response);
 			}
 		}
 	}

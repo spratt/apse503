@@ -31,7 +31,7 @@
 		while(i.hasNext()){
 			Category cat = (Category)i.next(); %>
 			<label>
-			<a href="#" id="<%=cat.categoryID %>"><%= cat.category %></a></label><br /><br />
+			<a href="<%=root%>/category/get?category=<%=cat.categoryID %>" id="<%=cat.categoryID %>"><%= cat.category %></a></label><br /><br />
 		<%}
 	}%>
 	
