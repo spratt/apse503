@@ -18,6 +18,7 @@
 %>
 	
 	Method name: <%=m.name %><br />
+	URL: <%=m.url %><br />
 	Summary: <%=m.summary %><br />
 	Detailed description: <%=m.description %><br />
 	Rating: <%=r.getAverageRating() %><br />

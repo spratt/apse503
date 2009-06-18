@@ -130,7 +130,11 @@ public class MethodController extends ActionController {
 				//System.out.println("Method:" + method.category_id + "," + method.description + "," + method.name + "," + method.status_id + "," + method.url + "," + method.user_id);
 				if(method != null)
 				{
-					method.url = request.getContextPath() + "/services/" + method.filePath;
+					StringBuffer fullurl = request.getRequestURL();
+					String uri = request.getRequestURI().substring(1);
+					uri = uri.substring(uri.indexOf('/'),uri.length());
+					fullurl.delete(fullurl.lastIndexOf(uri),fullurl.length());
+					method.url = fullurl + "/wsdl/" + method.filePath + ".wsdl";
 					if(method.save())
 					{									
 						//Saves the prices						

@@ -7,6 +7,8 @@
 <title>Web Method Categories</title>
 </head>
 <body>
+Controller class: <%=request.getAttribute("name") %><br />
+JSP class: <%=(this.getClass().getSimpleName()).substring(0, this.getClass().getSimpleName().length()) %><br />
 shizzle!
 </body>
 </html>

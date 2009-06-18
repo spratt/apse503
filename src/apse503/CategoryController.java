@@ -74,8 +74,10 @@ public class CategoryController extends ActionController {
 			if(null == request.getSession().getAttribute("user")) // not logged in
 				redirect(request.getContextPath() + "/user/login",request,response);
 			
-			else
+			else {
+				request.setAttribute("name",(this.getClass().getSimpleName()).substring(0, this.getClass().getSimpleName().length()) );
 				render("/categories.jsp",request,response);
+			}
 		}
 	}
 	
