@@ -91,8 +91,8 @@ public class Rating extends PersistenceClass {
 		if(null == sql) setUpDataSource();
 		
 		// Don't save if the user is invalid
-		if (!this.isValid()) return false;
-		
+		//if (!this.isValid()) return false;
+		System.out.println("in real save");
 		if (this.isSaved()) {
 			// TODO implement update code
 			String query;
@@ -104,6 +104,7 @@ public class Rating extends PersistenceClass {
 			query += "user_id='" + this.user_id+"',"
 			      + "WHERE rating_id=" + this.id +";";
 			try {
+				
 				sql.execute(query);
 				ResultSet results = sql.getResultSet();
 				if(!results.next()) return false;
@@ -120,6 +121,7 @@ public class Rating extends PersistenceClass {
 			query += "(NOW()," + this.rating + ",'" + this.comment + "'," + this.method_id + "," + this.user_id + ")"; 
 			String getid =  "select last_insert_id() as rating_id"; // grab the id of this new user
 			try {
+				System.out.println(query);
 				// INSERT the user into the table
 				sql.execute(query);
 				sql.execute(getid);
@@ -255,9 +257,8 @@ public class Rating extends PersistenceClass {
 		return null;
 	}*/
 	
-	public String getMyReview(int user_id){
+	public Rating getMyReview(int user_id){
 		
-		String review = null;
 		String query = null;
 		
 		if (null == sql)
@@ -265,13 +266,13 @@ public class Rating extends PersistenceClass {
 		
 		try {
 			query = "SELECT rating, comment from rating where method_id="+ this.method_id + " and user_id =" + user_id;
+			
 			sql.execute(query);
 			ResultSet results = sql.getResultSet();
 			if(results.next()) {
-				int rating = results.getInt("rating");
-				String comment = results.getString("comment");
-				review = rating + " " + comment;
-				return review;
+				this.rating = results.getInt("rating");
+				this.comment = results.getString("comment");
+				return this;
 			}
 		} catch (SQLException e) {
 			System.err.println("QUERY: " + query);

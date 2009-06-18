@@ -11,7 +11,7 @@ public abstract class PersistenceClass {
 	
 	// The id of a persistence class begins life as a flag value
 	// to show that it hasn't been saved yet.
-	protected int id = UNSAVED_ID;
+	public int id = UNSAVED_ID;
 	
 	// The resource ID, defined in context.xml and web.xml
 	protected static final String DATASOURCE_CONTEXT = "java:comp/env/jdbc/DB";

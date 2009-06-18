@@ -32,13 +32,30 @@
 			Method meth = (Method)i.next(); 
 			Rating rating = new Rating();
 			rating.method_id = meth.getId();
-			review = rating.getMyReview(myUser.getId()); %>
-			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;My rating: 
-			<c:choose>
-				<c:when test="${empty review}"><input type="text" id="comment" name="comment" />&nbsp;<input type="submit" value="add" /></c:when>
-				<c:otherwise><%=review%></c:otherwise>
-			</c:choose>
-			<% ranking++; %>
+			rating.getMyReview(myUser.getId()); %>
+			<form method="POST" action="<%=root%>/rating/save">
+				<%=ranking %>
+				<input type="hidden" name="methodid" value="<%=meth.getId()%>" />
+				<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId()%>"><%= meth.name %></a>&nbsp;
+				My rating:&nbsp;
+				<%if(rating.rating < 0){%>
+					<select name="rating">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+				<%}
+				  else{%>
+				  	<%=rating.rating %>
+				  <%}%>
+				  &nbsp;
+				My comment:&nbsp; 
+				<%if(rating.rating < 0){%><input type="text" id="comment" name="comment" />&nbsp;<input type="submit" value="add" /><%}
+				  else{%><%=rating.comment %><%} %>
+				<% ranking++; %>
+			</form>
 			<br />
 			<br />
 		<%}

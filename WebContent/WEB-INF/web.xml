@@ -26,6 +26,12 @@
 		<servlet-class>apse503.MethodUseController</servlet-class>
 	</servlet>
 	<servlet>
+		<description>The dispatcher for requests on the rating model.</description>
+		<display-name>RatingController</display-name>
+		<servlet-name>RatingController</servlet-name>
+		<servlet-class>apse503.RatingController</servlet-class>
+	</servlet>
+	<servlet>
 		<description>The dispatcher for requests on the category model.</description>
 		<display-name>CategoryController</display-name>
 		<servlet-name>CategoryController</servlet-name>
@@ -38,6 +44,10 @@
 	<servlet-mapping>
 		<servlet-name>MethodController</servlet-name>
 		<url-pattern>/method/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RatingController</servlet-name>
+		<url-pattern>/rating/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>MethodPurchaseController</servlet-name>

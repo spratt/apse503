@@ -98,35 +98,28 @@ public class RatingController extends ActionController {
 
 		public void start(HttpServletRequest request,
 				HttpServletResponse response) {
-
+			System.out.println("save");
 			try {
 				// Create the new method then set its attributes from request's
 				// parameters
 				Rating rating = new Rating();
 
 				rating.comment = request.getParameter("comment");
-				rating.rating = 1;
-				rating.rating_id = 1;
-				rating.user_id = 1; 
-				rating.method_id = 1; 
-				
-
-				boolean saveResult = rating.save();
-				System.out.println("status:" + saveResult);
+				rating.rating = Integer.parseInt(request.getParameter("rating"));
+				rating.user_id = ((User)request.getSession().getAttribute("user")).id; 
+				rating.method_id = Integer.parseInt(request.getParameter("methodid")); 			
 
 				if (rating.save())
-					request.setAttribute("flash",
-							"Rating Save was Sucessful");
+					request.setAttribute("flash","Rating Save was Sucessful");
 				else
-					request.setAttribute("flash",
-							"Rating Save was Unsucessful");
+					request.setAttribute("flash","Rating Save was Unsucessful");
 
 			} catch (Exception e) {
 				e.printStackTrace();
 				request.setAttribute("flash", "false");
 			}
 
-			render("/rating.jsp", request, response);
+			render("/mymethods.jsp", request, response);
 		}
 	}
 
