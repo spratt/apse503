@@ -149,7 +149,7 @@ public class Method extends PersistenceClass {
 			setUpDataSource();
 		}
 		try {
-			sql.execute("SELECT * FROM method WHERE filepath=" + filepath);
+			sql.execute("SELECT * FROM method WHERE filepath='" + filepath + "'");
 			ResultSet results = sql.getResultSet();
 			if(!results.next()) return null;
 			this.id = results.getInt("method_id");

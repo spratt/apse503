@@ -1,0 +1,31 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from MethodExampleService WSDL service -->
+
+  <service name="MethodExample" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://wrapperMethods"/>
+      <parameter name="wsdlServiceElement" value="MethodExampleService"/>
+      <parameter name="schemaQualified" value="http://wrapperMethods"/>
+      <parameter name="wsdlServicePort" value="MethodExample"/>
+      <parameter name="className" value="wrapperMethods.MethodExampleSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="MethodExample"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="countCharactersWrapper" qname="operNS:countCharactersWrapper" xmlns:operNS="http://wrapperMethods" returnQName="retNS:countCharactersWrapperReturn" xmlns:retNS="http://wrapperMethods" returnType="rtns:int" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:userName" xmlns:pns="http://wrapperMethods" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:password" xmlns:pns="http://wrapperMethods" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:toCount" xmlns:pns="http://wrapperMethods" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="countCharactersWrapper"/>
+
+  </service>
+</deployment>
