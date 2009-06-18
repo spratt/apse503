@@ -54,18 +54,18 @@ Card Type: <select name="Card types">
 Card Number: <input type="text" name="Cardnumber"> <br>
 	
 Expiry: <select name="ExpiryMonth">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="2">3</option>
-<option value="2">4</option>
-<option value="2">5</option>
-<option value="2">6</option>
-<option value="2">7</option>
-<option value="2">8</option>
-<option value="2">9</option>
-<option value="2">10</option>
-<option value="2">11</option>
-<option value="2">12</option>
+<option value="1">01</option>
+<option value="2">02</option>
+<option value="3">03</option>
+<option value="4">04</option>
+<option value="5">05</option>
+<option value="6">06</option>
+<option value="7">07</option>
+<option value="8">08</option>
+<option value="9">09</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
 </select>
 <select name="ExpiryYear">
 <option value="2009">2009</option>

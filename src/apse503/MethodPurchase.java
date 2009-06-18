@@ -137,9 +137,7 @@ public class MethodPurchase extends PersistenceClass {
 							"AND card_holder_name = '" 	+ cardHolder 		+ "' " +
 							"AND card_expiry_month = " 	+ expiryMonth 		+ " " +
 							"AND card_expiry_year = " 	+ expiryYear 		+ " " +
-							"AND card_code = " 			+ code 				+ ";";
-			
-			System.out.println(query);
+							"AND card_code = " 			+ code 				+ ";";		
 			
 			sql.execute(query);
 			ResultSet results = sql.getResultSet();
