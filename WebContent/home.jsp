@@ -52,9 +52,9 @@
 		while(i.hasNext()){
 			Method meth = (Method)i.next(); 
 			Rating rating = new Rating();
-			rating.method_id = meth.id;%>
+			rating.method_id = meth.getId();%>
 			<label>
-			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.id%>" id="<%=meth.id %>"><%= meth.name %></a>&nbsp;</label><label>average:</label> <%= rating.getAverageRating()%>&nbsp;<label>count:</label> <%= rating.getRatingsCount()%><br />
+			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;</label><label>average:</label> <%= rating.getAverageRating()%>&nbsp;<label>count:</label> <%= rating.getRatingsCount()%><br />
 			<%= meth.summary %><br /><br />
 			<% ranking++; %>
 			<br />

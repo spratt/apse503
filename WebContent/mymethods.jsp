@@ -31,9 +31,9 @@
 		while(i.hasNext()){
 			Method meth = (Method)i.next(); 
 			Rating rating = new Rating();
-			rating.method_id = meth.id;
+			rating.method_id = meth.getId();
 			review = rating.getMyReview(myUser.getId()); %>
-			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.id%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;My rating: 
+			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;My rating: 
 			<c:choose>
 				<c:when test="${empty review}"><input type="text" id="comment" name="comment" />&nbsp;<input type="submit" value="add" /></c:when>
 				<c:otherwise><%=review%></c:otherwise>
@@ -66,7 +66,7 @@
 	    
 		while(i.hasNext()){
 			Method meth = (Method)i.next();%>
-			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.id%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;&nbsp;Times Purchased: <%= meth.getPurchaseDetails()%>
+			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;&nbsp;Times Purchased: <%= meth.getPurchaseDetails()%>
 			<% ranking++; %>
 			<br />
 			<br />

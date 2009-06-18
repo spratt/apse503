@@ -15,14 +15,14 @@
 	Method method = new Method();
 	MethodPrice price = new MethodPrice();
 	method.get(Integer.parseInt(request.getParameter("id")));
-	ArrayList<MethodPrice> prices = price.get(method.id);
+	ArrayList<MethodPrice> prices = price.get(method.getId());
 	
 %>
 <p>Some texts to explain the purchasing details</p>
 
 <h3>Method Details</h3>
 Name: <%=method.name %>
-<input type="hidden" name="methodid" id="methodid" value="<%=method.id %>"></input>
+<input type="hidden" name="methodid" id="methodid" value="<%=method.getId() %>"></input>
 <br>
 Summary:<%=method.summary %>
 <br>

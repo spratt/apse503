@@ -14,7 +14,7 @@
 	Method m = new Method(); 
 	m.get(Integer.parseInt(request.getParameter("method")));
 	Rating r = new Rating();
-	r.method_id = m.id;
+	r.method_id = m.getId();
 %>
 	
 	Method name: <%=m.name %><br />
@@ -25,7 +25,7 @@
 	Created by: <%=myUser.userName %> <br /><br />
 	
 
-<a href="<%=root%>/purchase/approve?id=<%=m.id %>">Purchase Method</a>
+<a href="<%=root%>/purchase/approve?id=<%=m.getId() %>">Purchase Method</a>
 
 </body>
 </html>

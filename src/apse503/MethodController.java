@@ -130,6 +130,7 @@ public class MethodController extends ActionController {
 				//System.out.println("Method:" + method.category_id + "," + method.description + "," + method.name + "," + method.status_id + "," + method.url + "," + method.user_id);
 				if(method != null)
 				{
+					method.url = request.getContextPath() + "/services/" + method.filePath;
 					if(method.save())
 					{									
 						//Saves the prices						

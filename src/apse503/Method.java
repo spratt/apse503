@@ -15,8 +15,7 @@ public class Method extends PersistenceClass {
 	
 	//public URL url;  //if we switch to actual URL instead of a url String attribute
 	
-	public int id,
-			   user_id,
+	public int user_id,
 			   status_id,
 			   category_id;
 	
@@ -63,62 +62,54 @@ public class Method extends PersistenceClass {
 	
 	// TODO implement persistence code
 	public boolean save() {
-		//System.out.println("in save");
 		if(null == sql) {
-			System.out.println("sql is null");
 			setUpDataSource();
 		}
 		
 		// Don't save if the method is invalid
 		if (!this.isValid()) return false;
 		
-		if (this.isSaved()) {
-			// UPDATE ROW IN TABLE
-			// Return true if sql executed properly
-		} 
-		else {
-			String insert;
-			insert  = "INSERT INTO method" 		+
-					 "("						+
-					 	"name," 				+
-					 	"description," 			+
-					 	"summary," 				+
-					 	"url," 					+
-					 	"filepath," 			+
-					 	"user_id," 				+
-					 	"status_id," 			+
-					 	"category_id," 			+
-					 	"date_time"				+
-					 ") "						+
-					 "VALUES"					+
-					 "("						+
-					 	"'" + this.name			+ "'," +
-					 	"'" + this.description 	+ "'," +
-					 	"'" + this.summary		+ "'," +
-					 	"'" + this.url			+ "'," +
-					 	"'" + this.filePath		+ "'," +
-					 	this.user_id			+ "," +
-					 	this.status_id			+ "," +
-					 	this.category_id		+ "," +
-					 	"NOW()"			+
-					 "); ";
-			String select =  "select last_insert_id() as method_id"; // grab the id of this new method
+		String insert;
+		insert  = "INSERT INTO method" 		+
+				 "("						+
+				 	"name," 				+
+				 	"description," 			+
+				 	"summary," 				+
+				 	"url," 					+
+				 	"filepath," 			+
+				 	"user_id," 				+
+				 	"status_id," 			+
+				 	"category_id," 			+
+				 	"date_time"				+
+				 ") "						+
+				 "VALUES"					+
+				 "("						+
+				 	"'" + this.name			+ "'," +
+				 	"'" + this.description 	+ "'," +
+				 	"'" + this.summary		+ "'," +
+				 	"'" + this.url			+ "'," +
+				 	"'" + this.filePath		+ "'," +
+				 	this.user_id			+ "," +
+				 	this.status_id			+ "," +
+				 	this.category_id		+ "," +
+				 	"NOW()"			+
+				 "); ";
+		String select =  "select last_insert_id() as method_id"; // grab the id of this new method
+		
+		try {
+			// INSERT the user into the table
+			sql.execute(insert);
+			sql.execute(select);
+			ResultSet results = sql.getResultSet();
 			
-			try {
-				// INSERT the user into the table
-				sql.execute(insert);
-				sql.execute(select);
-				ResultSet results = sql.getResultSet();
-				
-				// Set the attribute to the new ID number
-				if(!results.next()) return false;
-				this.id = results.getInt("method_id");
-				return true;
-			} 
-			catch (SQLException e) {
-				// TODO log exception
-				e.printStackTrace();
-			}
+			// Set the attribute to the new ID number
+			if(!results.next()) return false;
+			this.id = results.getInt("method_id");
+			return true;
+		} 
+		catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
 		}
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
