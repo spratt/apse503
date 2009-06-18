@@ -15,6 +15,7 @@
 	m.get(Integer.parseInt(request.getParameter("method")));
 	Rating r = new Rating();
 	r.method_id = m.getId();
+	User creator = new User().get(m.user_id);
 %>
 	
 	Method name: <%=m.name %><br />
@@ -23,7 +24,7 @@
 	Detailed description: <%=m.description %><br />
 	Rating: <%=r.getAverageRating() %><br />
 	Number of reviews: <%=r.getRatingsCount() %>&nbsp;<u>view ratings link to be added</u><br /><br />
-	Created by: <%=myUser.userName %> <br /><br />
+	Created by: <%=creator.userName %> <br /><br />
 	
 
 <a href="<%=root%>/purchase/approve?id=<%=m.getId() %>">Purchase Method</a>
