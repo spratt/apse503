@@ -346,4 +346,29 @@ public class Method extends PersistenceClass {
 		
 	}
 	
+	public ArrayList<Method> getAllByCategory(int categoryID) {
+		if(null == sql) setUpDataSource();
+		try {
+			sql.execute("SELECT * FROM method where category_id = " + categoryID);
+			ResultSet results = sql.getResultSet();
+
+			ArrayList<Method> methods = new ArrayList<Method>();
+			Method tmp;
+			while(results.next())
+			{
+				tmp = new Method();	
+				tmp.id = results.getInt("method_id");
+				tmp.name = results.getString("name");
+				tmp.description = results.getString("description");
+				tmp.summary = results.getString("summary");
+				methods.add(tmp);
+			}
+			return methods;
+		} catch (SQLException e) {
+			// TODO log exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

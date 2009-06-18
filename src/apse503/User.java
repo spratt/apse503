@@ -283,10 +283,10 @@ public class User extends PersistenceClass {
 	public ArrayList<Method> getMyPurchased() {
 		if(null == sql) setUpDataSource();
 		try {
-			sql.execute("select * " +
-			"from method_purchase mp " +
-			"join method m " +
-			"on mp.method_id = m.method_id " +
+			sql.execute("select distinct(m.name), m.method_id, u.user_id " +
+			"from method m " +
+			"join method_purchase mp " +
+			"on m.method_id = mp.method_id " +
 			"join user u " +
 			"on u.user_id = mp.user_id " +
 			"where u.user_id=" + this.id);
@@ -300,11 +300,6 @@ public class User extends PersistenceClass {
 				tmp.id = results.getInt("method_id");
 				tmp.name = results.getString("name");
 				tmp.user_id = results.getInt("user_id");
-				tmp.status_id = results.getInt("status_id");
-				tmp.category_id = results.getInt("category_id");
-				tmp.description = results.getString("description");
-				tmp.summary = results.getString("summary");
-				tmp.url = results.getString("url");
 				methods.add(tmp);
 			}
 			return methods;
@@ -314,4 +309,5 @@ public class User extends PersistenceClass {
 		}
 		return null;
 	}
+	
 }

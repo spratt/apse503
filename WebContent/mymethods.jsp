@@ -30,6 +30,22 @@
 	
 		while(i.hasNext()){
 			Method meth = (Method)i.next(); 
+			MethodUse mu = new MethodUse();
+			mu.methodID = meth.id;
+			mu.userID = myUser.id;
+			int totalPurch = mu.totalPurchased();
+			int totalUsed = mu.totalUsed();
+			
+			if(totalPurch == -1){
+				totalPurch = 0;
+			}
+			
+			if(totalUsed == -1){
+				totalUsed = 0;
+			}
+			
+			
+			
 			Rating rating = new Rating();
 			rating.method_id = meth.getId();
 			rating.getMyReview(myUser.getId()); %>
@@ -37,6 +53,7 @@
 				<%=ranking %>
 				<input type="hidden" name="methodid" value="<%=meth.getId()%>" />
 				<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId()%>"><%= meth.name %></a>&nbsp;
+				<%=totalUsed %>/<%=totalPurch %>&nbsp;
 				My rating:&nbsp;
 				<%if(rating.rating < 0){%>
 					<select name="rating">

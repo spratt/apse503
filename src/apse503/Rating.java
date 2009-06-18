@@ -44,48 +44,6 @@ public class Rating extends PersistenceClass {
 		valid = valid && method_id > 0;
 		return valid;
 	}
-
-	// TODO implement persistence code
-	/*public boolean save() {
-		if (null == sql)
-			setUpDataSource();
-
-		// Don't save if the rating is invalid
-		if (!this.isValid())
-			return false;
-
-		if (this.isSaved()) {
-			// UPDATE ROW IN TABLE
-			// Return true if sql executed properly
-		} else {
-			String insert;
-			insert = "INSERT INTO rating" + "(" + "comment," + "rating,"
-					+ "rating_id," + "user_id," + "method_id," + "date_time"
-					+ ") " + "VALUES" + "(" + "'" + this.comment + "',"
-					+ this.rating + "," + this.user_id + "," + this.rating_id
-					+ "," + this.method_id + "," + this.dateTime + ");"
-					+ "select last_insert_id() as id;";
-
-			try {
-				// INSERT the rating into the table
-				sql.execute(insert);
-				ResultSet results = sql.getResultSet();
-
-				// Set the attribute to the new ID number
-				if (!results.next())
-					return false;
-
-				this.id = results.getInt("id");
-				return true;
-			} catch (SQLException e) {
-				// TODO log exception
-				e.printStackTrace();
-			}
-		}
-		// If the code ever gets to this point,
-		// something went horribly, horribly wrong
-		return false;
-	}*/
 	
 	public boolean save() {
 		if(null == sql) setUpDataSource();
@@ -214,48 +172,7 @@ public class Rating extends PersistenceClass {
 		}
 		return 0;
 	}
-	
-	/**public int getMyRatingForThisMethod(int user_id){
-		
-		int rating = 0;
-		
-		if (null == sql)
-			setUpDataSource();
-		
-		try {
-			sql.execute("SELECT rating from rating where method_id="+ this.method_id + " and user_id =" + user_id);
-			ResultSet results = sql.getResultSet();
-			results.next();
-			rating = results.getInt("rating");
-			return rating;
-		} catch (SQLException e) {
-			// TODO log exception
-			e.printStackTrace();
-		}
-		
-		return 0;
-	}*/
-	
-	/**public String getMyCommentForThisMethod(int user_id){
-		
-		String comment = null;
-		
-		if (null == sql)
-			setUpDataSource();
-		
-		try {
-			sql.execute("SELECT comment from rating where method_id="+ this.method_id + " and user_id =" + user_id);
-			ResultSet results = sql.getResultSet();
-			results.next();
-			comment = results.getString("comment");
-			return comment;
-		} catch (SQLException e) {
-			// TODO log exception
-			e.printStackTrace();
-		}
-		
-		return null;
-	}*/
+
 	
 	public Rating getMyReview(int user_id){
 		

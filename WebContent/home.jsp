@@ -14,7 +14,7 @@
 
 
 
-<%@ include file="/nav/footer.jsp" %>
+
 
 <table>
 <tr>
@@ -65,5 +65,8 @@
 
 </div>
 </td></tr></table>
+
+<%@ include file="/nav/footer.jsp" %>
+
 </body>
 </html>
