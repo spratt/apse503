@@ -8,9 +8,30 @@
 </head>
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
+<script type="text/javascript" src="<%=root%>/js/jquery-1.3.2.js"></script>
+<script type="text/javascript">
+function openReviews() {
+	$.getJSON('<%=root%>/rating/getall','id=<%=request.getParameter("method")%>',function(data) {
+		if(0 < data.error.length)
+			$('#allReviews').text('Error: ' + data.error);
+		else {
+			$('#allReviews').html('');
+			$.each(data.ratings,function(r,rating) {
+				$('#allReviews').append(rating.comment);
+				$('#allReviews').append('&nbsp;');
+				var tempRating = parseInt(rating.rating);
+				while(0 < tempRating--)
+					$('#allReviews').append('<img src="<%=root%>/images/whole.JPG" height="12" />');
+				$('#allReviews').append('&nbsp;');
+				$('#allReviews').append('--' + rating.user);
+				$('#allReviews').append('<br />');
+			});
+		}
+	});
+}
+</script>
 <p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
 <p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
-</div>
 
 <div class="input">
 <p>Search <input type="text" name="search_input"><input type="submit" name="search" value="Search"></p> 
@@ -66,15 +87,14 @@ if(prices != null)
 			} if(avg >= 0.5) { // Half star
 				%><img src="<%=root%>/images/half.JPG" height="12" /><%
 			}%>
-	&nbsp;<%=rating.getRatingsCount() %>&nbsp;reviews&nbsp;<u>read all reviews</u><br /><br />
+	&nbsp;<%=rating.getRatingsCount() %>&nbsp;reviews&nbsp;<a href="#" onClick="openReviews();return false">read all reviews</a><br /><br />
 	
 	
 
 <a href="<%=root%>/purchase/approve?id=<%=m.getId() %>">Purchase Method</a></td></tr>
 </table>
+<div id="allReviews">
 </div>
-
-
-
+</div>
 </body>
 </html>

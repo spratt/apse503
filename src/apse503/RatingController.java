@@ -1,6 +1,9 @@
 package apse503;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,7 @@ public class RatingController extends ActionController {
 		// Like UrlMappings in grails, only you don't have to worry about which
 		// order they're in!
 		addDefaultGetAction(new get());
+		addGetAction("/getall", new getall());
 		addPostAction("/get", new get());
 		addPostAction("/save", new save());
 		addGetAction("/submit", new submit());
@@ -33,6 +37,46 @@ public class RatingController extends ActionController {
 	}
 
 	// Like a controller method in grails
+	public class getall extends Action {
+
+		@Override
+		public void start(HttpServletRequest request,
+				HttpServletResponse response) {
+			response.setContentType("application/json");
+			String json = "{'error':'','ratings':[";
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				if(null == request.getParameter("id")) {
+					out.print("{'error':'no id'}");
+					return;
+				}
+				Rating rating = new Rating();
+				rating.method_id = Integer.parseInt(request.getParameter("id"));
+				// Get all ratings for this method
+				ArrayList<Rating> ratings = rating.getAll();
+				if(null == ratings) {
+					out.print("{'error':'no ratings'}");
+					return;
+				}
+				Iterator<Rating> i = ratings.iterator();
+				while(i.hasNext()) {
+					Rating next = i.next();
+					json+= "{'comment':'" + next.comment + "'," +
+							"'rating':'" + next.rating + "'," +
+							"'user':'" + new User().get(next.user_id).userName + "'},";
+				}
+				json = json.substring(0,json.length()-1) + "]}";  // Remove the extra comma at the end
+				out.print(json);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NumberFormatException nfe) {
+				nfe.printStackTrace();
+			}
+		}
+	}
+	
 	public class get extends Action {
 
 		@Override
