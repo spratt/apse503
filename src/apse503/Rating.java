@@ -153,6 +153,14 @@ public class Rating extends PersistenceClass {
 		return 0;
 	}
 	
+	public static double roundNearestHalf(double in){
+		double afterDecimal = in - Math.floor(in);
+		double out = Math.floor(in);
+		if(afterDecimal >= 0.75) out = out + 1.0;
+		else if(afterDecimal >= 0.25) out = out + 0.5;
+		return out;
+	}
+	
 	//gets the total number of ratings for a method
 	public int getRatingsCount(){
 		

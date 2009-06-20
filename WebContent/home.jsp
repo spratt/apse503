@@ -65,16 +65,17 @@
 			Method meth = (Method)i.next(); 
 			Rating rating = new Rating();
 			rating.method_id = meth.getId();
-			double avg = rating.getAverageRating();
-			double afterDecimal = avg - Math.floor(avg);
-			avg = Math.floor(avg);
-			if(afterDecimal >= 0.75) avg = avg + 1.0;
-			else if(afterDecimal >= 0.25) avg = avg + 0.5;
+			double avg = Rating.roundNearestHalf(rating.getAverageRating());
 			%>
 			<tr><td>
 			<%=ranking %>.&nbsp;Method: 
 			<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;
-			Average rating: <%= avg%>&nbsp;<%= rating.getRatingsCount()%>&nbsp;reviews<br />
+			<% for(; avg > 0.0; avg = avg-1.0){// Whole stars
+				%><img src="<%=root%>/images/star.png" height="10" /><%
+			} if(avg >= 0.5) { // Half star
+				%><img src="<%=root%>/images/half_star.png" height="10" /><%
+			}%>
+			<%= rating.getRatingsCount()%>&nbsp;reviews<br />
 			Method Summary: <%= meth.summary %></td></tr>
 			<% ranking++; %>
 		<%}
