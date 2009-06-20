@@ -66,7 +66,7 @@
 			Rating rating = new Rating();
 			rating.method_id = meth.getId();%>
 			<tr><td>
-			<%=ranking %>.&nbsp;Method: <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a><br />Average rating: <%= rating.getAverageRating()%>&nbsp;<%= rating.getRatingsCount()%>&nbsp;reviews<br />
+			<%=ranking %>.&nbsp;Method: <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;Average rating: <%= rating.getAverageRating()%>&nbsp;<%= rating.getRatingsCount()%>&nbsp;reviews<br />
 			Method Summary: <%= meth.summary %></td></tr>
 			<% ranking++; %>
 		<%}
