@@ -31,7 +31,7 @@
 
 <div class="table_2">
 <table width="400" cellpadding="3px" cellspacing="3px">
-<tr>
+<tr><td>
 <td bgcolor="#ECECDF"><strong>Top Methods</strong></td>
 </tr>
 	<%
@@ -49,7 +49,7 @@
 			rating.method_id = meth.getId();
 			double avg = Rating.roundNearestHalf(rating.getAverageRating());
 			%>
-			<tr><td>
+			<tr><td><td><td>
 			<%=ranking %>.&nbsp;Method: 
 			<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;
 			<% for(; avg > 0.5; avg = avg-1.0){// Whole stars
