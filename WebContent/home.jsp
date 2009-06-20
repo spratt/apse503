@@ -70,11 +70,11 @@
 			<tr><td>
 			<%=ranking %>.&nbsp;Method: 
 			<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;
-			<% for(; avg > 0.0; avg = avg-1.0){// Whole stars
+			<% for(; avg > 0.5; avg = avg-1.0){// Whole stars
 				%><img src="<%=root%>/images/star.png" height="10" /><%
 			} if(avg >= 0.5) { // Half star
 				%><img src="<%=root%>/images/half_star.png" height="10" /><%
-			}%>
+			}%>|<%=avg %>|
 			<%= rating.getRatingsCount()%>&nbsp;reviews<br />
 			Method Summary: <%= meth.summary %></td></tr>
 			<% ranking++; %>
