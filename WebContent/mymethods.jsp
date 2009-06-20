@@ -9,12 +9,21 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
+<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
+<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
+</div>
 
+<div class="input">
+<p>Search <input type="text" name="search_input"><input type="submit" name="search" value="Search"></p> 
 
+</div>
 
-<div id ="my_purchased">
-	<label class="title">Purchased Web Methods</label><br /><br />
-	
+<div class="table_1">
+<table width="600" cellpadding="3px" cellspacing="3px">
+<tr>
+<td bgcolor="#ECECDF" colspan="4"><strong>Purchased Web Methods</strong></td>
+</tr>
+<tr><td>Name</td><td>used/total</td><td>My rating</td><td>My comment</td></tr>
  	<%
 	User myUser = ((User)request.getSession().getAttribute("user"));
 	
@@ -48,13 +57,13 @@
 			
 			Rating rating = new Rating();
 			rating.method_id = meth.getId();
-			rating.getMyReview(myUser.getId()); %>
+			rating.getMyReview(myUser.getId());%>
 			<form method="POST" action="<%=root%>/rating/save">
-				<%=ranking %>
+				<tr><td><%=ranking %>
 				<input type="hidden" name="methodid" value="<%=meth.getId()%>" />
-				<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId()%>"><%= meth.name %></a>&nbsp;
-				<%=totalUsed %>/<%=totalPurch %>&nbsp;
-				My rating:&nbsp;
+				<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId()%>"><%= meth.name %></a></td>
+				<td><%=totalUsed %>/<%=totalPurch %></td>
+				<td>
 				<%if(rating.rating < 0){%>
 					<select name="rating">
 						<option value="0">0</option>
@@ -65,29 +74,28 @@
 						<option value="5">5</option>
 					</select>
 				<%}
-				  else{%>
-				  	<%=rating.rating %>
+				  else{
+				  double avg = rating.rating; %><% for(; avg > 0.5; avg = avg-1.0){
+				%><img src="<%=root%>/images/whole.JPG" height="12" /><%
+			}%>
 				  <%}%>
-				  &nbsp;
-				My comment:&nbsp; 
+				  </td>
+				<td> 
 				<%if(rating.rating < 0){%><input type="text" id="comment" name="comment" />&nbsp;<input type="submit" value="add" /><%}
 				  else{%><%=rating.comment %><%} %>
-				<% ranking++; %>
+				<% ranking++; %></td></tr>
 			</form>
-			<br />
-			<br />
 		<%}
 	}%>
 	
-
+</table>
 </div>
 
-<hr /> 
-
-<div id="my_contrib">
-
-	
-	<label class="title">Contributed Web Methods</label><br /><br />
+<div class="table_3">
+<table width="600" cellpadding="3px" cellspacing="3px">
+<tr>
+<td bgcolor="#ECECDF"><strong>Contributed Web Methods</strong></td>
+</tr>
 	<%
 	
 	
@@ -101,13 +109,11 @@
 	    
 		while(i.hasNext()){
 			Method meth = (Method)i.next();%>
-			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;&nbsp;Times Purchased: <%= meth.getPurchaseDetails()%>
+			<tr><td><%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;&nbsp;Times Purchased: <%= meth.getPurchaseDetails()%></td></tr>
 			<% ranking++; %>
-			<br />
-			<br />
 		<%}
 	}%>
-
+</table>
 </div>
 
 

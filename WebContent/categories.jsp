@@ -20,9 +20,16 @@
 
 
 
-<div class="table_1">
+<div class="cats">
 
-<table width="600" cellpadding="3px" cellspacing="3px">
+<%@ include file="/nav/cat_nav.jsp" %>
+</div>
+
+
+
+<div class="table_2">
+
+<table width="400" cellpadding="3px" cellspacing="3px">
 <tr>
 <td bgcolor="#ECECDF"><strong>Categories</strong></td>
 </tr>
