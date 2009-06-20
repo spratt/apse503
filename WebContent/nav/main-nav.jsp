@@ -23,7 +23,6 @@
 		  <p class="nav"><a href="<%=root%>/user/home">Home</a></p>
 		| <p class="nav"><a href="<%=root%>/method/show">My Methods</a></p>
 		| <p class="nav"><a href="<%=root%>/method/submit">Contribute</a></p>
-		| <p class="nav"><a href="<%=root%>/category/show">Categories</a></p>
 		| <p class="nav"><a href="<%=root%>/user/logout">Sign out</a></p>
 	</c:otherwise>
 </c:choose> 
