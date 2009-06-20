@@ -51,7 +51,7 @@ public class RatingController extends ActionController {
 				nfe.printStackTrace();
 			}
 
-			render("/rating.jsp", request, response);
+			render("/mymethods.jsp", request, response);
 		}
 	}
 
@@ -85,10 +85,10 @@ public class RatingController extends ActionController {
 			if (!rating.isValid()) {
 				request.setAttribute("flash",
 						"Invalid credit card number, please try again.");
-				render("/rating.jsp", request, response);
+				render("/mymethods.jsp", request, response);
 			} else {
 				// Authenticated!
-				redirect(request.getContextPath() + "/rating.jsp",
+				redirect(request.getContextPath() + "/mymethods.jsp",
 						request, response);
 			}
 		}
