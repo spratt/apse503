@@ -53,12 +53,12 @@
 			<%=ranking %>.&nbsp;Method: 
 			<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;
 			<% for(; avg > 0.5; avg = avg-1.0){// Whole stars
-				%><img src="<%=root%>/images/star.png" height="10" /><%
+				%><img src="<%=root%>/images/whole.JPG" height="12" /><%
 			} if(avg >= 0.5) { // Half star
-				%><img src="<%=root%>/images/half_star.png" height="10" /><%
-			}%>|<%=avg %>|
+				%><img src="<%=root%>/images/half.JPG" height="12" /><%
+			}%>
 			<%= rating.getRatingsCount()%>&nbsp;reviews<br />
-			Method Summary: <%= meth.summary %></td></tr>
+			Summary: <%= meth.summary %></td></tr>
 			<% ranking++; %>
 		<%}
 	}%>
