@@ -38,10 +38,10 @@
 
 <div class="table_2">
 <table width="400" cellpadding="3px" cellspacing="3px">
-<tr><td><td>
+<tr>
 <td bgcolor="#ECECDF"><strong>Method: <%=m.name %></strong></td>
 </tr>
-<tr><td><td><td><td>
+<tr><td>
 	Created by: <%=creator.userName %> <br /><br />
 	Summary: <%=m.summary %><br />
 	Detailed description: <%=m.description %><br />
