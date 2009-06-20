@@ -20,29 +20,11 @@
 
 </div>
 
-<div id="home_content">
 
-<div class="table_1">
 
-<table width="200" cellpadding="3px" cellspacing="3px">
-<tr>
-<td bgcolor="#ECECDF"><strong>Categories</strong></td>
-</tr>
+<div class="cats">
 
-	<%
-	ArrayList<Category> categories = new Category().getAll();
-	
-	if(categories != null)
-	{
-		Iterator i = categories.iterator();
-	
-		while(i.hasNext()){
-			Category cat = (Category)i.next(); %>
-			<tr><td>
-			<a href="<%=root%>/category/get?category=<%=cat.categoryID %>" id="<%=cat.categoryID %>"><%= cat.category %></a></td></tr>
-		<%}
-	}%>
-</table>
+<%@ include file="/nav/cat_nav.jsp" %>
 </div>
 
 
@@ -83,7 +65,7 @@
 	
 </table>
 </div>
-</div>
+
 <%@ include file="/nav/footer.jsp" %>
 
 </body>

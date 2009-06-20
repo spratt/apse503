@@ -9,6 +9,10 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
+<div id="cats">
+<%@ include file="/nav/cat_nav.jsp" %>
+</div>
+
 <%
 	User myUser = ((User)request.getSession().getAttribute("user"));
 	Method m = new Method(); 

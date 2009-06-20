@@ -9,8 +9,23 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
-<div id ="top_methods">
-	<label class="title">Category</label><br /><br />
+<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
+<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
+</div>
+
+<div class="input">
+<p>Search <input type="text" name="search_input"><input type="submit" name="search" value="Search"></p> 
+
+</div>
+
+
+
+<div class="table_1">
+
+<table width="600" cellpadding="3px" cellspacing="3px">
+<tr>
+<td bgcolor="#ECECDF"><strong>Category</strong></td>
+</tr>
 	
 	<%
 	
@@ -19,19 +34,19 @@
 
     %>
 
-	<b><%=c.category%></b><br />
+	<tr><td><b><%=c.category%></b><br />
 	<%
 			ArrayList<Method> methods = new Method().getAllByCategory(c.id);
 			Iterator<Method> i = methods.iterator();
 			while(i.hasNext()){
 				Method meth = (Method)i.next();%>
-				<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;<br />
-				Summary:&nbsp;<%=meth.summary %><br />
+				Method: <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;<br />
+				Method Summary:&nbsp;<%=meth.summary %><br />
 				Description:&nbsp;<%= meth.description %><br /><br />
 
-	<%}%>
+	<%}%></td></tr>
 	
-
+</table>
 </div>
 
 </body>
