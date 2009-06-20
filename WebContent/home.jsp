@@ -64,9 +64,17 @@
 		while(i.hasNext()){
 			Method meth = (Method)i.next(); 
 			Rating rating = new Rating();
-			rating.method_id = meth.getId();%>
+			rating.method_id = meth.getId();
+			double avg = rating.getAverageRating();
+			double afterDecimal = avg - Math.floor(avg);
+			avg = Math.floor(avg);
+			if(afterDecimal >= 0.75) avg = avg + 1.0;
+			else if(afterDecimal >= 0.25) avg = avg + 0.5;
+			%>
 			<tr><td>
-			<%=ranking %>.&nbsp;Method: <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;Average rating: <%= rating.getAverageRating()%>&nbsp;<%= rating.getRatingsCount()%>&nbsp;reviews<br />
+			<%=ranking %>.&nbsp;Method: 
+			<a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;
+			Average rating: <%= avg%>&nbsp;<%= rating.getRatingsCount()%>&nbsp;reviews<br />
 			Method Summary: <%= meth.summary %></td></tr>
 			<% ranking++; %>
 		<%}
