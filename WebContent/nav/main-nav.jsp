@@ -5,28 +5,37 @@
 	String root = request.getContextPath();
 %>
 <img src="<%=root%>/images/ravenbay_logo.jpg" style="position:absolute;top:10px;right:475px;" width="174" height="89" border="1" />
-<style type="text/css">
-<%@ include file="../css/web.css" %>
-</style>
 
-
+<link rel="stylesheet" href="../css/web.css" />
 
 <% 
 	User user = (User)session.getAttribute("user");
 %>
 
+<div class="main_nav">
+<div align="center">
+<div class="main_nav_links">
 <c:choose>
 	<c:when test="${null == user}"> 
 		<%-- Not signed in --%>
 	</c:when>
 	<c:otherwise>
-		  <a href="<%=root%>/user/home">Home</a> 
-		| <a href="<%=root%>/method/show">My Methods</a>
-		| <a href="<%=root%>/method/submit">Contribute</a>
-		| <a href="<%=root%>/category/show">Categories</a>
-		| <a href="<%=root%>/user/logout">Sign out</a>
+		  <p class="nav"><a href="<%=root%>/user/home">Home</a></p>
+		| <p class="nav"><a href="<%=root%>/method/show">My Methods</a></p>
+		| <p class="nav"><a href="<%=root%>/method/submit">Contribute</a></p>
+		| <p class="nav"><a href="<%=root%>/category/show">Categories</a></p>
+		| <p class="nav"><a href="<%=root%>/user/logout">Sign out</a></p>
 	</c:otherwise>
-</c:choose> <br />
+</c:choose> 
+</div>
+</div>
+
+
+
+
+
+
+
 
 
 <%-- FLASH MESSAGE --%>

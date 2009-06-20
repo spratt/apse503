@@ -1,17 +1,9 @@
-body {
-	font-family: Verdana, Arial, Courier, serif;
-	font-size: x-small;
-	font-stretch: normal;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: normal;
-	line-height: normal;
-}
+
 
 a {
 	background-color: transparent;
 	font-family: Verdana, Arial, Courier, serif;
-	font-size: x-small;
+	font-size: small;
 	font-stretch: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -61,6 +53,13 @@ body {
 background-color:#F9F9F8;
 width:800px;
 height:600px;
+font-family: Verdana, Arial, Courier, serif;
+font-size: small;
+font-stretch: normal;
+font-style: normal;
+font-variant: normal;
+font-weight: normal;
+line-height: normal;
 
 }
 
@@ -72,7 +71,7 @@ height:200px;
 
 .main_title {
 color:#790033;
-font-size:20px;
+font-size:18px;
 padding-left:10px;
 }
 
@@ -82,19 +81,32 @@ height:25px;
 }
 
 p.nav {
-padding:0px 30px 0px 40px;
+padding:0px 10px 0px 10px;
 display:inline;
 }
 
 p.text1 {
-font-size:12px;
+font-size:11px;
 padding-left:10px;
 }
 
 .input {
 display:inline;
 position:absolute;
-top:150px;
+top:110px;
 right:475px;
 
+}
+
+.table_1{
+display:inline;
+position:absolute;
+top:200px;
+}
+
+.table_2{
+display:inline;
+position:absolute;
+top:200px;
+right:575px;
 }

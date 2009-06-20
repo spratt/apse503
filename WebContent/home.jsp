@@ -10,17 +10,25 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
-<h2>Welcome, <%= ((User)session.getAttribute("user")).userName %>!</h2>
+<p class="main_title">Welcome, <%= ((User)session.getAttribute("user")).userName %>!</p>
+<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
+<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
+</div>
 
+<div class="input">
+<p>Search <input type="text" name="search_input"><input type="submit" name="search" value="Search"></p> 
 
+</div>
 
+<div id="home_content">
 
+<div class="table_1">
 
-<table>
+<table width="200" cellpadding="3px" cellspacing="3px">
 <tr>
-<td width="250">
-<div id="categories">
-	<label class="title">Categories</label><br /><br />
+<td bgcolor="#ECECDF"><strong>Categories</strong></td>
+</tr>
+
 	<%
 	ArrayList<Category> categories = new Category().getAll();
 	
@@ -30,16 +38,20 @@
 	
 		while(i.hasNext()){
 			Category cat = (Category)i.next(); %>
-			<label>
-			<a href="<%=root%>/category/get?category=<%=cat.categoryID %>" id="<%=cat.categoryID %>"><%= cat.category %></a></label><br /><br />
+			<tr><td>
+			<a href="<%=root%>/category/get?category=<%=cat.categoryID %>" id="<%=cat.categoryID %>"><%= cat.category %></a></td></tr>
 		<%}
 	}%>
-	
+</table>
 </div>
-</td>
-<td width="450">
-<div id ="top_methods">
-	<label class="title">Top Methods</label><br /><br />
+
+
+
+<div class="table_2">
+<table width="400" cellpadding="3px" cellspacing="3px">
+<tr>
+<td bgcolor="#ECECDF"><strong>Top Methods</strong></td>
+</tr>
 	<%
 	ArrayList<Method> methods = new Method().getTopTen();
 	
@@ -53,19 +65,16 @@
 			Method meth = (Method)i.next(); 
 			Rating rating = new Rating();
 			rating.method_id = meth.getId();%>
-			<label>
-			<%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;</label><label>average:</label> <%= rating.getAverageRating()%>&nbsp;<label>count:</label> <%= rating.getRatingsCount()%><br />
-			<%= meth.summary %><br /><br />
+			<tr><td>
+			<%=ranking %>.&nbsp;Method: <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a><br />Average rating: <%= rating.getAverageRating()%>&nbsp;<%= rating.getRatingsCount()%>&nbsp;reviews<br />
+			Method Summary: <%= meth.summary %></td></tr>
 			<% ranking++; %>
-			<br />
-			<br />
 		<%}
 	}%>
 	
-
+</table>
 </div>
-</td></tr></table>
-
+</div>
 <%@ include file="/nav/footer.jsp" %>
 
 </body>
