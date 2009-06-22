@@ -30,7 +30,7 @@ public class MethodPrice extends PersistenceClass{
 	
 	public ArrayList get(int id){
 		
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 						
 		try {
 			String select = "SELECT * FROM method_price WHERE method_price_status_id = 1 AND method_id = " + id + " ORDER BY price ASC;";
@@ -51,17 +51,19 @@ public class MethodPrice extends PersistenceClass{
 
 				prices.add(tmp);
 			}
+			closeDataSource();
 			return prices;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
-		
+
+		closeDataSource();
 		return null;
 	}
 	
 	public boolean save() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		
 		// Don't save if the price is invalid
 		if (!this.isValid()) return false;
@@ -79,7 +81,7 @@ public class MethodPrice extends PersistenceClass{
 			try {
 				// UPDATE the price in the table
 				sql.execute(update);
-				
+				closeDataSource();
 				return true;
 			} 
 			catch (SQLException e) {
@@ -113,6 +115,7 @@ public class MethodPrice extends PersistenceClass{
 				sql.execute(insert);
 				sql.execute(select);
 				ResultSet results = sql.getResultSet();
+				closeDataSource();
 				
 				if(!results.next()) 
 					return false;
@@ -129,6 +132,7 @@ public class MethodPrice extends PersistenceClass{
 		}
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
+		closeDataSource();
 		return false;
 	}
 
