@@ -51,11 +51,7 @@ public class MethodPurchase extends PersistenceClass {
 	
 	// TODO implement persistence code
 	public boolean save() {
-		System.out.println("in save");
-		if(null == sql) {
-			System.out.println("sql is null");
-			setUpDataSource();
-		}
+		setUpDataSource();
 		
 		try{			
 			String insert;
@@ -82,6 +78,7 @@ public class MethodPurchase extends PersistenceClass {
 			sql.execute(insert);
 			sql.execute(select);
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			
 			// Set the attribute to the new ID number
 			if(!results.next()) return false;
@@ -94,14 +91,13 @@ public class MethodPurchase extends PersistenceClass {
 		}	
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
+		closeDataSource();
 		return false;
 	}
 	
 	public MethodPurchase get(int id) {
+		setUpDataSource();
 		
-		if(null == sql){ 
-			setUpDataSource();
-		}
 		try {
 			sql.execute("SELECT * FROM method WHERE method_purchase_id=" + id);
 			ResultSet results = sql.getResultSet();
@@ -111,12 +107,14 @@ public class MethodPurchase extends PersistenceClass {
 			this.method_id = results.getInt("metod_id");
 			this.method_price_id = results.getInt("method_price_id");
 			this.paid_developer = results.getInt("paid_developer");
+			closeDataSource();
 			return this;
 		} 
 		catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
@@ -127,9 +125,8 @@ public class MethodPurchase extends PersistenceClass {
 	
 	public boolean isValidCreditCard(String creditCardNumber, int expiryMonth, int expiryYear, String cardHolder, int code)	
 	{		
-		if(null == sql){ 
-			setUpDataSource();
-		}
+		setUpDataSource();
+		
 		try {
 			String query =  "SELECT * " 				+
 							"FROM credit_cards " 		+
@@ -141,6 +138,7 @@ public class MethodPurchase extends PersistenceClass {
 			
 			sql.execute(query);
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			if(results.next()) 
 				return true;		
 		} 
@@ -148,6 +146,7 @@ public class MethodPurchase extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return false;
 	}
 }
