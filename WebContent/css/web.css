@@ -10,16 +10,16 @@ a {
 	font-weight: normal;
 	line-height: normal;
 	text-decoration: underline;
+	color: #790033;
 }
 
-h2 {
-	font-family: Verdana, Arial, Courier, serif;
-	font-size: small;
-	font-stretch: normal;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: 600;
-	line-height: normal;
+a:visited {
+	text-decoration: normal
+}
+
+a:hover {
+	text-decoration: underline; 
+	color: blue;
 }
 
 p {
@@ -31,11 +31,7 @@ p {
 	font-weight: normal;
 	line-height: normal;
 }
-td.label {
-	text-align: right;
-}
-
-.title {
+td.title {
 	font-weight: bold;
 }
 
@@ -65,6 +61,11 @@ line-height: normal;
 
 .main_nav {
 
+width:500px;
+height:200px;
+}
+
+.footer {
 width:500px;
 height:200px;
 }

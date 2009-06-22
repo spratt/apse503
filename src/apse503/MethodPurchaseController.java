@@ -53,18 +53,18 @@ public class MethodPurchaseController extends ActionController {
 						
 						System.out.println(purchase.method_price_id);
 						purchase.save();
-						request.setAttribute("flash", "Purchase Successful");
+						//request.setAttribute("flash", "Purchase Successful");
 					}
 					else
 					{
-						request.setAttribute("flash", "Invalid Credit Card Information");
+						//request.setAttribute("flash", "Invalid Credit Card Information");
 					}
 				}
 				catch(NumberFormatException nfe){
 					nfe.printStackTrace();
 				}		
 						
-			render("/home.jsp",request,response);
+			render("/mymethods.jsp",request,response);
 		}
 	}
 		
@@ -117,10 +117,8 @@ public class MethodPurchaseController extends ActionController {
 		public void start(HttpServletRequest request,
 				HttpServletResponse response) {
 
-			if (null == request.getSession().getAttribute("method"))
-				;
-
-			render("/method.jsp", request, response);
+			if (null == request.getSession().getAttribute("method"));
+				render("/method.jsp", request, response);
 		}
 	}
 

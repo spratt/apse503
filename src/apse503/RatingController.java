@@ -153,10 +153,10 @@ public class RatingController extends ActionController {
 				rating.user_id = ((User)request.getSession().getAttribute("user")).id; 
 				rating.method_id = Integer.parseInt(request.getParameter("methodid")); 			
 
-				if (rating.save())
+				/*if (rating.save())
 					request.setAttribute("flash","Rating Save was Sucessful");
 				else
-					request.setAttribute("flash","Rating Save was Unsucessful");
+					request.setAttribute("flash","Rating Save was Unsucessful");*/
 
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -9,21 +9,14 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
-<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
-<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
-</div>
-
-<div class="input">
-<p>Search <input type="text" name="search_input"><input type="submit" name="search" value="Search"></p> 
-
-</div>
 
 <div class="table_1">
+
 <table width="600" cellpadding="3px" cellspacing="3px">
 <tr>
 <td bgcolor="#ECECDF" colspan="4"><strong>Purchased Web Methods</strong></td>
 </tr>
-<tr><td>Name</td><td>used/total</td><td>My rating</td><td>My comment</td></tr>
+<tr><td class="title">Name</td><td class="title">used/total</td><td class="title">My rating</td><td class="title">My comment</td></tr>
  	<%
 	User myUser = ((User)request.getSession().getAttribute("user"));
 	
@@ -84,18 +77,20 @@
 				<%if(rating.rating < 0){%><input type="text" id="comment" name="comment" />&nbsp;<input type="submit" value="add" /><%}
 				  else{%><%=rating.comment %><%} %>
 				<% ranking++; %></td></tr>
-			</form>
+				</form>
 		<%}
 	}%>
 	
 </table>
+
 </div>
 
 <div class="table_3">
 <table width="600" cellpadding="3px" cellspacing="3px">
 <tr>
-<td bgcolor="#ECECDF"><strong>Contributed Web Methods</strong></td>
+<td bgcolor="#ECECDF" colspan="2"><strong>Contributed Web Methods</strong></td>
 </tr>
+<tr><td class="title">Name</td><td class="title"># purchases for $ earned</td></tr>
 	<%
 	
 	
@@ -109,7 +104,7 @@
 	    
 		while(i.hasNext()){
 			Method meth = (Method)i.next();%>
-			<tr><td><%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a>&nbsp;&nbsp;Times Purchased: <%= meth.getPurchaseDetails()%></td></tr>
+			<tr><td><%=ranking %> <a href="<%=root%>/method/get?method=<%=meth.getId()%>" id="<%=meth.getId() %>"><%= meth.name %></a></td><td><%= meth.getPurchaseDetails()%></td></tr>
 			<% ranking++; %>
 		<%}
 	}%>
