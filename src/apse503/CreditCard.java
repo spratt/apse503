@@ -45,12 +45,11 @@ public class CreditCard extends PersistenceClass {
 					+ " and card_expiry_year = " + this.card_expiry_year
 					+ " and card_code = " + this.card_code);
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
-			if (!results.next())
-
+			if (!results.next()) {
+				closeDataSource();
 				return false;
-
-			else {
+			} else {
+				closeDataSource();
 				return true;
 			}
 		} catch (SQLException e) {
