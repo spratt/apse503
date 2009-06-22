@@ -35,7 +35,7 @@ public class MethodUse extends PersistenceClass {
 	 */
 	@Override
 	public boolean save() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		
 		// Don't save if the user is invalid
 		if (!this.isValid()) return false;
@@ -56,6 +56,7 @@ public class MethodUse extends PersistenceClass {
 			sql.execute(query);
 			sql.execute(getid);
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			
 			// Set the attribute to the new ID number
 			if(!results.next()) return false;
@@ -64,11 +65,12 @@ public class MethodUse extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return false;
 	}
 	
 	public int totalPurchased() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		
 		String purchasedQuery = "select " +
 				"sum(quantity) as purchased " +
@@ -80,6 +82,7 @@ public class MethodUse extends PersistenceClass {
 			// INSERT the user into the table
 			sql.execute(purchasedQuery);
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			
 			// Set the attribute to the new ID number
 			if(!results.next()) return -1;
@@ -88,11 +91,12 @@ public class MethodUse extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return -1;
 	}
 	
 	public int totalUsed() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		
 		String usedQuery = "select " +
 				"count(*) as used " +
@@ -103,6 +107,7 @@ public class MethodUse extends PersistenceClass {
 			// INSERT the user into the table
 			sql.execute(usedQuery);
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			
 			// Set the attribute to the new ID number
 			if(!results.next()) return -1;
@@ -111,6 +116,7 @@ public class MethodUse extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return -1;
 	}
 	
