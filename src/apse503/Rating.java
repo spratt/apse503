@@ -46,11 +46,10 @@ public class Rating extends PersistenceClass {
 	}
 	
 	public boolean save() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		
 		// Don't save if the user is invalid
 		//if (!this.isValid()) return false;
-		System.out.println("in real save");
 		if (this.isSaved()) {
 			// TODO implement update code
 			String query;
@@ -65,6 +64,7 @@ public class Rating extends PersistenceClass {
 				
 				sql.execute(query);
 				ResultSet results = sql.getResultSet();
+				closeDataSource();
 				if(!results.next()) return false;
 				return true;
 			} catch (SQLException e) {
@@ -79,11 +79,12 @@ public class Rating extends PersistenceClass {
 			query += "(NOW()," + this.rating + ",'" + this.comment + "'," + this.method_id + "," + this.user_id + ")"; 
 			String getid =  "select last_insert_id() as rating_id"; // grab the id of this new user
 			try {
-				System.out.println(query);
+				//System.out.println(query);
 				// INSERT the user into the table
 				sql.execute(query);
 				sql.execute(getid);
 				ResultSet results = sql.getResultSet();
+				closeDataSource();
 				
 				// Set the attribute to the new ID number
 				if(!results.next()) return false;
@@ -96,6 +97,7 @@ public class Rating extends PersistenceClass {
 		}
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
+		closeDataSource();
 		return false;
 	}
 
@@ -106,7 +108,7 @@ public class Rating extends PersistenceClass {
 	
 	//gets all ratings for a method
 	public ArrayList<Rating> getAll() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM rating where method_id = " + this.method_id);
 			ResultSet results = sql.getResultSet();
@@ -124,11 +126,13 @@ public class Rating extends PersistenceClass {
 				tmp.user_id = results.getInt("user_id");
 				ratings.add(tmp);
 			}
+			closeDataSource();
 			return ratings;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
@@ -136,20 +140,21 @@ public class Rating extends PersistenceClass {
 	public double getAverageRating(){
 		
 		double average = 0;
-		if (null == sql)
-			setUpDataSource();
+		setUpDataSource();
 		
 		try {
 			sql.execute("SELECT AVG(rating) AS average from rating where method_id="+ this.method_id);
 			ResultSet results = sql.getResultSet();
 			results.next();
 			average = results.getDouble("average");
+			closeDataSource();
 			//if (average != null)
 				return average;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return 0;
 	}
 	
@@ -165,19 +170,20 @@ public class Rating extends PersistenceClass {
 	public int getRatingsCount(){
 		
 		int total = 0;
-		if (null == sql)
-			setUpDataSource();
+		setUpDataSource();
 		
 		try {
 			sql.execute("SELECT COUNT(rating) AS total from rating where method_id="+ this.method_id);
 			ResultSet results = sql.getResultSet();
 			results.next();
 			total = results.getInt("total");
+			closeDataSource();
 			return total;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return 0;
 	}
 
@@ -186,8 +192,7 @@ public class Rating extends PersistenceClass {
 		
 		String query = null;
 		
-		if (null == sql)
-			setUpDataSource();
+		setUpDataSource();
 		
 		try {
 			query = "SELECT rating, comment from rating where method_id="+ this.method_id + " and user_id =" + user_id;
@@ -197,13 +202,15 @@ public class Rating extends PersistenceClass {
 			if(results.next()) {
 				this.rating = results.getInt("rating");
 				this.comment = results.getString("comment");
+				closeDataSource();
 				return this;
 			}
 		} catch (SQLException e) {
 			System.err.println("QUERY: " + query);
 			e.printStackTrace();
 		}
-		
+
+		closeDataSource();
 		return null;
 	}
 }
