@@ -56,10 +56,12 @@ public class MethodUse extends PersistenceClass {
 			sql.execute(query);
 			sql.execute(getid);
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
 			
 			// Set the attribute to the new ID number
-			if(!results.next()) return false;
+			if(!results.next()) {
+				closeDataSource();
+				return false;
+			}
 			return true;
 		} catch (SQLException e) {
 			// TODO log exception
@@ -82,11 +84,15 @@ public class MethodUse extends PersistenceClass {
 			// INSERT the user into the table
 			sql.execute(purchasedQuery);
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
 			
 			// Set the attribute to the new ID number
-			if(!results.next()) return -1;
-			return results.getInt("purchased");
+			if(!results.next()){
+				closeDataSource();
+				return -1;
+			}
+			int toReturn = results.getInt("purchased");
+			closeDataSource();
+			return toReturn;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
@@ -107,11 +113,15 @@ public class MethodUse extends PersistenceClass {
 			// INSERT the user into the table
 			sql.execute(usedQuery);
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
 			
 			// Set the attribute to the new ID number
-			if(!results.next()) return -1;
-			return results.getInt("used");
+			if(!results.next()) {
+				closeDataSource();
+				return -1;
+			}
+			int toReturn = results.getInt("used");
+			closeDataSource();
+			return toReturn;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
