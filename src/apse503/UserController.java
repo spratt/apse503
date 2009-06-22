@@ -99,24 +99,6 @@ public class UserController extends ActionController {
 
 		@Override
 		public void start(HttpServletRequest request, HttpServletResponse response) {
-			/*
-			 *  BEGIN DEBUG CODE
-			 */
-			try {
-				PrintWriter out = response.getWriter();
-				Enumeration<String> parameters = request.getParameterNames();
-				while(parameters.hasMoreElements()) {
-					String key = parameters.nextElement();
-					out.print(key + " = ");
-					out.println(request.getParameter(key));
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			/*
-			 *  END OF DEBUG CODE
-			 */
 			// If the passwords do not match, go back to registration
 			if(!request.getParameter("password").equals(request.getParameter("confirm_password"))){
 				request.setAttribute("flash","Confirm password does not match password.");
