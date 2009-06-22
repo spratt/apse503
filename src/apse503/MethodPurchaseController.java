@@ -51,7 +51,6 @@ public class MethodPurchaseController extends ActionController {
 						purchase.user_id = ((User)request.getSession().getAttribute("user")).id;
 						purchase.paid_developer = 0;
 						
-						System.out.println(purchase.method_price_id);
 						purchase.save();
 						request.setAttribute("flash", "Purchase Successful");
 					}
@@ -76,7 +75,6 @@ public class MethodPurchaseController extends ActionController {
 			try{
 				Method method = new Method();
 				int methodID = Integer.parseInt(request.getParameter("id"));
-				System.out.println(methodID);
 				request.setAttribute("method", method.get(methodID));	
 			}
 			catch(NumberFormatException nfe){
@@ -168,7 +166,6 @@ public class MethodPurchaseController extends ActionController {
 				mp.paid_developer = 1; // Integer.parseInt(request.getParameter("paid_developer");
 
 				boolean saveResult = mp.save();
-				System.out.println("status:" + saveResult);
 
 				if (mp.save())
 					request.setAttribute("flash",

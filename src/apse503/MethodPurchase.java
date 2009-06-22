@@ -71,8 +71,7 @@ public class MethodPurchase extends PersistenceClass {
 					 	this.paid_developer		+ "," +
 					 	"now()"					+
 					 "); ";
-			System.out.println (insert);
-			String select =  "select last_insert_id() as user_id"; // grab the id of this new method
+			String select =  "select last_insert_id() as method_purchase_id"; // grab the id of this new method
 						
 			// INSERT the user into the table
 			sql.execute(insert);

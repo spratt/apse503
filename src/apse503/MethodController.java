@@ -48,7 +48,7 @@ public class MethodController extends ActionController {
 			
 			// Ensure the parameter is in fact an Integer
 			try{
-				int methodID = Integer.parseInt(request.getParameter("id"));
+				int methodID = Integer.parseInt(request.getParameter("method"));
 				request.setAttribute("method", method.get(methodID));	
 			}
 			catch(NumberFormatException nfe){
