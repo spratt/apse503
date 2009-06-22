@@ -78,11 +78,14 @@ public class MethodPurchase extends PersistenceClass {
 			sql.execute(insert);
 			sql.execute(select);
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
 			
 			// Set the attribute to the new ID number
-			if(!results.next()) return false;
+			if(!results.next()) {
+				closeDataSource();
+				return false;
+			}
 			this.id = results.getInt("method_purchase_id");
+			closeDataSource();
 			return true;
 		} 
 		catch (SQLException e) {
@@ -138,9 +141,10 @@ public class MethodPurchase extends PersistenceClass {
 			
 			sql.execute(query);
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
-			if(results.next()) 
+			if(results.next()) {
+				closeDataSource();
 				return true;		
+			}
 		} 
 		catch (SQLException e) {
 			// TODO log exception
