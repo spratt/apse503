@@ -84,11 +84,14 @@ public class Rating extends PersistenceClass {
 				sql.execute(query);
 				sql.execute(getid);
 				ResultSet results = sql.getResultSet();
-				closeDataSource();
 				
 				// Set the attribute to the new ID number
-				if(!results.next()) return false;
+				if(!results.next()) {
+					closeDataSource();
+					return false;
+				}
 				this.id = results.getInt("rating_id");
+				closeDataSource();
 				return true;
 			} catch (SQLException e) {
 				// TODO log exception
