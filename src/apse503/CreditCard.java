@@ -35,9 +35,8 @@ public class CreditCard extends PersistenceClass {
 	}
 
 	public boolean isValid() {
-		if (null == sql) {
-			setUpDataSource();
-		}
+		setUpDataSource();
+
 		try {
 			sql.execute("SELECT * FROM credit_cards WHERE card_type = "
 					+ this.card_type + " and card_number = " + this.card_number
@@ -46,6 +45,7 @@ public class CreditCard extends PersistenceClass {
 					+ " and card_expiry_year = " + this.card_expiry_year
 					+ " and card_code = " + this.card_code);
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			if (!results.next())
 
 				return false;
@@ -57,7 +57,7 @@ public class CreditCard extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
-
+		closeDataSource();
 		return false;
 	}
 
@@ -68,8 +68,7 @@ public class CreditCard extends PersistenceClass {
 	}
 
 	public ArrayList<CreditCard> getAll() {
-		if (null == sql)
-			setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM credit_cards");
 			ResultSet results = sql.getResultSet();
@@ -87,12 +86,13 @@ public class CreditCard extends PersistenceClass {
 				tmp.card_code = results.getInt("card_code");
 				cc.add(tmp);
 			}
-			System.out.println("it works");
+			closeDataSource();
 			return cc;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 }
