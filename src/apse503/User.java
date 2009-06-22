@@ -50,7 +50,7 @@ public class User extends PersistenceClass {
 	}
 	
 	public User get(int id) {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM user WHERE user_id=" + id);
 			ResultSet results = sql.getResultSet();
@@ -67,16 +67,18 @@ public class User extends PersistenceClass {
 			this.postalCode = results.getString("postal_code");
 			this.province = results.getString("province_state");
 			this.country = results.getString("country");
+			closeDataSource();
 			return this;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
 	public User findByUserName(String userName) {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM user WHERE user_name='" + userName + "'");
 			ResultSet results = sql.getResultSet();
@@ -93,16 +95,18 @@ public class User extends PersistenceClass {
 			this.postalCode = results.getString("postal_code");
 			this.province = results.getString("province_state");
 			this.country = results.getString("country");
+			closeDataSource();
 			return this;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
 	public User findByEmail(String email) {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM user WHERE email='" + email + "'");
 			ResultSet results = sql.getResultSet();
@@ -119,11 +123,13 @@ public class User extends PersistenceClass {
 			this.postalCode = results.getString("postal_code");
 			this.province = results.getString("province_state");
 			this.country = results.getString("country");
+			closeDataSource();
 			return this;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 
@@ -160,7 +166,7 @@ public class User extends PersistenceClass {
 	 * @see apse503.PersistenceClass#save()
 	 */
 	public boolean save() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		
 		// Don't save if the user is invalid
 		if (!this.isValid()) return false;
@@ -183,6 +189,7 @@ public class User extends PersistenceClass {
 			try {
 				sql.execute(query);
 				ResultSet results = sql.getResultSet();
+				closeDataSource();
 				if(!results.next()) return false;
 				return true;
 			} catch (SQLException e) {
@@ -212,6 +219,7 @@ public class User extends PersistenceClass {
 				sql.execute(query);
 				sql.execute(getid);
 				ResultSet results = sql.getResultSet();
+				closeDataSource();
 				
 				// Set the attribute to the new ID number
 				if(!results.next()) return false;
@@ -224,6 +232,7 @@ public class User extends PersistenceClass {
 		}
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
+		closeDataSource();
 		return false;
 	}
 	
@@ -251,7 +260,7 @@ public class User extends PersistenceClass {
 	}
 	
 	public ArrayList<Method> getMyContributed() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute(
 					"SELECT * FROM method where user_id=" + this.id);
@@ -272,16 +281,18 @@ public class User extends PersistenceClass {
 				tmp.url = results.getString("url");
 				methods.add(tmp);
 			}
+			closeDataSource();
 			return methods;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
 	public ArrayList<Method> getMyPurchased() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("select distinct(m.name), m.method_id, u.user_id " +
 			"from method m " +
@@ -302,11 +313,13 @@ public class User extends PersistenceClass {
 				tmp.user_id = results.getInt("user_id");
 				methods.add(tmp);
 			}
+			closeDataSource();
 			return methods;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
