@@ -18,23 +18,25 @@ public class Category extends PersistenceClass {
 	}
 	
 	public Category get(int id) {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM category WHERE category_id=" + id);
 			ResultSet results = sql.getResultSet();
 			if(!results.next()) return null;
 			this.id = results.getInt("category_id");
 			this.category = results.getString("category");
+			closeDataSource();
 			return this;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
 	public ArrayList<Category> getAll() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM category");
 			ResultSet results = sql.getResultSet();
@@ -48,28 +50,32 @@ public class Category extends PersistenceClass {
 				tmp.category = results.getString("category");
 				categories.add(tmp);
 			}
+			closeDataSource();
 			return categories;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
 	
 	public Category findByCategory(String category) {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM category WHERE category='" + category + "'");
 			ResultSet results = sql.getResultSet();
 			if(!results.next()) return null;
 			this.id = results.getInt("category_id");
 			this.category = results.getString("category");
+			closeDataSource();
 			return this;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
@@ -84,7 +90,7 @@ public class Category extends PersistenceClass {
 	}
 	
 	public boolean save() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		
 		// Don't save if the user is invalid
 		if (!this.isValid()) return false;
@@ -98,6 +104,7 @@ public class Category extends PersistenceClass {
 			try {
 				sql.execute(query);
 				ResultSet results = sql.getResultSet();
+				closeDataSource();
 				if(!results.next()) return false;
 				return true;
 			} catch (SQLException e) {
@@ -116,6 +123,7 @@ public class Category extends PersistenceClass {
 				sql.execute(query);
 				sql.execute(getid);
 				ResultSet results = sql.getResultSet();
+				closeDataSource();
 				
 				// Set the attribute to the new ID number
 				if(!results.next()) return false;
@@ -128,6 +136,7 @@ public class Category extends PersistenceClass {
 		}
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
+		closeDataSource();
 		return false;
 	}
 

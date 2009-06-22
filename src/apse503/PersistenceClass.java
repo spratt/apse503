@@ -1,5 +1,6 @@
 package apse503;
 
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.naming.InitialContext;
@@ -17,6 +18,7 @@ public abstract class PersistenceClass {
 	protected static final String DATASOURCE_CONTEXT = "java:comp/env/jdbc/DB";
 
 	// Used for querying the DB
+	protected DataSource data = null;
 	protected Statement sql = null;
 	
 	protected void setUpDataSource(){
@@ -40,11 +42,20 @@ public abstract class PersistenceClass {
 		 */
 		
 		try {
-			DataSource data = (DataSource)new InitialContext().lookup(DATASOURCE_CONTEXT);
-			sql = data.getConnection().createStatement();
+			if(null == data) data = (DataSource)new InitialContext().lookup(DATASOURCE_CONTEXT);
+			if(null == sql) sql = data.getConnection().createStatement();
 		} catch (Exception e) {
-			// TODO log this exception
-			e.printStackTrace();
+			System.err.println("Error: " + e.getMessage());
+			return;
+		}
+	}
+	
+	protected void closeDataSource() {
+		try {
+			if(sql != null) sql.close();
+			sql = null;
+		} catch (Exception e) {
+			System.err.println("Error: " + e.getMessage());
 		}
 	}
 	

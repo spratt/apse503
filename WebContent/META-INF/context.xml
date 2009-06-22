@@ -30,7 +30,11 @@
          -->
 
   <Resource name="jdbc/DB" scope="Shareable" auth="Container" type="javax.sql.DataSource"
-               maxActive="100" maxIdle="30" maxWait="10000"
+               maxActive="3" maxIdle="1" maxWait="10000"
+               testOnBorrow="true" testWhileIdle="true"
+			   timeBetweenEvictionRunsMillis="1000"
+			   minEvictableIdleTimeMillis="6000"
+			   validationQuery="SELECT 1"
                username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
                url="jdbc:mysql://localhost:3306/webMethods?autoReconnect=true"/>
 </Context>
