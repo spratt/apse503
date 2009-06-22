@@ -189,8 +189,11 @@ public class User extends PersistenceClass {
 			try {
 				sql.execute(query);
 				ResultSet results = sql.getResultSet();
+				if(!results.next()) {
+					closeDataSource();
+					return false;
+				}
 				closeDataSource();
-				if(!results.next()) return false;
 				return true;
 			} catch (SQLException e) {
 				// TODO log exception
@@ -219,11 +222,14 @@ public class User extends PersistenceClass {
 				sql.execute(query);
 				sql.execute(getid);
 				ResultSet results = sql.getResultSet();
-				closeDataSource();
 				
 				// Set the attribute to the new ID number
-				if(!results.next()) return false;
+				if(!results.next()) {
+					closeDataSource();
+					return false;
+				}
 				this.id = results.getInt("user_id");
+				closeDataSource();
 				return true;
 			} catch (SQLException e) {
 				// TODO log exception
