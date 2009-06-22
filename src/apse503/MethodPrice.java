@@ -115,14 +115,16 @@ public class MethodPrice extends PersistenceClass{
 				sql.execute(insert);
 				sql.execute(select);
 				ResultSet results = sql.getResultSet();
-				closeDataSource();
 				
-				if(!results.next()) 
+				if(!results.next()) {
+					closeDataSource();
 					return false;
+				}
 				
 				// Set the attribute to the new ID number
 				// Is this going to work?
 				this.id = results.getInt("method_price_id");
+				closeDataSource();
 				return true;
 			} 
 			catch (SQLException e) {
