@@ -99,11 +99,14 @@ public class Method extends PersistenceClass {
 			sql.execute(insert);
 			sql.execute(select);
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
 			
 			// Set the attribute to the new ID number
-			if(!results.next()) return false;
+			if(!results.next()) {
+				closeDataSource();
+				return false;
+			}
 			this.id = results.getInt("method_id");
+			closeDataSource();
 			return true;
 		} 
 		catch (SQLException e) {
@@ -272,12 +275,16 @@ public class Method extends PersistenceClass {
 			"order by SUM(Total) Desc");
 
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
 			
-			if (!results.next())
+			if (!results.next()) {
+				closeDataSource();
 				return "$0.00";
-			else
-				return new java.text.DecimalFormat("$0.00").format((results.getDouble("Earned")* (0.55)));
+			}
+			else {
+				Double toReturn = results.getDouble("Earned");
+				closeDataSource();
+				return new java.text.DecimalFormat("$0.00").format((toReturn* (0.55)));
+			}
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
@@ -304,13 +311,17 @@ public class Method extends PersistenceClass {
 			"order by SUM(Transactions) Desc");
 
 			ResultSet results = sql.getResultSet();
-			closeDataSource();
 			
-			if(!results.next())
+			if(!results.next()){
+				closeDataSource();
 				return 0;
+			}
 			
-			else			
-				return results.getInt("Total Purchases");
+			else {
+				int toReturn = results.getInt("Total Purchases");
+				closeDataSource();
+				return toReturn;
+			}
 			
 		} catch (SQLException e) {
 			// TODO log exception
@@ -339,13 +350,18 @@ public class Method extends PersistenceClass {
 				"order by SUM(Transactions) Desc");
 
 				ResultSet results = sql.getResultSet();
-				closeDataSource();
 				
-				if(!results.next())
+				if(!results.next()){
+					closeDataSource();
 					return "0 for $0.00";
+				}
 				
-				else			
-					return (results.getInt("Total Purchases") + " for " + new java.text.DecimalFormat("$0.00").format((results.getDouble("Earned")* (0.55))));
+				else	{
+					int totalPurchases = results.getInt("Total Purchases");
+					double earned = results.getDouble("Earned");
+					closeDataSource();
+					return (totalPurchases + " for " + new java.text.DecimalFormat("$0.00").format((earned* (0.55))));
+				}
 				
 			} catch (SQLException e) {
 				// TODO log exception
