@@ -62,9 +62,7 @@ public class Method extends PersistenceClass {
 	
 	// TODO implement persistence code
 	public boolean save() {
-		if(null == sql) {
-			setUpDataSource();
-		}
+		setUpDataSource();
 		
 		// Don't save if the method is invalid
 		if (!this.isValid()) return false;
@@ -101,6 +99,7 @@ public class Method extends PersistenceClass {
 			sql.execute(insert);
 			sql.execute(select);
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			
 			// Set the attribute to the new ID number
 			if(!results.next()) return false;
@@ -113,14 +112,13 @@ public class Method extends PersistenceClass {
 		}
 		// If the code ever gets to this point, 
 		// something went horribly, horribly wrong
+		closeDataSource();
 		return false;
 	}
 	
 	public Method get(int id) {
+		setUpDataSource();
 		
-		if(null == sql){ 
-			setUpDataSource();
-		}
 		try {
 			sql.execute("SELECT * FROM method WHERE method_id=" + id);
 			ResultSet results = sql.getResultSet();
@@ -134,20 +132,20 @@ public class Method extends PersistenceClass {
 			this.url = results.getString("url");
 			this.user_id = results.getInt("user_id");
 			this.category_id = results.getInt("category_id");
+			closeDataSource();
 			return this;
 		} 
 		catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
 	public Method findByFilepath(String filepath) {
+		setUpDataSource();
 		
-		if(null == sql){ 
-			setUpDataSource();
-		}
 		try {
 			sql.execute("SELECT * FROM method WHERE filepath='" + filepath + "'");
 			ResultSet results = sql.getResultSet();
@@ -161,12 +159,14 @@ public class Method extends PersistenceClass {
 			this.url = results.getString("url");
 			this.user_id = results.getInt("user_id");
 			this.category_id = results.getInt("category_id");
+			closeDataSource();
 			return this;
 		} 
 		catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
@@ -176,7 +176,7 @@ public class Method extends PersistenceClass {
 	}
 	
 	public ArrayList<Method> getAll() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM method");
 			ResultSet results = sql.getResultSet();
@@ -200,16 +200,18 @@ public class Method extends PersistenceClass {
 				//
 				methods.add(tmp);
 			}
+			closeDataSource();
 			return methods;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
 	public ArrayList<Method> getTopTen() {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("select * " +
 			"from(" +
@@ -242,16 +244,18 @@ public class Method extends PersistenceClass {
 				//
 				methods.add(tmp);
 			}
+			closeDataSource();
 			return methods;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
 	public String getEarnedByMethod(){
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("select SUM(Total) AS 'Earned' " +
 			"from ( " +
@@ -268,6 +272,7 @@ public class Method extends PersistenceClass {
 			"order by SUM(Total) Desc");
 
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			
 			if (!results.next())
 				return "$0.00";
@@ -277,11 +282,12 @@ public class Method extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return "$0.00";
 	}
 	
 	public int getTotalPurchases(){
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("select SUM(Transactions) AS 'Total Purchases' " +
 			"from ( " +
@@ -298,6 +304,7 @@ public class Method extends PersistenceClass {
 			"order by SUM(Transactions) Desc");
 
 			ResultSet results = sql.getResultSet();
+			closeDataSource();
 			
 			if(!results.next())
 				return 0;
@@ -309,12 +316,13 @@ public class Method extends PersistenceClass {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return 0;
 	}
 	
 	public String getPurchaseDetails(){
 		
-			if(null == sql) setUpDataSource();
+			setUpDataSource();
 			try {
 				sql.execute("select SUM(Total) AS 'Earned', SUM(Transactions) AS 'Total Purchases' " +
 				"from ( " +
@@ -331,6 +339,7 @@ public class Method extends PersistenceClass {
 				"order by SUM(Transactions) Desc");
 
 				ResultSet results = sql.getResultSet();
+				closeDataSource();
 				
 				if(!results.next())
 					return "0 for $0.00";
@@ -347,7 +356,7 @@ public class Method extends PersistenceClass {
 	}
 	
 	public ArrayList<Method> getAllByCategory(int categoryID) {
-		if(null == sql) setUpDataSource();
+		setUpDataSource();
 		try {
 			sql.execute("SELECT * FROM method where category_id = " + categoryID);
 			ResultSet results = sql.getResultSet();
@@ -363,11 +372,13 @@ public class Method extends PersistenceClass {
 				tmp.summary = results.getString("summary");
 				methods.add(tmp);
 			}
+			closeDataSource();
 			return methods;
 		} catch (SQLException e) {
 			// TODO log exception
 			e.printStackTrace();
 		}
+		closeDataSource();
 		return null;
 	}
 	
