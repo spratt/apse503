@@ -1,7 +1,6 @@
 package apse503;
 
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -20,6 +19,7 @@ public abstract class PersistenceClass {
 	// Used for querying the DB
 	protected DataSource data = null;
 	protected Statement sql = null;
+	protected Connection conn = null;
 	
 	protected void setUpDataSource(){
 		/*
@@ -43,16 +43,24 @@ public abstract class PersistenceClass {
 		
 		try {
 			if(null == data) data = (DataSource)new InitialContext().lookup(DATASOURCE_CONTEXT);
-			if(null == sql) sql = data.getConnection().createStatement();
+			if(null == conn) conn = data.getConnection();
+			if(null == sql) sql = conn.createStatement();
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
+			closeDataSource();
+			setUpDataSource();
 			return;
 		}
 	}
 	
 	protected void closeDataSource() {
 		try {
-			if(sql != null) sql.close();
+			if(sql != null) {
+				sql.close();
+				conn.close();
+			}
+			data = null;
+			conn = null;
 			sql = null;
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
