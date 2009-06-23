@@ -62,7 +62,7 @@ line-height: normal;
 .main_nav {
 
 width:500px;
-height:200px;
+height:140px;
 }
 
 .footer {
@@ -101,19 +101,17 @@ right:475px;
 
 .table_1{
 display:inline;
-position:absolute;
 top:200px;
 }
 
 .table_2{
 display:inline;
 position:absolute;
-top:200px;
+top:160px;
 right:575px;
 }
 
 .table_3{
-margin-top:200px;
 right:575px;
 }
 
