@@ -8,3 +8,6 @@ build/*
 
 # Files ending with ~ are emacs autosaves.  Not to be shared.
 *~
+
+# methodClient xml files
+methodClient/*.xml

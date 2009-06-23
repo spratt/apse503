@@ -1,0 +1,11 @@
+truncate table rating;
+truncate table audit;
+truncate table credit_cards;
+truncate table method_use;
+truncate table method_purchase;
+truncate table method_price;
+truncate table method_price_status;
+truncate table method;
+truncate table status;
+truncate table category;
+truncate table user;
