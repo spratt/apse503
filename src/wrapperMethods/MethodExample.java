@@ -3,10 +3,10 @@ package wrapperMethods;
 import apse503.*;
 
 public class MethodExample extends userMethods.MethodExample {
-	String name = (this.getClass().getSimpleName()).substring(0, this.getClass().getSimpleName().length());
 
 	public int countCharactersWrapper(String userName, String password,String toCount) {
 		//  PASTE AFTER THIS LINE
+		String name = (this.getClass().getSimpleName()).substring(0, this.getClass().getSimpleName().length());
 		System.out.println("NAME: " + name);
 		User thisUser = new User().findByUserName(userName);
 		if(!thisUser.authenticate(password)) {
