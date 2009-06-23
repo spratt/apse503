@@ -64,8 +64,11 @@ public class Rating extends PersistenceClass {
 				
 				sql.execute(query);
 				ResultSet results = sql.getResultSet();
+				if(!results.next()) {
+					closeDataSource();
+					return false;
+				}
 				closeDataSource();
-				if(!results.next()) return false;
 				return true;
 			} catch (SQLException e) {
 				// TODO log exception

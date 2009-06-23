@@ -9,13 +9,9 @@ import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import apse503.ActionController.Action;
-import apse503.UserController.authenticate;
-
 /**
  * Servlet implementation class RatingController
  */
-@SuppressWarnings("unused")
 public class RatingController extends ActionController {
 	/*
 	 * Just let eclipse generate one of these for your class. HOW??
@@ -132,7 +128,7 @@ public class RatingController extends ActionController {
 				render("/mymethods.jsp", request, response);
 			} else {
 				// Authenticated!
-				redirect(request.getContextPath() + "/mymethods.jsp",
+				redirect(request.getContextPath() + "/method/show",
 						request, response);
 			}
 		}
@@ -142,7 +138,6 @@ public class RatingController extends ActionController {
 
 		public void start(HttpServletRequest request,
 				HttpServletResponse response) {
-			System.out.println("save");
 			try {
 				// Create the new method then set its attributes from request's
 				// parameters
@@ -153,17 +148,17 @@ public class RatingController extends ActionController {
 				rating.user_id = ((User)request.getSession().getAttribute("user")).id; 
 				rating.method_id = Integer.parseInt(request.getParameter("methodid")); 			
 
-				/*if (rating.save())
+				if (rating.save())
 					request.setAttribute("flash","Rating Save was Sucessful");
 				else
-					request.setAttribute("flash","Rating Save was Unsucessful");*/
+					request.setAttribute("flash","Rating Save was Unsucessful");
 
 			} catch (Exception e) {
 				e.printStackTrace();
 				request.setAttribute("flash", "false");
 			}
 
-			render("/mymethods.jsp", request, response);
+			redirect(request.getContextPath() + "/method/show", request, response);
 		}
 	}
 
