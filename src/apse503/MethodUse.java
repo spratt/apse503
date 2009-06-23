@@ -35,7 +35,6 @@ public class MethodUse extends PersistenceClass {
 	 */
 	@Override
 	public boolean save() {
-		setUpDataSource();
 		
 		// Don't save if the user is invalid
 		if (!this.isValid()) return false;
@@ -43,17 +42,22 @@ public class MethodUse extends PersistenceClass {
 		// Don't save if the user has no uses left
 		if (!this.hasUsesLeft()) return false;
 		
+		setUpDataSource();
+		
 		String query;
 		query  = "INSERT INTO method_use ";
 		query += "(method_id,user_id,date_time) ";
 		query += "VALUES ";
-		query += "('" + this.methodID + "','"
-		      +         this.userID   + "',"
+		query += "(" + this.methodID + ","
+		      +         this.userID   + ","
 		      +        "NOW())"; 
 		String getid =  "select last_insert_id() as user_id"; // grab the id of this new user
 		try {
 			// INSERT the user into the table
+			System.out.println("Query: " + query);
+			System.out.println("SQL: " + sql);
 			sql.execute(query);
+			System.out.println("GetID: " + getid);
 			sql.execute(getid);
 			ResultSet results = sql.getResultSet();
 			
@@ -62,6 +66,7 @@ public class MethodUse extends PersistenceClass {
 				closeDataSource();
 				return false;
 			}
+			closeDataSource();
 			return true;
 		} catch (SQLException e) {
 			// TODO log exception

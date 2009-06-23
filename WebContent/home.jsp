@@ -11,7 +11,6 @@
 <%@ include file="/nav/main-nav.jsp" %>
 
 <p class="main_title">Welcome, <%= ((User)session.getAttribute("user")).userName %>!</p>
-<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
 
 </div>
 

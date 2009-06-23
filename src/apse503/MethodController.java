@@ -210,7 +210,6 @@ public class MethodController extends ActionController {
 							File saveTo = new File(dirName + fileName);
 							try 
 							{
-								System.out.println(saveTo.getAbsolutePath());
 								fileItemTemp.write(saveTo);
 								// Just want to chop off the file extension =)
 								method.filePath = fileName.substring(0, fileName.lastIndexOf("."));

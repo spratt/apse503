@@ -8,9 +8,6 @@
 </head>
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
-
-<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
-<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
 </div>
 
 <div class="input">

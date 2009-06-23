@@ -3,9 +3,11 @@ package wrapperMethods;
 import apse503.*;
 
 public class MethodExample extends userMethods.MethodExample {
-	private String name = (this.getClass().getSimpleName()).substring(0, this.getClass().getSimpleName().length());
+	String name = (this.getClass().getSimpleName()).substring(0, this.getClass().getSimpleName().length());
 
 	public int countCharactersWrapper(String userName, String password,String toCount) {
+		//  PASTE AFTER THIS LINE
+		System.out.println("NAME: " + name);
 		User thisUser = new User().findByUserName(userName);
 		if(!thisUser.authenticate(password)) {
 			// TODO log this failed authentication
@@ -17,13 +19,25 @@ public class MethodExample extends userMethods.MethodExample {
 			return -2;
 		}
 		MethodUse thisMethodUse = new MethodUse();
-		thisMethodUse.methodID = thisMethod.getId();
-		thisMethodUse.userID   = thisUser.getId();
+		try{
+			thisMethodUse.methodID = thisMethod.getId();
+			thisMethodUse.userID   = thisUser.getId();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		if(!thisMethodUse.hasUsesLeft()) {
 			// TODO log this lack of uses
 			return -4;
 		}
-		thisMethodUse.save();
-		return this.countCharacters(toCount);
+		// STOP PASTING
+		// CALL USER METHOD
+		int toReturn = -8;
+		try {
+			thisMethodUse.save();
+			toReturn = this.countCharacters(toCount);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return toReturn;
 	}
 }

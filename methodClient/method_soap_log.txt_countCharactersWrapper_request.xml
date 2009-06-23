@@ -4,8 +4,8 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <env:Body>
     <n1:countCharactersWrapper xmlns:n1="http://wrapperMethods">
-      <n1:userName>deuce</n1:userName>
-      <n1:password>password</n1:password>
+      <n1:userName>user</n1:userName>
+      <n1:password>testing</n1:password>
       <n1:toCount>this should return 21</n1:toCount>
     </n1:countCharactersWrapper>
   </env:Body>
