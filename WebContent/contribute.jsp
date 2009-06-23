@@ -13,22 +13,23 @@ function imposeMaxLength(Object, MaxLen)
   return (Object.value.length <= MaxLen);
 }
 
-
 //-->
 </script>
 
-<%@ include file="/nav/main-nav.jsp" %>
+
 
 </head>
 <body>
+<%@ include file="/nav/main-nav.jsp" %>
 
-<div id="submit_intro" class="intro">introduction text to go here</div>
+<div class="table_1">
 
-<div id="contribute_form" class="form">
 
 <form name="contribute" ENCTYPE='multipart/form-data' method="POST" action="<%=root%>/method/save" > 
-
-<table>
+<table width="600" cellpadding="3px" cellspacing="3px">
+<tr>
+<td bgcolor="#ECECDF" colspan="4"><strong>Method information</strong></td>
+</tr>
 <tr>
 	<td class="label">Method name:</td><td><input type="text" id="name" name="name" /></td>
 </tr>
@@ -62,7 +63,7 @@ function imposeMaxLength(Object, MaxLen)
 	<td class="label">Method file:</td><td><input type="file" id="filename" name="filename" size="30"></td>
 </tr>
 <tr>
-	<td colspan="4">Some details about the payment options or rates etc.</td>
+	<td colspan="4"><b>Enter your three rate options below ($ per # of uses):</b></td>
 </tr>
 <tr>
 	<td class="label">Rate 1:</td><td><input type="text" id="rate_one" name="rate_one" maxsize="8" length="8" /> for <input type="text" id="rate_one_uses" name="rate_one_uses" maxsize="8" length="8" /> uses.</td>
@@ -73,7 +74,7 @@ function imposeMaxLength(Object, MaxLen)
 <tr>
 	<td class="label">Rate 3:</td><td><input type="text" id="rate_three" name="rate_three" maxsize="8" length="8" /> for <input type="text" id="rate_three_uses" name="rate_three_uses" maxsize="8" length="8" /> uses.</td>
 </tr>
-<tr><td>&nbsp;</td><td><input type="checkbox" name="terms" onClick="document.contribute['submit'].disabled =(document.contribute['submit'].disabled)? false : true"> I agree to the Terms and Conditions</td></tr>
+<tr><td>&nbsp;</td><td><input type="checkbox" name="terms" onClick="document.contribute['submit'].disabled =(document.contribute['submit'].disabled)? false : true"> I agree to the <a href="#">Terms and Conditions</a></td></tr>
 
 <tr>
 	<td>&nbsp;</td><td><input type="submit" name="submit" id="submit" value="Submit Method" disabled /></td>

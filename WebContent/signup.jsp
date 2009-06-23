@@ -28,48 +28,53 @@
 <title>Register</title>
 </head>
 <body>
-	<%@ include file="/nav/main-nav.jsp" %>
+	<%@ include file="/nav/main-basic.jsp" %>
 	<script type="text/javascript" src="<%=root%>/js/jquery-1.3.2.js"></script>
 	<form id="registration" method="POST" action="<%=root%>/user/signup">
-		<table>
+<div class="table_1">
+<form method="POST" action="<%=root%>/rating/save">
+<table width="600" cellpadding="3px" cellspacing="3px">
+<tr>
+<td bgcolor="#ECECDF" colspan="2"><strong>Member information</strong></td>
+</tr>
 			<tr>
-				<td class="label">Username:</td>
+				<td width="150">Username:</td>
 				<td><input type="text" id="username" name="username" value="<%=userName%>" /></td>
 			</tr>
 			<tr>
-				<td class="label">Password:</td>
+				<td width="150">Password:</td>
 				<td><input type="password" id="password" name="password" /></td>
 			</tr>
 			<tr>
-				<td class="label">Confirm Password:</td>
+				<td width="150">Confirm Password:</td>
 				<td><input type="password" id="confirm_password" name="confirm_password" /></td>
 			</tr>
 			<tr>
-				<td class="label">First Name:</td>
+				<td width="150">First Name:</td>
 				<td><input type="text" id="firstname" name="firstname" value="<%=firstName%>" /></td>
 			</tr>
 			<tr>
-				<td class="label">Last Name:</td>
+				<td width="150">Last Name:</td>
 				<td><input type="text" id="lastname" name="lastname" value="<%=lastName%>" /></td>
 			</tr>
 			<tr>	
-				<td class="label">Email:</td>
+				<td width="150">Email:</td>
 				<td><input type="text" id="email" name="email" value="<%=email%>" /></td>
 			</tr>
 			<tr>
-				<td class="label">Address:</td>
+				<td width="150">Address:</td>
 				<td><input type="text" id="address" name="address" value="<%=address%>" /></td>
 			</tr>
 			<tr>
-				<td class="label">City:</td>
+				<td width="150">City:</td>
 				<td><input type="text" id="city" name="city" value="<%=city%>" /></td>
 			</tr>
 			<tr>
-				<td class="label">Province/State:</td>
+				<td width="150">Province/State:</td>
 				<td><input type="text" id="province" name="province" value="<%=province%>" /></td>
 			</tr>
 			<tr>
-				<td class="label">Country:</td>
+				<td width="150">Country:</td>
 				<td>
 					<select id="country" name="country" />
 						<option>-- Select Country --</option>
@@ -82,14 +87,16 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="label">Postal/Zip Code:</td>
+				<td width="150">Postal/Zip Code:</td>
 				<td><input type="text" id="postalcode" name="postalcode" value="<%=postalCode%>" /></td>
 			</tr>
 			<tr>
-				<td class="label">&nbsp;</td><td><button type="submit">Register!</button></td>
+				<td width="150">&nbsp;</td><td><button type="submit">Register!</button></td>
 			</tr>
 		</table>
+
 	</form>
+</div>
 	<%@ include file="/nav/footer.jsp" %>
 </body>
 </html>

@@ -10,23 +10,9 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
-<p class="main_title">Welcome, <%= ((User)session.getAttribute("user")).userName %>!</p>
-
-</div>
-
-<div class="input">
-<p>Search <input type="text" name="search_input"><input type="submit" name="search" value="Search"></p> 
-
-</div>
-
-
-
 <div class="cats">
-
 <%@ include file="/nav/cat_nav.jsp" %>
 </div>
-
-
 
 <div class="table_2">
 <table width="400" cellpadding="3px" cellspacing="3px">

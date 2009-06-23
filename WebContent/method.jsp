@@ -17,13 +17,15 @@ function openReviews() {
 		else {
 			$('#allReviews').html('');
 			$.each(data.ratings,function(r,rating) {
-				$('#allReviews').append(rating.comment);
-				$('#allReviews').append('&nbsp;');
 				var tempRating = parseInt(rating.rating);
 				while(0 < tempRating--)
 					$('#allReviews').append('<img src="<%=root%>/images/whole.JPG" height="12" />');
 				$('#allReviews').append('&nbsp;');
-				$('#allReviews').append('--' + rating.user);
+				$('#allReviews').append('"');
+				$('#allReviews').append(rating.comment);
+				$('#allReviews').append('"');
+				$('#allReviews').append('&nbsp;');
+				$('#allReviews').append('-' + rating.user);
 				$('#allReviews').append('<br />');
 			});
 		}
@@ -31,10 +33,6 @@ function openReviews() {
 }
 </script>
 
-<div class="input">
-<p>Search <input type="text" name="search_input"><input type="submit" name="search" value="Search"></p> 
-
-</div>
 
 
 
@@ -87,12 +85,12 @@ if(prices != null)
 			}%>
 	&nbsp;<%=rating.getRatingsCount() %>&nbsp;reviews&nbsp;<a href="#" onClick="openReviews();return false">read all reviews</a><br /><br />
 	
-	
-
-<a href="<%=root%>/purchase/approve?id=<%=m.getId() %>">Purchase Method</a></td></tr>
-</table>
 <div id="allReviews">
 </div>
+</td></tr>
+<tr><td><br /><button type="button" onclick="location.href='<%=root%>/purchase/approve?id=<%=m.getId() %>'">Purchase Method</button></td></tr>
+</table>
+
 </div>
 </body>
 </html>

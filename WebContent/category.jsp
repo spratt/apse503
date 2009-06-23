@@ -9,14 +9,7 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 
-<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
-<p class="text1">Some text info hereSome text info hereSome text info hereSome text info here</p>
-</div>
 
-<div class="input">
-<p>Search <input type="text" name="search_input"><input type="submit" name="search" value="Search"></p> 
-
-</div>
 
 
 

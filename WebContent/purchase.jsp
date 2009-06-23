@@ -11,6 +11,7 @@
 <body>
 <%@ include file="/nav/main-nav.jsp" %>
 <form method="POST" action="<%=root%>/purchase/buy">
+
 <%
 	Method method = new Method();
 	MethodPrice price = new MethodPrice();
@@ -18,17 +19,13 @@
 	ArrayList<MethodPrice> prices = price.get(method.getId());
 	
 %>
-<p>Some texts to explain the purchasing details</p>
 
-<h3>Method Details</h3>
-Name: <%=method.name %>
-<input type="hidden" name="methodid" id="methodid" value="<%=method.getId() %>"></input>
-<br>
-Summary:<%=method.summary %>
-<br>
-<br>
-<form>
-Rate option:<br /> 
+<div class="table_1">
+<table width="600" cellpadding="3px" cellspacing="3px">
+<tr><td bgcolor="#ECECDF" colspan="2"><strong>Method Details</strong></td></tr>
+<tr><td width="150">Name: </td><td align="left"><%=method.name %><input type="hidden" name="methodid" id="methodid" value="<%=method.getId() %>"></input></td></tr>
+<tr><td width="150">Summary:</td><td align="left"><%=method.summary %></td></tr>
+<tr><td colspan="2">Choose rate option:</td></tr>
 <%
 if(prices != null)
 {
@@ -36,24 +33,25 @@ if(prices != null)
 
 	while(i.hasNext()){
 		MethodPrice p = (MethodPrice)i.next(); %>
-		<input type="radio" checked="checked" name="rate" id="rate" value="<%=p.method_price_id %>"> <%=p.quantity %> - $<%=p.price %> <br>
+		<tr><td colspan="2"><input type="radio" name="rate" id="rate" value="<%=p.method_price_id %>"> <%= new java.text.DecimalFormat("$0.00").format(p.price) %> for <%=p.quantity %> uses</td></tr>
 	<%}
 }
 %>
-<p>
-------------------------------------------------------------------</p>
-<br>
-<h3>Payment Details</h3>
-<br>
-Card Type: <select name="Card types">
+</table>
+</div>
+<div class="table_3">
+
+<table width="600" cellpadding="3px" cellspacing="3px">
+<tr>
+<td bgcolor="#ECECDF" colspan="2"><strong>Purchase Details</strong></td>
+</tr>
+<tr><td width="150">Card Type: </td><td align="left"><select name="Card types">
 	<option value="Card">-- Select Card Type --</option>
 	<option value="Card">Visa</option>
-	<option value="Card">Master</option>
-</select> <br>
-<br>
-Card Number: <input type="text" name="Cardnumber"> <br>
-	
-Expiry: <select name="ExpiryMonth">
+	<option value="Card">MasterCard</option>
+</select></td></tr>
+<tr><td width="150">Card Number: </td><td align="left"><input type="text" name="Cardnumber"></td></tr>
+<tr><td width="150">Expiry: </td><td align="left"><select name="ExpiryMonth">
 <option value="1">01</option>
 <option value="2">02</option>
 <option value="3">03</option>
@@ -76,14 +74,17 @@ Expiry: <select name="ExpiryMonth">
 <option value="2014">2014</option>
 <option value="2015">2015</option>
 </select>
-<br>
-Cardholder Name: <input type="text" name="Cardname"> <br>
-Code: <input type="text" name="code"> <br>
-<br>
-<input type="submit" value="Purchase Now" />
-<br>
-</form>
+</td></tr>
+<tr><td width="150">Cardholder Name: </td><td align="left"><input type="text" name="Cardname"></td></tr>
+<tr><td width="150">Code: </td><td align="left"><input type="text" name="code"></td></tr>
+<tr><td width="150">&nbsp;</td><td><input type="submit" value="Purchase Now" /></td></tr>
+</table>
+
+</div>
+
 <%@ include file="/nav/footer.jsp" %>
+
+</form>
 </body>
 
 </html>

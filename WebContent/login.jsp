@@ -4,29 +4,41 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Login</title>
+
 </head>
 <body>
-<%@ include file="/nav/main-nav.jsp" %>
-	<form method="POST" action="<%=root%>/user/login">
-		<table>
-			<tr>
-				<td class="label">Username:</td><td><input type="text" id="username" name="username" /></td>
-			</tr>
-			<tr>
-				<td class="label">Password:</td><td><input type="password" id="password" name="password" /></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td><td><button type="submit">Sign In</button></td>
-			</tr>
-		</table>
-	</form>
-	<hr />
-	<table>
-		<tr>
-			<td class="label">New User?</td>
-			<td><button type="button" onclick="location.href='<%=root%>/user/signup'">Register now</button></td>
-		</tr>
-	</table>
+
+<%@ include file="/nav/main-basic.jsp" %>
+
+
+<div class="table_1">
+
+<form method="POST" action="<%=root%>/user/login">
+<table width="600" cellpadding="3px" cellspacing="3px">
+<tr>
+<td bgcolor="#ECECDF" colspan="2"><strong>Returning user?</strong></td>
+</tr>
+<tr>
+	<td>Username:</td><td><input type="text" id="username" name="username" /></td>
+</tr>
+<tr>
+	<td>Password:</td><td><input type="password" id="password" name="password" /></td>
+</tr>
+<tr>
+	<td>&nbsp;</td><td><button type="submit">Sign In</button></td>
+</tr>
+<tr>
+<td colspan="2"><hr></td>
+</tr>
+<tr>
+<td><strong>New user?</strong></td><td><button type="button" onclick="location.href='<%=root%>/user/signup'">Register now</button></td>
+</tr>
+
+</table>
+</form>
+
+</div>
+
 <%@ include file="/nav/footer.jsp" %>
 </body>
 </html>
