@@ -1,15 +1,12 @@
 APSE503
 ========================================
 
-Instructions:
+A web method framework built with Java and MySQL using an agile methodology for the final design project for SAIT's Bachelor of Applied Information Systems Software Engineering degree.
 
-# create a dynamic project in eclipse called apse503
-# open a command prompt
-# navigate to the apse503 project directory
-# git clone git@github.com:spratt/apse503.git
+The finished framework allows users to build and submit web methods, which could then be purchased and used by consumers on a per-use or per-method basis. 
 
-You should be good to go!
-
-blah blah blah - lauren
-
-Eventually fix the bug! - Sunmoon
+Contributors:
+Bruneau, Mathew
+Kim, Sunmoon
+Pratt, Simon
+McClure, Lauren
